@@ -2,7 +2,8 @@ require('dotenv')
     .config();
 
 const requiredEnvs = [
-    'DB_URI',
+    'NODE_ENV',
+    'MONGODB_URL',
     'PORT',
 ];
 
