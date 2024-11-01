@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const baseModel = require('./base.model');
 
 const schema = new mongoose.Schema({
     name: {
@@ -16,13 +17,7 @@ const schema = new mongoose.Schema({
         required: true,
         unique: true,
     },
-    isDeleted: {
-        type: Boolean,
-        default: false,
-    },
-    deletedAt: {
-        type: Date,
-    },
-}, { timestamps: true, versionKey: false });
+    ...baseModel.fields
+}, { ...baseModel.options });
 
 module.exports = mongoose.model('currency', schema);

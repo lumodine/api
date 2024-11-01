@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const baseModel = require('./base.model');
 const { LANGUAGE_DIRECTIONS } = require('../constants');
 
 const schema = new mongoose.Schema({
@@ -27,13 +28,7 @@ const schema = new mongoose.Schema({
         enum: Object.values(LANGUAGE_DIRECTIONS),
         default: LANGUAGE_DIRECTIONS.LTR,
     },
-    isDeleted: {
-        type: Boolean,
-        default: false,
-    },
-    deletedAt: {
-        type: Date,
-    },
-}, { timestamps: true, versionKey: false });
+    ...baseModel.fields
+}, { ...baseModel.options });
 
 module.exports = mongoose.model('language', schema);
