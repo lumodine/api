@@ -17,12 +17,20 @@ const schema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    defaultLanguage: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'language',
+    },
     languages: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'language',
         },
     ],
+    defaultCurrency: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'currency',
+    },
     currencies: [
         {
             type: mongoose.Schema.Types.ObjectId,
@@ -36,6 +44,6 @@ const schema = new mongoose.Schema({
     deletedAt: {
         type: Date,
     },
-}, { timestamps: true });
+}, { timestamps: true, versionKey: false });
 
 module.exports = mongoose.model('tenant', schema);

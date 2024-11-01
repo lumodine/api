@@ -7,7 +7,9 @@ const create = async (request, reply) => {
         logo,
         background,
         address,
+        defaultLanguage,
         languages,
+        defaultCurrency,
         currencies,
     } = request.body;
 
@@ -16,7 +18,9 @@ const create = async (request, reply) => {
         logo,
         background,
         address,
+        defaultLanguage,
         languages,
+        defaultCurrency,
         currencies,
     };
 
@@ -53,7 +57,9 @@ const update = async (request, reply) => {
         logo,
         background,
         address,
+        defaultLanguage,
         languages,
+        defaultCurrency,
         currencies,
     } = request.body;
 
@@ -62,7 +68,9 @@ const update = async (request, reply) => {
         logo,
         background,
         address,
+        defaultLanguage,
         languages,
+        defaultCurrency,
         currencies,
     };
 

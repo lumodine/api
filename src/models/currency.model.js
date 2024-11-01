@@ -23,6 +23,6 @@ const schema = new mongoose.Schema({
     deletedAt: {
         type: Date,
     },
-}, { timestamps: true });
+}, { timestamps: true, versionKey: false });
 
 module.exports = mongoose.model('currency', schema);
