@@ -14,7 +14,9 @@
     "fastify": "^5.0.0",
     "http-status": "^2.0.0",
     "mongoose": "^8.7.3",
-    "mongoose-autopopulate": "^1.1.0"
+    "mongoose-autopopulate": "^1.1.0",
+    "@lumodine/crypto": "file:src/packages/crypto",
+    "@lumodine/mongodb": "file:src/packages/mongodb"
   },
   "devDependencies": {
     "nodemon": "^3.1.7"

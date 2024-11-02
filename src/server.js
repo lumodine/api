@@ -7,12 +7,17 @@ const fastifyOptions = {
 
 const fastify = require('fastify')(fastifyOptions);
 const cors = require('@fastify/cors');
-const routes = require('./routes');
-const mongodb = require('./databases/mongo.database');
+const { connect: mongodbConnect } = require('@lumodine/mongodb');
 
 fastify.register(cors);
 
-routes.registerAllRoutes(fastify);
+fastify.register(require('./modules/user'));
+fastify.register(require('./modules/language'));
+fastify.register(require('./modules/currency'));
+fastify.register(require('./modules/tenant'));
+fastify.register(require('./modules/unit'));
+fastify.register(require('./modules/category'));
+fastify.register(require('./modules/product'));
 
 const port = process.env.PORT || 3000;
 fastify.listen({ port, host: '0.0.0.0' }, async (err, address) => {
@@ -21,7 +26,7 @@ fastify.listen({ port, host: '0.0.0.0' }, async (err, address) => {
     process.exit(1);
   }
 
-  await mongodb.connect(process.env.MONGODB_URL);
+  await mongodbConnect(process.env.MONGODB_URL);
 
   console.log(`Server listening on ${address}`);
 });
