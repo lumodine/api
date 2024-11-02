@@ -21,11 +21,11 @@ const schema = new mongoose.Schema({
             description: {
                 type: String,
             },
-            image: {
-                type: String,
-            },
         },
     ],
+    image: {
+        type: String,
+    },
     categories: [
         {
             type: mongoose.Schema.Types.ObjectId,

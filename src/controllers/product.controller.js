@@ -5,6 +5,7 @@ const create = async (request, reply) => {
     const {
         tenant,
         translations,
+        image,
         categories,
         prices,
     } = request.body;
@@ -12,6 +13,7 @@ const create = async (request, reply) => {
     const payload = {
         tenant,
         translations,
+        image,
         categories,
         prices,
     };
@@ -47,6 +49,7 @@ const update = async (request, reply) => {
     const {
         tenant,
         translations,
+        image,
         categories,
         prices,
     } = request.body;
@@ -54,6 +57,7 @@ const update = async (request, reply) => {
     const payload = {
         tenant,
         translations,
+        image,
         categories,
         prices,
     };
