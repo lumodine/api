@@ -2,22 +2,20 @@ const mongoose = require('mongoose');
 const baseModel = require('./base.model');
 
 const schema = new mongoose.Schema({
-    name: {
+    code: {
         type: String,
         required: true,
         unique: true,
     },
-    shortName: {
-        type: String,
+    number: {
+        type: Number,
         required: true,
-        unique: true,
     },
     symbol: {
         type: String,
         required: true,
-        unique: true,
     },
-    ...baseModel.fields
+    ...baseModel.fields,
 }, { ...baseModel.options });
 
 module.exports = mongoose.model('currency', schema);

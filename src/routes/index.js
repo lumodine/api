@@ -19,4 +19,25 @@ module.exports.registerAllRoutes = (fastify) => {
             prefix: '/tenants',
         },
     );
+
+    fastify.register(
+        require('./product.route'),
+        {
+            prefix: '/products',
+        },
+    );
+
+    fastify.register(
+        require('./category.route'),
+        {
+            prefix: '/categories',
+        },
+    );
+
+    fastify.register(
+        require('./unit.route'),
+        {
+            prefix: '/units',
+        },
+    );
 };

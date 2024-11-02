@@ -1,37 +1,29 @@
 const httpStatus = require('http-status').default;
-const languageService = require('../services/language.service');
+const unitService = require('../services/unit.service');
 
 const create = async (request, reply) => {
     const {
-        name,
-        shortName,
-        culture,
-        prefix,
-        flag,
-        direction,
+        tenant,
+        translations,
     } = request.body;
 
     const payload = {
-        name,
-        shortName,
-        culture,
-        prefix,
-        flag,
-        direction,
+        tenant,
+        translations,
     };
 
-    const item = await languageService.create(payload);
+    const item = await unitService.create(payload);
 
     if (!item) {
         return reply.code(httpStatus.NOT_FOUND).send({
             success: false,
-            message: 'language_create_error'
+            message: 'unit_create_error'
         });
     }
 
     return reply.code(httpStatus.OK).send({
         success: true,
-        message: 'language_create_success',
+        message: 'unit_create_success',
         data: item,
     });
 };
@@ -39,45 +31,37 @@ const create = async (request, reply) => {
 const update = async (request, reply) => {
     const { id } = request.params;
 
-    const findedItem = await languageService.getById(id);
+    const findedItem = await unitService.getById(id);
 
     if (!findedItem) {
         return reply.code(httpStatus.NOT_FOUND).send({
             success: false,
-            message: 'language_not_found'
+            message: 'unit_not_found'
         });
     }
-
+    
     const {
-        name,
-        shortName,
-        culture,
-        prefix,
-        flag,
-        direction,
+        tenant,
+        translations,
     } = request.body;
 
     const payload = {
-        name,
-        shortName,
-        culture,
-        prefix,
-        flag,
-        direction,
+        tenant,
+        translations,
     };
 
-    const item = await languageService.update(id, payload);
+    const item = await unitService.update(id, payload);
 
     if (!item) {
         return reply.code(httpStatus.NOT_FOUND).send({
             success: false,
-            message: 'language_update_error'
+            message: 'unit_update_error'
         });
     }
 
     return reply.code(httpStatus.OK).send({
         success: true,
-        message: 'language_update_success',
+        message: 'unit_update_success',
         data: item,
     });
 };
@@ -85,32 +69,32 @@ const update = async (request, reply) => {
 const remove = async (request, reply) => {
     const { id } = request.params;
 
-    const findedItem = await languageService.getById(id);
+    const findedItem = await unitService.getById(id);
 
     if (!findedItem) {
         return reply.code(httpStatus.NOT_FOUND).send({
             success: false,
-            message: 'language_not_found'
+            message: 'unit_not_found'
         });
     }
 
-    const item = await languageService.remove(id);
+    const item = await unitService.remove(id);
 
     if (!item) {
         return reply.code(httpStatus.NOT_FOUND).send({
             success: false,
-            message: 'language_remove_error'
+            message: 'unit_remove_error'
         });
     }
 
     return reply.code(httpStatus.OK).send({
         success: true,
-        message: 'language_remove_success',
+        message: 'unit_remove_success',
     });
 };
 
 const getAll = async (request, reply) => {
-    const items = await languageService.getAll();
+    const items = await unitService.getAll();
 
     return reply.code(httpStatus.OK).send({
         success: true,
@@ -121,12 +105,12 @@ const getAll = async (request, reply) => {
 const getById = async (request, reply) => {
     const { id } = request.params;
 
-    const item = await languageService.getById(id);
+    const item = await unitService.getById(id);
 
     if (!item) {
         return reply.code(httpStatus.NOT_FOUND).send({
             success: false,
-            message: 'language_not_found'
+            message: 'unit_not_found'
         });
     }
 

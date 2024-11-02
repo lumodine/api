@@ -1,37 +1,33 @@
 const httpStatus = require('http-status').default;
-const languageService = require('../services/language.service');
+const productService = require('../services/product.service');
 
 const create = async (request, reply) => {
     const {
-        name,
-        shortName,
-        culture,
-        prefix,
-        flag,
-        direction,
+        tenant,
+        translations,
+        categories,
+        prices,
     } = request.body;
 
     const payload = {
-        name,
-        shortName,
-        culture,
-        prefix,
-        flag,
-        direction,
+        tenant,
+        translations,
+        categories,
+        prices,
     };
 
-    const item = await languageService.create(payload);
+    const item = await productService.create(payload);
 
     if (!item) {
         return reply.code(httpStatus.NOT_FOUND).send({
             success: false,
-            message: 'language_create_error'
+            message: 'product_create_error'
         });
     }
 
     return reply.code(httpStatus.OK).send({
         success: true,
-        message: 'language_create_success',
+        message: 'product_create_success',
         data: item,
     });
 };
@@ -39,45 +35,41 @@ const create = async (request, reply) => {
 const update = async (request, reply) => {
     const { id } = request.params;
 
-    const findedItem = await languageService.getById(id);
+    const findedItem = await productService.getById(id);
 
     if (!findedItem) {
         return reply.code(httpStatus.NOT_FOUND).send({
             success: false,
-            message: 'language_not_found'
+            message: 'product_not_found'
         });
     }
 
     const {
-        name,
-        shortName,
-        culture,
-        prefix,
-        flag,
-        direction,
+        tenant,
+        translations,
+        categories,
+        prices,
     } = request.body;
 
     const payload = {
-        name,
-        shortName,
-        culture,
-        prefix,
-        flag,
-        direction,
+        tenant,
+        translations,
+        categories,
+        prices,
     };
 
-    const item = await languageService.update(id, payload);
+    const item = await productService.update(id, payload);
 
     if (!item) {
         return reply.code(httpStatus.NOT_FOUND).send({
             success: false,
-            message: 'language_update_error'
+            message: 'product_update_error'
         });
     }
 
     return reply.code(httpStatus.OK).send({
         success: true,
-        message: 'language_update_success',
+        message: 'product_update_success',
         data: item,
     });
 };
@@ -85,32 +77,32 @@ const update = async (request, reply) => {
 const remove = async (request, reply) => {
     const { id } = request.params;
 
-    const findedItem = await languageService.getById(id);
+    const findedItem = await productService.getById(id);
 
     if (!findedItem) {
         return reply.code(httpStatus.NOT_FOUND).send({
             success: false,
-            message: 'language_not_found'
+            message: 'product_not_found'
         });
     }
 
-    const item = await languageService.remove(id);
+    const item = await productService.remove(id);
 
     if (!item) {
         return reply.code(httpStatus.NOT_FOUND).send({
             success: false,
-            message: 'language_remove_error'
+            message: 'product_remove_error'
         });
     }
 
     return reply.code(httpStatus.OK).send({
         success: true,
-        message: 'language_remove_success',
+        message: 'product_remove_success',
     });
 };
 
 const getAll = async (request, reply) => {
-    const items = await languageService.getAll();
+    const items = await productService.getAll();
 
     return reply.code(httpStatus.OK).send({
         success: true,
@@ -121,12 +113,12 @@ const getAll = async (request, reply) => {
 const getById = async (request, reply) => {
     const { id } = request.params;
 
-    const item = await languageService.getById(id);
+    const item = await productService.getById(id);
 
     if (!item) {
         return reply.code(httpStatus.NOT_FOUND).send({
             success: false,
-            message: 'language_not_found'
+            message: 'product_not_found'
         });
     }
 

@@ -18,6 +18,11 @@ const schema = new mongoose.Schema({
         required: true,
         unique: true,
     },
+    prefix: {
+        type: String,
+        required: true,
+        unique: true,
+    },
     flag: {
         type: String,
         required: true,
@@ -28,7 +33,7 @@ const schema = new mongoose.Schema({
         enum: Object.values(LANGUAGE_DIRECTIONS),
         default: LANGUAGE_DIRECTIONS.LTR,
     },
-    ...baseModel.fields
+    ...baseModel.fields,
 }, { ...baseModel.options });
 
 module.exports = mongoose.model('language', schema);

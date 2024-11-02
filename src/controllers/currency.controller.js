@@ -3,14 +3,14 @@ const currencyService = require('../services/currency.service');
 
 const create = async (request, reply) => {
     const {
-        name,
-        shortName,
+        code,
+        number,
         symbol,
     } = request.body;
 
     const payload = {
-        name,
-        shortName,
+        code,
+        number,
         symbol,
     };
 
@@ -43,14 +43,14 @@ const update = async (request, reply) => {
     }
     
     const {
-        name,
-        shortName,
+        code,
+        number,
         symbol,
     } = request.body;
 
     const payload = {
-        name,
-        shortName,
+        code,
+        number,
         symbol,
     };
 

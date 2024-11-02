@@ -8,11 +8,9 @@ const schema = new mongoose.Schema({
     },
     logo: {
         type: String,
-        required: true,
     },
     background: {
         type: String,
-        required: true,
     },
     address: {
         type: String,
@@ -21,24 +19,28 @@ const schema = new mongoose.Schema({
     defaultLanguage: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'language',
+        required: true,
     },
     languages: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'language',
+            required: true,
         },
     ],
     defaultCurrency: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'currency',
+        required: true,
     },
     currencies: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'currency',
+            required: true,
         },
     ],
-    ...baseModel.fields
+    ...baseModel.fields,
 }, { ...baseModel.options });
 
 module.exports = mongoose.model('tenant', schema);
