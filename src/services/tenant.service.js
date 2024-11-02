@@ -55,10 +55,19 @@ const getById = async (id) => {
         .populate(POPULATES);
 };
 
+const getBySubDomain = async (subDomain) => {
+    return await Tenant
+        .findOne({
+            subDomain,
+            isDeleted: false
+        });
+};
+
 module.exports = {
     create,
     update,
     remove,
     getAll,
     getById,
+    getBySubDomain,
 };

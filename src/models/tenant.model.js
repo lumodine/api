@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const baseModel = require('./base.model');
 
 const schema = new mongoose.Schema({
+    subDomain: {
+        type: String,
+        required: true,
+    },
     name: {
         type: String,
         required: true,
