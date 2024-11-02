@@ -6,6 +6,7 @@ const schema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'tenant',
         required: true,
+        autopopulate: true,
     },
     translations: [
         {
@@ -13,6 +14,7 @@ const schema = new mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'language',
                 required: true,
+                autopopulate: true,
             },
             name: {
                 type: String,
@@ -32,5 +34,7 @@ const schema = new mongoose.Schema({
     },
     ...baseModel.fields,
 }, { ...baseModel.options });
+
+schema.plugin(require('mongoose-autopopulate'));
 
 module.exports = mongoose.model('category', schema);

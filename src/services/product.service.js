@@ -1,18 +1,9 @@
 const Product = require('../models/product.model');
 
-const POPULATES = [
-    'translations.language',
-    'categories',
-    'prices.currency',
-    'prices.unit',
-];
-
 const create = async (payload) => {
     const product = new Product(payload);
 
-    const model = await product.save();
-
-    return model.populate(POPULATES);
+    return await product.save();
 };
 
 const update = async (id, payload) => {
@@ -23,8 +14,7 @@ const update = async (id, payload) => {
             {
                 new: true,
             }
-        )
-        .populate(POPULATES);
+        );
 };
 
 const remove = async (id) => {
@@ -42,8 +32,7 @@ const getAll = async () => {
     return await Product
         .find({
             isDeleted: false
-        })
-        .populate(POPULATES);
+        });
 };
 
 const getById = async (id) => {
@@ -51,8 +40,7 @@ const getById = async (id) => {
         .findOne({
             _id: id,
             isDeleted: false
-        })
-        .populate(POPULATES);
+        });
 };
 
 module.exports = {

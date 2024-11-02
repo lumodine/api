@@ -6,6 +6,7 @@ const schema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'tenant',
         required: true,
+        autopopulate: true,
     },
     translations: [
         {
@@ -13,6 +14,7 @@ const schema = new mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'language',
                 required: true,
+                autopopulate: true,
             },
             name: {
                 type: String,
@@ -31,6 +33,7 @@ const schema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'category',
             required: true,
+            autopopulate: true,
         },
     ],
     prices: [
@@ -39,11 +42,13 @@ const schema = new mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'currency',
                 required: true,
+                autopopulate: true,
             },
             unit: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'unit',
                 required: true,
+                autopopulate: true,
             },
             price: {
                 type: Number,
@@ -57,5 +62,7 @@ const schema = new mongoose.Schema({
     },
     ...baseModel.fields,
 }, { ...baseModel.options });
+
+schema.plugin(require('mongoose-autopopulate'));
 
 module.exports = mongoose.model('product', schema);

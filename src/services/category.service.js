@@ -1,15 +1,9 @@
 const Category = require('../models/category.model');
 
-const POPULATES = [
-    'translations.language',
-];
-
 const create = async (payload) => {
     const category = new Category(payload);
 
-    const model = await category.save();
-
-    return model.populate(POPULATES);
+    return await category.save();
 };
 
 const update = async (id, payload) => {
@@ -20,8 +14,7 @@ const update = async (id, payload) => {
             {
                 new: true,
             }
-        )
-        .populate(POPULATES);
+        );
 };
 
 const remove = async (id) => {
@@ -39,8 +32,7 @@ const getAll = async () => {
     return await Category
         .find({
             isDeleted: false
-        })
-        .populate(POPULATES);
+        });
 };
 
 const getById = async (id) => {
@@ -48,8 +40,7 @@ const getById = async (id) => {
         .findOne({
             _id: id,
             isDeleted: false
-        })
-        .populate(POPULATES);
+        });
 };
 
 module.exports = {

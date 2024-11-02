@@ -1,18 +1,9 @@
 const Tenant = require('../models/tenant.model');
 
-const POPULATES = [
-    'defaultLanguage',
-    'languages',
-    'defaultCurrency',
-    'currencies'
-];
-
 const create = async (payload) => {
     const tenant = new Tenant(payload);
 
-    const model = await tenant.save();
-
-    return model.populate(POPULATES);
+    return await tenant.save();
 };
 
 const update = async (id, payload) => {
@@ -23,8 +14,7 @@ const update = async (id, payload) => {
             {
                 new: true,
             }
-        )
-        .populate(POPULATES);
+        );
 };
 
 const remove = async (id) => {
@@ -42,8 +32,7 @@ const getAll = async () => {
     return await Tenant
         .find({
             isDeleted: false
-        })
-        .populate(POPULATES);
+        });
 };
 
 const getById = async (id) => {
@@ -51,8 +40,7 @@ const getById = async (id) => {
         .findOne({
             _id: id,
             isDeleted: false
-        })
-        .populate(POPULATES);
+        });
 };
 
 const getBySubDomain = async (subDomain) => {

@@ -1,15 +1,9 @@
 const Unit = require('../models/unit.model');
 
-const POPULATES = [
-    'translations.language',
-];
-
 const create = async (payload) => {
     const unit = new Unit(payload);
 
-    const model = unit.save();
-
-    return model.populate(POPULATES);
+    return await unit.save();
 };
 
 const update = async (id, payload) => {
@@ -20,8 +14,7 @@ const update = async (id, payload) => {
             {
                 new: true,
             }
-        )
-        .populate(POPULATES);
+        );
 };
 
 const remove = async (id) => {
@@ -39,8 +32,7 @@ const getAll = async () => {
     return await Unit
         .find({
             isDeleted: false
-        })
-        .populate(POPULATES);
+        });
 };
 
 const getById = async (id) => {
@@ -48,8 +40,7 @@ const getById = async (id) => {
         .findOne({
             _id: id,
             isDeleted: false
-        })
-        .populate(POPULATES);
+        });
 };
 
 module.exports = {
