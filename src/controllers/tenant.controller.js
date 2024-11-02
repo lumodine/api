@@ -3,7 +3,7 @@ const tenantService = require('../services/tenant.service');
 
 const create = async (request, reply) => {
     const {
-        subDomain,
+        alias,
         name,
         logo,
         background,
@@ -15,7 +15,7 @@ const create = async (request, reply) => {
     } = request.body;
 
     const payload = {
-        subDomain,
+        alias,
         name,
         logo,
         background,
@@ -55,7 +55,7 @@ const update = async (request, reply) => {
     }
 
     const {
-        subDomain,
+        alias,
         name,
         logo,
         background,
@@ -67,7 +67,7 @@ const update = async (request, reply) => {
     } = request.body;
 
     const payload = {
-        subDomain,
+        alias,
         name,
         logo,
         background,

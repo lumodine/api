@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const baseModel = require('./base.model');
 
 const schema = new mongoose.Schema({
-    subDomain: {
+    alias: {
         type: String,
         required: true,
     },

@@ -43,10 +43,10 @@ const getById = async (id) => {
         });
 };
 
-const getBySubDomain = async (subDomain) => {
+const getByAlias = async (alias) => {
     return await Tenant
         .findOne({
-            subDomain,
+            alias,
             isDeleted: false
         });
 };
@@ -57,5 +57,5 @@ module.exports = {
     remove,
     getAll,
     getById,
-    getBySubDomain,
+    getByAlias,
 };
