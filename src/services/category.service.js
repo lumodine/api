@@ -1,7 +1,7 @@
 const Category = require('../models/category.model');
 
 const POPULATES = [
-    'products',
+    'translations.language',
 ];
 
 const create = async (payload) => {
@@ -32,8 +32,7 @@ const remove = async (id) => {
                 isDeleted: true,
                 deletedAt: new Date()
             }
-        )
-        .populate(POPULATES);
+        );
 };
 
 const getAll = async () => {

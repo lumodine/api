@@ -5,11 +5,13 @@ const create = async (request, reply) => {
     const {
         tenant,
         translations,
+        image,
     } = request.body;
 
     const payload = {
         tenant,
         translations,
+        image,
     };
 
     const item = await categoryService.create(payload);
@@ -43,11 +45,13 @@ const update = async (request, reply) => {
     const {
         tenant,
         translations,
+        image,
     } = request.body;
 
     const payload = {
         tenant,
         translations,
+        image,
     };
 
     const item = await categoryService.update(id, payload);
