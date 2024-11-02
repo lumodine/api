@@ -40,4 +40,11 @@ module.exports.registerAllRoutes = (fastify) => {
             prefix: '/units',
         },
     );
+
+    fastify.register(
+        require('./user.route'),
+        {
+            prefix: '/users',
+        },
+    );
 };
