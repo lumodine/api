@@ -5,6 +5,8 @@ const requiredEnvs = [
     'NODE_ENV',
     'MONGODB_URL',
     'PORT',
+    'CRYPTO_SALT_ROUNDS',
+    'JWT_SECRET_KEY',
 ];
 
 for (const requiredEnv of requiredEnvs) {

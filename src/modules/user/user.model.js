@@ -1,6 +1,6 @@
 const { mongoose } = require('@lumodine/mongodb');
 const baseModel = require('../common/base.model');
-const { USER_ROLES } = require('./user.constant');
+const { USER_ROLES } = require('../common/user.constant');
 const userHook = require('./user.hook');
 const userMethod = require('./user.method');
 
@@ -21,6 +21,7 @@ const schema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
+        //select: false, //TODO: 
     },
     role: {
         type: String,

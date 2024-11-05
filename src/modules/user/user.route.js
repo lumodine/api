@@ -1,15 +1,61 @@
 const userController = require('./user.controller');
+const { PERMISSIONS } = require('../common/user.constant');
 
 module.exports = (fastify, opts, done) => {
-    fastify.post('/', userController.create);
+    fastify.post(
+        '/',
+        {
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.CREATE_USER),
+            ],
+        },
+        userController.create
+    );
 
-    fastify.get('/', userController.getAll);
+    fastify.get(
+        '/',
+        {
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.GET_ALL_USERS),
+            ],
+        },
+        userController.getAll
+    );
 
-    fastify.put('/:id', userController.update);
+    fastify.put(
+        '/:id',
+        {
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.UPDATE_USER),
+            ],
+        },
+        userController.update
+    );
 
-    fastify.delete('/:id', userController.remove);
+    fastify.delete(
+        '/:id',
+        {
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.DELETE_USER),
+            ],
+        },
+        userController.remove
+    );
 
-    fastify.get('/:id', userController.getById);
+    fastify.get(
+        '/:id',
+        {
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.GET_USER),
+            ],
+        },
+        userController.getById
+    );
 
     done();
 };

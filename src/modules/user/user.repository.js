@@ -43,10 +43,18 @@ const getById = async (id) => {
         });
 };
 
+const getByEmail = async (email) => {
+    return await User
+        .findOne({
+            email,
+        });
+};
+
 module.exports = {
     create,
     update,
     remove,
     getAll,
     getById,
+    getByEmail,
 };

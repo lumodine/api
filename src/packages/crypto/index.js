@@ -9,5 +9,5 @@ const compare = async (text, hash) => await bcrypt.compare(text, hash);
 
 module.exports = {
     create,
-    compare
+    compare,
 };

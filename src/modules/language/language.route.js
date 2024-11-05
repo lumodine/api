@@ -1,15 +1,61 @@
 const languageController = require('./language.controller');
+const { PERMISSIONS } = require('../common/user.constant');
 
 module.exports = (fastify, opts, done) => {
-    fastify.post('/', languageController.create);
+    fastify.post(
+        '/',
+        {
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.CREATE_LANGUAGE),
+            ],
+        },
+        languageController.create
+    );
 
-    fastify.get('/', languageController.getAll);
+    fastify.get(
+        '/',
+        {
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.GET_ALL_LANGUAGES),
+            ],
+        },
+        languageController.getAll
+    );
 
-    fastify.put('/:id', languageController.update);
+    fastify.put(
+        '/:id',
+        {
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.UPDATE_LANGUAGE),
+            ],
+        },
+        languageController.update
+    );
 
-    fastify.delete('/:id', languageController.remove);
+    fastify.delete(
+        '/:id',
+        {
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.DELETE_LANGUAGE),
+            ],
+        },
+        languageController.remove
+    );
 
-    fastify.get('/:id', languageController.getById);
+    fastify.get(
+        '/:id',
+        {
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.GET_LANGUAGE),
+            ],
+        },
+        languageController.getById
+    );
 
     done();
 };

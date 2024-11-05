@@ -10,7 +10,9 @@ const cors = require('@fastify/cors');
 const { connect: mongodbConnect } = require('@lumodine/mongodb');
 
 fastify.register(cors);
+fastify.register(require('./plugins/auth.plugin'));
 
+fastify.register(require('./modules/auth'));
 fastify.register(require('./modules/user'));
 fastify.register(require('./modules/language'));
 fastify.register(require('./modules/currency'));
