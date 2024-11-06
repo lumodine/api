@@ -119,7 +119,7 @@ const deleteTenantSchema = {
             type: 'object',
             properties: {
                 id: {
-                    type: 'number',
+                    type: 'string',
                 },
             },
             required: [
