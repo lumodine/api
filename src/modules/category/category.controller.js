@@ -1,5 +1,4 @@
-const httpStatus = require('http-status').default;
-const categoryRepository = require('./category.repository');
+const categoryService = require('./category.service');
 
 const create = async (request, reply) => {
     const {
@@ -8,39 +7,17 @@ const create = async (request, reply) => {
         image,
     } = request.body;
 
-    const payload = {
+    const data = await categoryService.create(
         tenant,
         translations,
-        image,
-    };
+        image
+    );
 
-    const item = await categoryRepository.create(payload);
-
-    if (!item) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'category_create_error'
-        });
-    }
-
-    return reply.code(httpStatus.OK).send({
-        success: true,
-        message: 'category_create_success',
-        data: item,
-    });
+    return reply.send(data);
 };
 
 const update = async (request, reply) => {
     const { id } = request.params;
-
-    const findedItem = await categoryRepository.getById(id);
-
-    if (!findedItem) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'category_not_found'
-        });
-    }
 
     const {
         tenant,
@@ -48,87 +25,36 @@ const update = async (request, reply) => {
         image,
     } = request.body;
 
-    const payload = {
+    const data = await categoryService.update(
+        id,
         tenant,
         translations,
-        image,
-    };
+        image
+    );
 
-    const item = await categoryRepository.update(id, payload);
-
-    if (!item) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'category_update_error'
-        });
-    }
-
-    return reply.code(httpStatus.OK).send({
-        success: true,
-        message: 'category_update_success',
-        data: item,
-    });
+    return reply.send(data);
 };
 
 const remove = async (request, reply) => {
     const { id } = request.params;
 
-    const findedItem = await categoryRepository.getById(id);
+    const data = await categoryService.remove(id);
 
-    if (!findedItem) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'category_not_found'
-        });
-    }
-
-    const item = await categoryRepository.remove(id);
-
-    if (!item) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'category_remove_error'
-        });
-    }
-
-    return reply.code(httpStatus.OK).send({
-        success: true,
-        message: 'category_remove_success',
-    });
+    return reply.send(data);
 };
 
 const getAll = async (request, reply) => {
-    const items = await categoryRepository.getAll();
+    const data = await categoryService.getAll();
 
-    if (items.length == 0) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'categories_not_found',
-        });
-    }
-
-    return reply.code(httpStatus.OK).send({
-        success: true,
-        data: items,
-    });
+    return reply.send(data);
 };
 
 const getById = async (request, reply) => {
     const { id } = request.params;
 
-    const item = await categoryRepository.getById(id);
+    const data = await categoryService.getById(id);
 
-    if (!item) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'category_not_found'
-        });
-    }
-
-    return reply.code(httpStatus.OK).send({
-        success: true,
-        data: item,
-    });
+    return reply.send(data);
 };
 
 module.exports = {
