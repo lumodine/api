@@ -19,27 +19,18 @@ const update = async (id, payload) => {
 
 const remove = async (id) => {
     return await Category
-        .findByIdAndUpdate(
-            id,
-            {
-                isDeleted: true,
-                deletedAt: new Date()
-            }
-        );
+        .findByIdAndDelete(id);
 };
 
 const getAll = async () => {
     return await Category
-        .find({
-            isDeleted: false
-        });
+        .find();
 };
 
 const getById = async (id) => {
     return await Category
         .findOne({
             _id: id,
-            isDeleted: false
         });
 };
 

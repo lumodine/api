@@ -19,27 +19,18 @@ const update = async (id, payload) => {
 
 const remove = async (id) => {
     return await Unit
-        .findByIdAndUpdate(
-            id,
-            {
-                isDeleted: true,
-                deletedAt: new Date()
-            }
-        );
+        .findByIdAndDelete(id);
 };
 
 const getAll = async () => {
     return await Unit
-        .find({
-            isDeleted: false
-        });
+        .find();
 };
 
 const getById = async (id) => {
     return await Unit
         .findOne({
             _id: id,
-            isDeleted: false
         });
 };
 
