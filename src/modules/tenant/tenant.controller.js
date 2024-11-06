@@ -124,6 +124,13 @@ const remove = async (request, reply) => {
 const getAll = async (request, reply) => {
     const items = await tenantRepository.getAll();
 
+    if (items.length == 0) {
+        return reply.code(httpStatus.NOT_FOUND).send({
+            success: false,
+            message: 'tenants_not_found',
+        });
+    }
+
     return reply.code(httpStatus.OK).send({
         success: true,
         data: items,
