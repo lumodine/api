@@ -1,6 +1,6 @@
 const httpStatus = require('http-status').default;
 const fp = require('fastify-plugin');
-const { USER_PERMISSIONS } = require('../modules/common/user.constant');
+const { USER_PERMISSIONS } = require('../modules/user/user.constant');
 const userRepository = require('../modules/user/user.repository');
 
 async function authPlugin(fastify, options) {

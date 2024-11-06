@@ -1,5 +1,5 @@
 const authController = require('./auth.controller');
-const { PERMISSIONS } = require('../common/user.constant');
+const { PERMISSIONS } = require('../user/user.constant');
 const {
     getMeSchema,
     getMePermissionsSchema,

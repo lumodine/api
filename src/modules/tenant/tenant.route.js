@@ -1,5 +1,5 @@
 const tenantController = require('./tenant.controller');
-const { PERMISSIONS } = require('../common/user.constant');
+const { PERMISSIONS } = require('../user/user.constant');
 const {
     createTenantSchema,
     updateTenantSchema,

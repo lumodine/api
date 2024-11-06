@@ -1,5 +1,5 @@
 const languageController = require('./language.controller');
-const { PERMISSIONS } = require('../common/user.constant');
+const { PERMISSIONS } = require('../user/user.constant');
 const {
     createLanguageSchema,
     updateLanguageSchema,

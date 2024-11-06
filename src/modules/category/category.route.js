@@ -1,5 +1,5 @@
 const categoryController = require('./category.controller');
-const { PERMISSIONS } = require('../common/user.constant');
+const { PERMISSIONS } = require('../user/user.constant');
 const {
     createCategorySchema,
     updateCategorySchema,

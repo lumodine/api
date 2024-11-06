@@ -1,4 +1,4 @@
-const { USER_ROLES } = require("../common/user.constant");
+const { USER_ROLES } = require("../user/user.constant");
 
 const createUserSchema = {
     schema: {

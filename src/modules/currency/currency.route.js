@@ -1,5 +1,5 @@
 const currencyController = require('./currency.controller');
-const { PERMISSIONS } = require('../common/user.constant');
+const { PERMISSIONS } = require('../user/user.constant');
 const {
     createCurrencySchema,
     updateCurrencySchema,

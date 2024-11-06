@@ -1,4 +1,4 @@
-const { USER_PERMISSIONS } = require('../common/user.constant');
+const { USER_PERMISSIONS } = require('../user/user.constant');
 const User = require('../user/user.model');
 
 const getProfile = async (userId) => {
