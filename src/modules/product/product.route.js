@@ -1,10 +1,18 @@
 const productController = require('./product.controller');
 const { PERMISSIONS } = require('../common/user.constant');
+const {
+    createProductSchema,
+    updateProductSchema,
+    deleteProductSchema,
+    getByIdProductSchema,
+    getAllProductsSchema,
+} = require('./product.schema');
 
 module.exports = (fastify, opts, done) => {
     fastify.post(
         '/',
         {
+            ...createProductSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.CREATE_PRODUCT),
@@ -16,6 +24,7 @@ module.exports = (fastify, opts, done) => {
     fastify.get(
         '/',
         {
+            ...getAllProductsSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.GET_ALL_PRODUCTS),
@@ -27,6 +36,7 @@ module.exports = (fastify, opts, done) => {
     fastify.put(
         '/:id',
         {
+            ...updateProductSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.UPDATE_PRODUCT),
@@ -38,6 +48,7 @@ module.exports = (fastify, opts, done) => {
     fastify.delete(
         '/:id',
         {
+            ...deleteProductSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.DELETE_PRODUCT),
@@ -49,6 +60,7 @@ module.exports = (fastify, opts, done) => {
     fastify.get(
         '/:id',
         {
+            ...getByIdProductSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.GET_PRODUCT),

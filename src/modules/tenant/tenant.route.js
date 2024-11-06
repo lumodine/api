@@ -1,10 +1,18 @@
 const tenantController = require('./tenant.controller');
 const { PERMISSIONS } = require('../common/user.constant');
+const {
+    createTenantSchema,
+    updateTenantSchema,
+    deleteTenantSchema,
+    getByIdTenantSchema,
+    getAllTenantsSchema,
+} = require('./tenant.schema');
 
 module.exports = (fastify, opts, done) => {
     fastify.post(
         '/',
         {
+            ...createTenantSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.CREATE_TENANT),
@@ -16,6 +24,7 @@ module.exports = (fastify, opts, done) => {
     fastify.get(
         '/',
         {
+            ...getAllTenantsSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.GET_ALL_TENANTS),
@@ -27,6 +36,7 @@ module.exports = (fastify, opts, done) => {
     fastify.put(
         '/:id',
         {
+            ...updateTenantSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.UPDATE_TENANT),
@@ -38,6 +48,7 @@ module.exports = (fastify, opts, done) => {
     fastify.delete(
         '/:id',
         {
+            ...deleteTenantSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.DELETE_TENANT),
@@ -49,6 +60,7 @@ module.exports = (fastify, opts, done) => {
     fastify.get(
         '/:id',
         {
+            ...getByIdTenantSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.GET_TENANT),

@@ -1,10 +1,18 @@
 const unitController = require('./unit.controller');
 const { PERMISSIONS } = require('../common/user.constant');
+const {
+    createUnitSchema,
+    updateUnitSchema,
+    deleteUnitSchema,
+    getByIdUnitSchema,
+    getAllUnitsSchema,
+} = require('./unit.schema');
 
 module.exports = (fastify, opts, done) => {
     fastify.post(
         '/',
         {
+            ...createUnitSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.CREATE_UNIT),
@@ -16,6 +24,7 @@ module.exports = (fastify, opts, done) => {
     fastify.get(
         '/',
         {
+            ...getAllUnitsSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.GET_ALL_UNITS),
@@ -27,6 +36,7 @@ module.exports = (fastify, opts, done) => {
     fastify.put(
         '/:id',
         {
+            ...updateUnitSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.UPDATE_UNIT),
@@ -38,6 +48,7 @@ module.exports = (fastify, opts, done) => {
     fastify.delete(
         '/:id',
         {
+            ...deleteUnitSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.DELETE_UNIT),
@@ -49,6 +60,7 @@ module.exports = (fastify, opts, done) => {
     fastify.get(
         '/:id',
         {
+            ...getByIdUnitSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.GET_UNIT),

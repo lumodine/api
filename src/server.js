@@ -7,7 +7,19 @@ const fastifyOptions = {
 
 const fastify = require('fastify')(fastifyOptions);
 const cors = require('@fastify/cors');
+const Ajv = require('ajv').default;
 const { connect: mongodbConnect } = require('@lumodine/mongodb');
+
+const ajv = new Ajv({
+  removeAdditional: true,
+  useDefaults: true,
+  coerceTypes: 'array',
+  allErrors: true,
+});
+
+fastify.setValidatorCompiler(({ schema, method, url, httpPart }) => {
+  return ajv.compile(schema);
+});
 
 fastify.register(cors);
 fastify.register(require('./plugins/auth.plugin'));

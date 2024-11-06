@@ -29,14 +29,6 @@ const schema = new mongoose.Schema({
         enum: Object.values(USER_ROLES),
         default: USER_ROLES.TENANT_ADMIN,
     },
-    tenants: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'tenant',
-            required: true,
-            autopopulate: true,
-        }
-    ],
     ...baseModel.fields,
 }, { ...baseModel.options });
 

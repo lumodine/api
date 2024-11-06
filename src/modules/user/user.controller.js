@@ -7,7 +7,6 @@ const create = async (request, reply) => {
         name,
         surname,
         password,
-        tenants,
     } = request.body;
 
     const payload = {
@@ -15,7 +14,6 @@ const create = async (request, reply) => {
         name,
         surname,
         password,
-        tenants,
     };
 
     const item = await userRepository.create(payload);
@@ -51,7 +49,6 @@ const update = async (request, reply) => {
         name,
         surname,
         password,
-        tenants,
     } = request.body;
 
     const payload = {
@@ -59,7 +56,6 @@ const update = async (request, reply) => {
         name,
         surname,
         password,
-        tenants,
     };
 
     const item = await userRepository.update(id, payload);

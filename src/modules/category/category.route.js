@@ -1,10 +1,18 @@
 const categoryController = require('./category.controller');
 const { PERMISSIONS } = require('../common/user.constant');
+const {
+    createCategorySchema,
+    updateCategorySchema,
+    deleteCategorySchema,
+    getByIdCategorySchema,
+    getAllCategoriesSchema,
+} = require('./category.schema');
 
 module.exports = (fastify, opts, done) => {
     fastify.post(
         '/',
         {
+            ...createCategorySchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.CREATE_CATEGORY),
@@ -16,6 +24,7 @@ module.exports = (fastify, opts, done) => {
     fastify.get(
         '/',
         {
+            ...getAllCategoriesSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.GET_ALL_CATEGORIES),
@@ -27,6 +36,7 @@ module.exports = (fastify, opts, done) => {
     fastify.put(
         '/:id',
         {
+            ...updateCategorySchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.UPDATE_CATEGORY),
@@ -38,6 +48,7 @@ module.exports = (fastify, opts, done) => {
     fastify.delete(
         '/:id',
         {
+            ...deleteCategorySchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.DELETE_CATEGORY),
@@ -49,6 +60,7 @@ module.exports = (fastify, opts, done) => {
     fastify.get(
         '/:id',
         {
+            ...getByIdCategorySchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.GET_CATEGORY),

@@ -1,10 +1,18 @@
 const languageController = require('./language.controller');
 const { PERMISSIONS } = require('../common/user.constant');
+const {
+    createLanguageSchema,
+    updateLanguageSchema,
+    deleteLanguageSchema,
+    getByIdLanguageSchema,
+    getAllLanguagesSchema,
+} = require('./language.schema');
 
 module.exports = (fastify, opts, done) => {
     fastify.post(
         '/',
         {
+            ...createLanguageSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.CREATE_LANGUAGE),
@@ -16,6 +24,7 @@ module.exports = (fastify, opts, done) => {
     fastify.get(
         '/',
         {
+            ...getAllLanguagesSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.GET_ALL_LANGUAGES),
@@ -27,6 +36,7 @@ module.exports = (fastify, opts, done) => {
     fastify.put(
         '/:id',
         {
+            ...updateLanguageSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.UPDATE_LANGUAGE),
@@ -38,6 +48,7 @@ module.exports = (fastify, opts, done) => {
     fastify.delete(
         '/:id',
         {
+            ...deleteLanguageSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.DELETE_LANGUAGE),
@@ -49,6 +60,7 @@ module.exports = (fastify, opts, done) => {
     fastify.get(
         '/:id',
         {
+            ...getByIdLanguageSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.GET_LANGUAGE),
