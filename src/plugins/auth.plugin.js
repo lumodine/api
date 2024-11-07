@@ -1,7 +1,7 @@
 const httpStatus = require('http-status').default;
 const fp = require('fastify-plugin');
 const { USER_PERMISSIONS } = require('../modules/user/user.constant');
-const userRepository = require('../modules/user/user.repository');
+const userService = require('../modules/user/user.service');
 
 async function authPlugin(fastify, options) {
   fastify.register(require('@fastify/jwt'), {
@@ -20,16 +20,16 @@ async function authPlugin(fastify, options) {
   });
 
   fastify.decorate('authorize', (requiredPermission) => async (request, reply) => {
-    const user = await userRepository.getById(request.user.sub);
+    const data = await userService.getById(request.user.sub);
 
-    if (!user) {
+    if (!data.success) {
       return reply.code(httpStatus.FORBIDDEN).send({
         success: false,
         message: 'forbidden'
       });
     }
 
-    const userRole = user.role;
+    const userRole = data.data.role;
 
     const hasPermission = USER_PERMISSIONS[userRole].includes(requiredPermission);
 

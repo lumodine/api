@@ -1,5 +1,4 @@
-const httpStatus = require('http-status').default;
-const userRepository = require('./user.repository');
+const userService = require('./user.service');
 
 const create = async (request, reply) => {
     const {
@@ -7,132 +6,60 @@ const create = async (request, reply) => {
         name,
         surname,
         password,
+        role,
     } = request.body;
+    
+    const data = await userService.create(
+        tenant,
+        translations
+    );
 
-    const payload = {
-        email,
-        name,
-        surname,
-        password,
-    };
-
-    const item = await userRepository.create(payload);
-
-    if (!item) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'user_create_error'
-        });
-    }
-
-    return reply.code(httpStatus.OK).send({
-        success: true,
-        message: 'user_create_success',
-        data: item,
-    });
+    return reply.send(data);
 };
 
 const update = async (request, reply) => {
     const { id } = request.params;
-
-    const findedItem = await userRepository.getById(id);
-
-    if (!findedItem) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'user_not_found'
-        });
-    }
     
     const {
         email,
         name,
         surname,
         password,
+        role,
     } = request.body;
-
-    const payload = {
+    
+    const data = await userService.update(
+        id,
         email,
         name,
         surname,
         password,
-    };
+        role
+    );
 
-    const item = await userRepository.update(id, payload);
-
-    if (!item) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'user_update_error'
-        });
-    }
-
-    return reply.code(httpStatus.OK).send({
-        success: true,
-        message: 'user_update_success',
-        data: item,
-    });
+    return reply.send(data);
 };
 
 const remove = async (request, reply) => {
     const { id } = request.params;
 
-    const findedItem = await userRepository.getById(id);
+    const data = await userService.remove(id);
 
-    if (!findedItem) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'user_not_found'
-        });
-    }
-
-    const item = await userRepository.remove(id);
-
-    if (!item) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'user_remove_error'
-        });
-    }
-
-    return reply.code(httpStatus.OK).send({
-        success: true,
-        message: 'user_remove_success',
-    });
+    return reply.send(data);
 };
 
 const getAll = async (request, reply) => {
-    const items = await userRepository.getAll();
+    const data = await userService.getAll();
 
-    if (items.length == 0) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'users_not_found',
-        });
-    }
-
-    return reply.code(httpStatus.OK).send({
-        success: true,
-        data: items,
-    });
+    return reply.send(data);
 };
 
 const getById = async (request, reply) => {
     const { id } = request.params;
 
-    const item = await userRepository.getById(id);
+    const data = await userService.getById(id);
 
-    if (!item) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'user_not_found'
-        });
-    }
-
-    return reply.code(httpStatus.OK).send({
-        success: true,
-        data: item,
-    });
+    return reply.send(data);
 };
 
 module.exports = {
