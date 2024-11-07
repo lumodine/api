@@ -1,5 +1,4 @@
-const httpStatus = require('http-status').default;
-const tenantRepository = require('./tenant.repository');
+const tenantService = require('./tenant.service');
 
 const create = async (request, reply) => {
     const {
@@ -13,8 +12,8 @@ const create = async (request, reply) => {
         defaultCurrency,
         currencies,
     } = request.body;
-
-    const payload = {
+    
+    const data = await tenantService.create(
         alias,
         name,
         logo,
@@ -23,36 +22,14 @@ const create = async (request, reply) => {
         defaultLanguage,
         languages,
         defaultCurrency,
-        currencies,
-    };
+        currencies
+    );
 
-    const item = await tenantRepository.create(payload);
-
-    if (!item) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'tenant_create_error'
-        });
-    }
-
-    return reply.code(httpStatus.OK).send({
-        success: true,
-        message: 'tenant_create_success',
-        data: item,
-    });
+    return reply.send(data);
 };
 
 const update = async (request, reply) => {
     const { id } = request.params;
-
-    const findedItem = await tenantRepository.getById(id);
-
-    if (!findedItem) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'tenant_not_found'
-        });
-    }
 
     const {
         alias,
@@ -65,8 +42,9 @@ const update = async (request, reply) => {
         defaultCurrency,
         currencies,
     } = request.body;
-
-    const payload = {
+    
+    const data = await tenantService.update(
+        id,
         alias,
         name,
         logo,
@@ -75,84 +53,32 @@ const update = async (request, reply) => {
         defaultLanguage,
         languages,
         defaultCurrency,
-        currencies,
-    };
+        currencies
+    );
 
-    const item = await tenantRepository.update(id, payload);
-
-    if (!item) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'tenant_update_error'
-        });
-    }
-
-    return reply.code(httpStatus.OK).send({
-        success: true,
-        message: 'tenant_update_success',
-        data: item,
-    });
+    return reply.send(data);
 };
 
 const remove = async (request, reply) => {
     const { id } = request.params;
 
-    const findedItem = await tenantRepository.getById(id);
+    const data = await tenantService.remove(id);
 
-    if (!findedItem) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'tenant_not_found'
-        });
-    }
-
-    const item = await tenantRepository.remove(id);
-
-    if (!item) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'tenant_remove_error'
-        });
-    }
-
-    return reply.code(httpStatus.OK).send({
-        success: true,
-        message: 'tenant_remove_success',
-    });
+    return reply.send(data);
 };
 
 const getAll = async (request, reply) => {
-    const items = await tenantRepository.getAll();
+    const data = await tenantService.getAll();
 
-    if (items.length == 0) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'tenants_not_found',
-        });
-    }
-
-    return reply.code(httpStatus.OK).send({
-        success: true,
-        data: items,
-    });
+    return reply.send(data);
 };
 
 const getById = async (request, reply) => {
     const { id } = request.params;
 
-    const item = await tenantRepository.getById(id);
+    const data = await tenantService.getById(id);
 
-    if (!item) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'tenant_not_found'
-        });
-    }
-
-    return reply.code(httpStatus.OK).send({
-        success: true,
-        data: item,
-    });
+    return reply.send(data);
 };
 
 module.exports = {
