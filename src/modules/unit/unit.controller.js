@@ -1,130 +1,56 @@
-const httpStatus = require('http-status').default;
-const unitRepository = require('./unit.repository');
+const unitService = require('./unit.service');
 
 const create = async (request, reply) => {
     const {
         tenant,
         translations,
     } = request.body;
-
-    const payload = {
+    
+    const data = await unitService.create(
         tenant,
-        translations,
-    };
+        translations
+    );
 
-    const item = await unitRepository.create(payload);
-
-    if (!item) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'unit_create_error'
-        });
-    }
-
-    return reply.code(httpStatus.OK).send({
-        success: true,
-        message: 'unit_create_success',
-        data: item,
-    });
+    return reply.send(data);
 };
 
 const update = async (request, reply) => {
     const { id } = request.params;
-
-    const findedItem = await unitRepository.getById(id);
-
-    if (!findedItem) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'unit_not_found'
-        });
-    }
     
     const {
         tenant,
         translations,
     } = request.body;
-
-    const payload = {
+    
+    const data = await unitService.update(
+        id,
         tenant,
-        translations,
-    };
+        translations
+    );
 
-    const item = await unitRepository.update(id, payload);
-
-    if (!item) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'unit_update_error'
-        });
-    }
-
-    return reply.code(httpStatus.OK).send({
-        success: true,
-        message: 'unit_update_success',
-        data: item,
-    });
+    return reply.send(data);
 };
 
 const remove = async (request, reply) => {
     const { id } = request.params;
 
-    const findedItem = await unitRepository.getById(id);
+    const data = await unitService.remove(id);
 
-    if (!findedItem) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'unit_not_found'
-        });
-    }
-
-    const item = await unitRepository.remove(id);
-
-    if (!item) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'unit_remove_error'
-        });
-    }
-
-    return reply.code(httpStatus.OK).send({
-        success: true,
-        message: 'unit_remove_success',
-    });
+    return reply.send(data);
 };
 
 const getAll = async (request, reply) => {
-    const items = await unitRepository.getAll();
+    const data = await unitService.getAll();
 
-    if (items.length == 0) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'units_not_found',
-        });
-    }
-
-    return reply.code(httpStatus.OK).send({
-        success: true,
-        data: items,
-    });
+    return reply.send(data);
 };
 
 const getById = async (request, reply) => {
     const { id } = request.params;
 
-    const item = await unitRepository.getById(id);
+    const data = await unitService.getById(id);
 
-    if (!item) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'unit_not_found'
-        });
-    }
-
-    return reply.code(httpStatus.OK).send({
-        success: true,
-        data: item,
-    });
+    return reply.send(data);
 };
 
 module.exports = {
