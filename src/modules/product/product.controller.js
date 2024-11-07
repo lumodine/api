@@ -1,5 +1,4 @@
-const httpStatus = require('http-status').default;
-const productRepository = require('./product.repository');
+const productService = require('./product.service');
 
 const create = async (request, reply) => {
     const {
@@ -9,42 +8,20 @@ const create = async (request, reply) => {
         categories,
         prices,
     } = request.body;
-
-    const payload = {
+    
+    const data = await productService.create(
         tenant,
         translations,
         image,
         categories,
         prices,
-    };
+    );
 
-    const item = await productRepository.create(payload);
-
-    if (!item) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'product_create_error'
-        });
-    }
-
-    return reply.code(httpStatus.OK).send({
-        success: true,
-        message: 'product_create_success',
-        data: item,
-    });
+    return reply.send(data);
 };
 
 const update = async (request, reply) => {
     const { id } = request.params;
-
-    const findedItem = await productRepository.getById(id);
-
-    if (!findedItem) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'product_not_found'
-        });
-    }
 
     const {
         tenant,
@@ -53,90 +30,39 @@ const update = async (request, reply) => {
         categories,
         prices,
     } = request.body;
-
-    const payload = {
+    
+    const data = await productService.update(
+        id,
         tenant,
         translations,
         image,
         categories,
-        prices,
-    };
+        prices
+    );
 
-    const item = await productRepository.update(id, payload);
-
-    if (!item) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'product_update_error'
-        });
-    }
-
-    return reply.code(httpStatus.OK).send({
-        success: true,
-        message: 'product_update_success',
-        data: item,
-    });
+    return reply.send(data);
 };
 
 const remove = async (request, reply) => {
     const { id } = request.params;
 
-    const findedItem = await productRepository.getById(id);
+    const data = await productService.remove(id);
 
-    if (!findedItem) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'product_not_found'
-        });
-    }
-
-    const item = await productRepository.remove(id);
-
-    if (!item) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'product_remove_error'
-        });
-    }
-
-    return reply.code(httpStatus.OK).send({
-        success: true,
-        message: 'product_remove_success',
-    });
+    return reply.send(data);
 };
 
 const getAll = async (request, reply) => {
-    const items = await productRepository.getAll();
+    const data = await productService.getAll();
 
-    if (items.length == 0) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'products_not_found',
-        });
-    }
-
-    return reply.code(httpStatus.OK).send({
-        success: true,
-        data: items,
-    });
+    return reply.send(data);
 };
 
 const getById = async (request, reply) => {
     const { id } = request.params;
 
-    const item = await productRepository.getById(id);
+    const data = await productService.getById(id);
 
-    if (!item) {
-        return reply.code(httpStatus.NOT_FOUND).send({
-            success: false,
-            message: 'product_not_found'
-        });
-    }
-
-    return reply.code(httpStatus.OK).send({
-        success: true,
-        data: item,
-    });
+    return reply.send(data);
 };
 
 module.exports = {
