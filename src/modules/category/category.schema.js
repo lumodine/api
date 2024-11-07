@@ -6,6 +6,12 @@ const createCategorySchema = {
                 tenant: {
                     type: 'string',
                 },
+                products: {
+                    type: 'array',
+                    items: {
+                        type: 'string',
+                    },
+                },
                 translations: {
                     type: 'array',
                     items: {
@@ -57,6 +63,12 @@ const updateCategorySchema = {
             properties: {
                 tenant: {
                     type: 'string',
+                },
+                products: {
+                    type: 'array',
+                    items: {
+                        type: 'string',
+                    },
                 },
                 translations: {
                     type: 'array',

@@ -3,12 +3,14 @@ const categoryService = require('./category.service');
 const create = async (request, reply) => {
     const {
         tenant,
+        products,
         translations,
         image,
     } = request.body;
 
     const data = await categoryService.create(
         tenant,
+        products,
         translations,
         image
     );
@@ -21,6 +23,7 @@ const update = async (request, reply) => {
 
     const {
         tenant,
+        products,
         translations,
         image,
     } = request.body;
@@ -28,6 +31,7 @@ const update = async (request, reply) => {
     const data = await categoryService.update(
         id,
         tenant,
+        products,
         translations,
         image
     );

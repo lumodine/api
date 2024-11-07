@@ -1,4 +1,5 @@
 const Product = require('./product.model');
+const Category = require('../category/category.model');
 
 const create = async (tenant, translations, image, categories, prices) => {
     // TODO: check tenant
@@ -22,6 +23,21 @@ const create = async (tenant, translations, image, categories, prices) => {
         };
     }
 
+    if (categories && categories.length > 0) {
+        await Category.updateMany(
+            {
+                _id:{
+                    $in: categories,
+                },
+            },
+            {
+                $addToSet: {
+                    products: product._id,
+                },
+            }
+        );
+    }
+
     return {
         success: true,
         message: 'product_create_success',
@@ -30,18 +46,48 @@ const create = async (tenant, translations, image, categories, prices) => {
 };
 
 const update = async (id, tenant, translations, image, categories, prices) => {
-    const hasProduct = await Product
+    const product = await Product
         .findOne(
             {
                 _id: id,
             }
         );
 
-    if (!hasProduct) {
+    if (!product) {
         return {
             success: false,
             message: 'product_not_found'
         };
+    }
+
+    if (product.categories && product.categories.length > 0) {
+        await Category.updateMany(
+            {
+                _id: {
+                    $in: product.categories,
+                },
+            },
+            {
+                $pull: {
+                    products: product._id,
+                },
+            }
+        );
+    }
+
+    if (categories & categories.length > 0) {
+        await Category.updateMany(
+            {
+                _id: {
+                    $in: categories,
+                },
+            },
+            {
+                $addToSet: {
+                    products: product._id,
+                },
+            }
+        );
     }
 
     // TODO: check tenant
@@ -80,18 +126,33 @@ const update = async (id, tenant, translations, image, categories, prices) => {
 };
 
 const remove = async (id) => {
-    const hasProduct = await Product
+    const product = await Product
         .findOne(
             {
                 _id: id,
             }
         );
 
-    if (!hasProduct) {
+    if (!product) {
         return {
             success: false,
             message: 'product_not_found'
         };
+    }
+
+    if (product.categories && product.categories.length > 0) {
+        await Category.updateMany(
+            {
+                _id: {
+                    $in: product.categories,
+                },
+            },
+            {
+                $pull: {
+                    products: product._id,
+                },
+            }
+        );
     }
 
     const isRemoved = await Product

@@ -1,10 +1,13 @@
 const Category = require('./category.model');
+const Product = require('../product/product.model');
 
-const create = async (tenant, translations, image) => {
+const create = async (tenant, products, translations, image) => {
     // TODO: check tenant
+    // TODO: check products
     // TODO: check translations
     const payload = {
         tenant,
+        products,
         translations,
         image,
     };
@@ -18,6 +21,21 @@ const create = async (tenant, translations, image) => {
         };
     }
 
+    if (products && products.length > 0) {
+        await Product.updateMany(
+            {
+                _id: {
+                    $in: products,
+                },
+            },
+            {
+                $addToSet: {
+                    categories: category._id,
+                },
+            }
+        );
+    }
+
     return {
         success: true,
         message: 'category_create_success',
@@ -25,25 +43,57 @@ const create = async (tenant, translations, image) => {
     };
 };
 
-const update = async (id, tenant, translations, image) => {
-    const hasCategory = await Category
+const update = async (id, tenant, products, translations, image) => {
+    const category = await Category
         .findOne(
             {
                 _id: id,
             }
         );
 
-    if (!hasCategory) {
+    if (!category) {
         return {
             success: false,
             message: 'category_not_found'
         };
     }
 
+    if (category.products && category.products.length > 0) {
+        await Product.updateMany(
+            {
+                _id: {
+                    $in: category.products,
+                },
+            },
+            {
+                $pull: {
+                    categories: category._id,
+                },
+            }
+        );
+    }
+
+    if (products && products.length > 0) {
+        await Product.updateMany(
+            {
+                _id: {
+                    $in: products,
+                },
+            },
+            {
+                $addToSet: {
+                    categories: category._id,
+                },
+            }
+        );
+    }
+
     // TODO: check tenant
+    // TODO: check products
     // TODO: check translations
     const payload = {
         tenant,
+        products,
         translations,
         image,
     };
@@ -72,18 +122,33 @@ const update = async (id, tenant, translations, image) => {
 };
 
 const remove = async (id) => {
-    const hasCategory = await Category
+    const category = await Category
         .findOne(
             {
                 _id: id,
             }
         );
 
-    if (!hasCategory) {
+    if (!category) {
         return {
             success: false,
             message: 'category_not_found'
         };
+    }
+
+    if (category.products && category.products.length > 0) {
+        await Product.updateMany(
+            {
+                _id: {
+                    $in: category.products,
+                },
+            },
+            {
+                $pull: {
+                    categories: category._id,
+                },
+            }
+        );
     }
 
     const isRemoved = await Category

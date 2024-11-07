@@ -8,6 +8,13 @@ const schema = new mongoose.Schema({
         required: true,
         autopopulate: true,
     },
+    products: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'product',
+            autopopulate: true,
+        },
+    ],
     translations: [
         {
             language: {
