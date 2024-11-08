@@ -1,11 +1,24 @@
 const Tenant = require('./tenant.model');
+const User = require('../user/user.model');
 
-const create = async (alias, name, logo, background, address, defaultLanguage, languages, defaultCurrency, currencies) => {
+const create = async (
+    users,
+    alias,
+    name,
+    logo,
+    background,
+    address,
+    defaultLanguage,
+    languages,
+    defaultCurrency,
+    currencies
+) => {
     // TODO: check defaultLanguage
     // TODO: check languages
     // TODO: check defaultCurrency
     // TODO: check currencies
     const payload = {
+        users,
         alias,
         name,
         logo,
@@ -17,6 +30,7 @@ const create = async (alias, name, logo, background, address, defaultLanguage, l
         currencies,
     };
 
+    // TODO: check alias
     const tenant = await (new Tenant(payload)).save();
 
     if (!tenant) {
@@ -26,6 +40,21 @@ const create = async (alias, name, logo, background, address, defaultLanguage, l
         };
     }
 
+    if (users && users.length > 0) {
+        await User.updateMany(
+            {
+                _id:{
+                    $in: users,
+                },
+            },
+            {
+                $addToSet: {
+                    tenants: tenant._id,
+                },
+            }
+        );
+    }
+
     return {
         success: true,
         message: 'tenant_create_success',
@@ -33,19 +62,63 @@ const create = async (alias, name, logo, background, address, defaultLanguage, l
     };
 };
 
-const update = async (id, alias, name, logo, background, address, defaultLanguage, languages, defaultCurrency, currencies) => {
-    const hasTenant = await Tenant
+const update = async (
+    id,
+    users,
+    alias,
+    name,
+    logo,
+    background,
+    address,
+    defaultLanguage,
+    languages,
+    defaultCurrency,
+    currencies
+) => {
+    const tenant = await Tenant
         .findOne(
             {
                 _id: id,
             }
         );
 
-    if (!hasTenant) {
+    if (!tenant) {
         return {
             success: false,
             message: 'tenant_not_found'
         };
+    }
+
+    // TODO: check alias
+    
+    if (tenant.users && tenant.users.length > 0) {
+        await User.updateMany(
+            {
+                _id: {
+                    $in: tenant.users,
+                },
+            },
+            {
+                $pull: {
+                    tenants: tenant._id,
+                },
+            }
+        );
+    }
+
+    if (users && users.length > 0) {
+        await User.updateMany(
+            {
+                _id: {
+                    $in: users,
+                },
+            },
+            {
+                $addToSet: {
+                    tenants: tenant._id,
+                },
+            }
+        );
     }
 
     // TODO: check defaultLanguage
@@ -53,6 +126,7 @@ const update = async (id, alias, name, logo, background, address, defaultLanguag
     // TODO: check defaultCurrency
     // TODO: check currencies
     const payload = {
+        users,
         alias,
         name,
         logo,
@@ -88,18 +162,33 @@ const update = async (id, alias, name, logo, background, address, defaultLanguag
 };
 
 const remove = async (id) => {
-    const hasTenant = await Tenant
+    const tenant = await Tenant
         .findOne(
             {
                 _id: id,
             }
         );
 
-    if (!hasTenant) {
+    if (!tenant) {
         return {
             success: false,
             message: 'tenant_not_found'
         };
+    }
+
+    if (tenant.users && tenant.users.length > 0) {
+        await User.updateMany(
+            {
+                _id: {
+                    $in: tenant.users,
+                },
+            },
+            {
+                $pull: {
+                    tenants: tenant._id,
+                },
+            }
+        );
     }
 
     const isRemoved = await Tenant

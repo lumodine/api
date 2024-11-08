@@ -2,6 +2,14 @@ const { mongoose } = require('@lumodine/mongodb');
 const baseModel = require('../common/base.model');
 
 const schema = new mongoose.Schema({
+    users: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'user',
+            required: true,
+            autopopulate: true,
+        },
+    ],
     alias: {
         type: String,
         required: true,

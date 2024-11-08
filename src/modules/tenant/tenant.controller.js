@@ -14,6 +14,9 @@ const create = async (request, reply) => {
     } = request.body;
     
     const data = await tenantService.create(
+        users = [
+            request.user.sub,
+        ],
         alias,
         name,
         logo,
@@ -45,6 +48,9 @@ const update = async (request, reply) => {
     
     const data = await tenantService.update(
         id,
+        users = [
+            request.user.sub,
+        ],
         alias,
         name,
         logo,

@@ -1,6 +1,24 @@
 const User = require('./user.model');
+const Tenant = require('../tenant/tenant.model');
 
 const create = async (email, name, surname, password, role) => {
+    const hasUser = await User
+        .findOne(
+            {
+                email,
+            },
+            [
+                'email',
+            ]
+        );
+
+    if (hasUser) {
+        return {
+            success: false,
+            message: 'user_already_exists',
+        };
+    }
+
     const payload = {
         email,
         name,
@@ -39,7 +57,8 @@ const update = async (id, email, name, surname, password, role) => {
             message: 'user_not_found'
         };
     }
-
+    
+    // TODO: check email
     const payload = {
         email,
         name,
@@ -72,18 +91,33 @@ const update = async (id, email, name, surname, password, role) => {
 };
 
 const remove = async (id) => {
-    const hasUser = await User
+    const user = await User
         .findOne(
             {
                 _id: id,
             }
         );
 
-    if (!hasUser) {
+    if (!user) {
         return {
             success: false,
             message: 'user_not_found'
         };
+    }
+
+    if (user.tenants && user.tenants.length > 0) {
+        await Tenant.updateMany(
+            {
+                _id: {
+                    $in: user.tenants,
+                },
+            },
+            {
+                $pull: {
+                    users: user._id,
+                },
+            }
+        );
     }
 
     const isRemoved = await User

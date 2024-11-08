@@ -5,6 +5,14 @@ const userHook = require('./user.hook');
 const userMethod = require('./user.method');
 
 const schema = new mongoose.Schema({
+    tenants: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'tenant',
+            required: true,
+            autopopulate: true,
+        },
+    ],
     email: {
         type: String,
         required: true,
@@ -21,7 +29,7 @@ const schema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-        //select: false, //TODO: 
+        select: false,
     },
     role: {
         type: String,

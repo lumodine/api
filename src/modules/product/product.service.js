@@ -75,7 +75,7 @@ const update = async (id, tenant, translations, image, categories, prices) => {
         );
     }
 
-    if (categories & categories.length > 0) {
+    if (categories && categories.length > 0) {
         await Category.updateMany(
             {
                 _id: {
