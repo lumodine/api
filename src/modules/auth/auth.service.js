@@ -3,16 +3,9 @@ const User = require('../user/user.model');
 
 const getProfile = async (userId) => {
     const user = await User
-        .findOne(
-            {
-                _id: userId,
-            },
-            [
-                'email',
-                'name',
-                'surname',
-            ]
-        );
+        .findOne({
+            _id: userId,
+        });
 
     if (!user) {
         return {
