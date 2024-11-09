@@ -25,6 +25,4 @@ const schema = new mongoose.Schema({
     ...baseModel.fields,
 }, { ...baseModel.options });
 
-schema.plugin(require('mongoose-autopopulate'));
-
 module.exports = mongoose.model('unit', schema);

@@ -33,7 +33,6 @@ const schema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'category',
             required: true,
-            autopopulate: true,
         },
     ],
     prices: [
@@ -62,7 +61,5 @@ const schema = new mongoose.Schema({
     },
     ...baseModel.fields,
 }, { ...baseModel.options });
-
-schema.plugin(require('mongoose-autopopulate'));
 
 module.exports = mongoose.model('product', schema);

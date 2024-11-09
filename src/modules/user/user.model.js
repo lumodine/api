@@ -10,7 +10,6 @@ const schema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'tenant',
             required: true,
-            autopopulate: true,
         },
     ],
     email: {
@@ -44,7 +43,5 @@ schema.pre('save', userHook.save);
 schema.pre('findOneAndUpdate', userHook.findOneAndUpdate);
 
 schema.methods.comparePassword = userMethod.comparePassword;
-
-schema.plugin(require('mongoose-autopopulate'));
 
 module.exports = mongoose.model('user', schema);

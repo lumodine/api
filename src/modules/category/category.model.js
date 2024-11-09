@@ -12,7 +12,6 @@ const schema = new mongoose.Schema({
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'product',
-            autopopulate: true,
         },
     ],
     translations: [
@@ -41,7 +40,5 @@ const schema = new mongoose.Schema({
     },
     ...baseModel.fields,
 }, { ...baseModel.options });
-
-schema.plugin(require('mongoose-autopopulate'));
 
 module.exports = mongoose.model('category', schema);

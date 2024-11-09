@@ -7,7 +7,6 @@ const schema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'user',
             required: true,
-            autopopulate: true,
         },
     ],
     alias: {
@@ -39,7 +38,6 @@ const schema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'language',
             required: true,
-            autopopulate: true,
         },
     ],
     defaultCurrency: {
@@ -53,12 +51,9 @@ const schema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'currency',
             required: true,
-            autopopulate: true,
         },
     ],
     ...baseModel.fields,
 }, { ...baseModel.options });
-
-schema.plugin(require('mongoose-autopopulate'));
 
 module.exports = mongoose.model('tenant', schema);
