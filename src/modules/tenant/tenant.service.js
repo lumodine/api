@@ -207,9 +207,13 @@ const remove = async (id) => {
     };
 };
 
-const getAll = async () => {
+const getAll = async (user) => {
     const items = await Tenant
-        .find({});
+        .find({
+            users: {
+                $in: user,
+            },
+        });
 
     if (items.length == 0) {
         return {
@@ -224,11 +228,14 @@ const getAll = async () => {
     };
 };
 
-const getById = async (id) => {
+const getById = async (id, user) => {
     const tenant = await Tenant
         .findOne(
             {
                 _id: id,
+                users: {
+                    $in: user,
+                },
             }
         );
 

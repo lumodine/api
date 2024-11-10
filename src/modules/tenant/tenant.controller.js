@@ -74,15 +74,19 @@ const remove = async (request, reply) => {
 };
 
 const getAll = async (request, reply) => {
-    const data = await tenantService.getAll();
+    const user = request.user.sub;
+
+    const data = await tenantService.getAll(user);
 
     return reply.send(data);
 };
 
 const getById = async (request, reply) => {
+    const user = request.user.sub;
+
     const { id } = request.params;
 
-    const data = await tenantService.getById(id);
+    const data = await tenantService.getById(id, user);
 
     return reply.send(data);
 };
