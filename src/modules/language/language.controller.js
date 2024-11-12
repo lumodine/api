@@ -1,4 +1,4 @@
-const languageService = require('./language.service');
+const Language = require('./language.model');
 
 const create = async (request, reply) => {
     const {
@@ -9,22 +9,50 @@ const create = async (request, reply) => {
         flag,
         direction,
     } = request.body;
-    
-    const data = await languageService.create(
+
+    const language = await Language.findOne({
+        $or: [
+            {
+                prefix,
+            },
+            {
+                culture,
+            },
+        ],
+    });
+
+    if (language) {
+        return reply.send({
+            success: false,
+            message: 'language_already_exists',
+        });
+    }
+
+    const payload = {
         name,
         shortName,
         culture,
         prefix,
         flag,
         direction,
-    );
+    };
 
-    return reply.send(data);
+    const createdLanguage = await (new Language(payload)).save();
+    if (!createdLanguage) {
+        return reply.send({
+            success: false,
+            message: 'language_create_error',
+        });
+    }
+
+    return reply.send({
+        success: true,
+        message: 'language_create_success',
+    });
 };
 
 const update = async (request, reply) => {
-    const { id } = request.params;
-
+    const { languageId } = request.params;
     const {
         name,
         shortName,
@@ -33,40 +61,125 @@ const update = async (request, reply) => {
         flag,
         direction,
     } = request.body;
-    
-    const data = await languageService.update(
-        id,
+
+    const language = await Language.findById(languageId);
+
+    if (!language) {
+        return reply.send({
+            success: false,
+            message: 'language_not_found',
+        });
+    }
+
+    const hasLanguage = await Language.findOne({
+        _id: {
+            $ne: languageId,
+        },
+        $or: [
+            {
+                prefix,
+            },
+            {
+                culture,
+            },
+        ],
+    });
+
+    if (hasLanguage) {
+        return reply.send({
+            success: false,
+            message: 'language_already_exists',
+        });
+    }
+
+    const payload = {
         name,
         shortName,
         culture,
         prefix,
         flag,
-        direction
+        direction,
+    };
+
+    const updatedLanguage = await Language.findByIdAndUpdate(
+        languageId,
+        payload,
+        {
+            new: true,
+        }
     );
 
-    return reply.send(data);
+    if (!updatedLanguage) {
+        return reply.send({
+            success: false,
+            message: 'language_update_error',
+        });
+    }
+
+    return reply.send({
+        success: true,
+        data: updatedLanguage,
+    });
 };
 
 const remove = async (request, reply) => {
-    const { id } = request.params;
+    const { languageId } = request.params;
 
-    const data = await languageService.remove(id);
+    const language = await Language.findById(languageId);
 
-    return reply.send(data);
+    if (!language) {
+        return reply.send({
+            success: false,
+            message: 'language_not_found',
+        });
+    }
+
+    const isRemoved = await Language.findByIdAndDelete(language._id);
+    if (!isRemoved) {
+        return reply.send({
+            success: false,
+            message: 'language_remove_error',
+        });
+    }
+
+    return reply.send({
+        success: true,
+        message: 'language_remove_success',
+    });
 };
 
 const getAll = async (request, reply) => {
-    const data = await languageService.getAll();
+    const languages = await Language.find({});
 
-    return reply.send(data);
+    if (languages.length === 0) {
+        return reply.send({
+            success: false,
+            message: 'languages_not_found',
+        });
+    }
+
+    return reply.send({
+        success: true,
+        data: languages,
+    });
 };
 
 const getById = async (request, reply) => {
-    const { id } = request.params;
+    const { languageId } = request.params;
 
-    const data = await languageService.getById(id);
+    const language = await Language.findById(languageId);
 
-    return reply.send(data);
+    if (!language) {
+        return reply.send({
+            success: false,
+            message: 'language_not_found',
+        });
+    }
+
+    return reply.send({
+        success: true,
+        data: language,
+    });
 };
 
 module.exports = {

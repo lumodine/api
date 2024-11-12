@@ -1,23 +1,25 @@
 const createCategorySchema = {
     schema: {
+        params: {
+            type: 'object',
+            properties: {
+                tenantId: {
+                    type: 'string',
+                },
+            },
+            required: [
+                'tenantId',
+            ],
+        },
         body: {
             type: 'object',
             properties: {
-                tenant: {
-                    type: 'string',
-                },
-                products: {
-                    type: 'array',
-                    items: {
-                        type: 'string',
-                    },
-                },
                 translations: {
                     type: 'array',
                     items: {
                         type: 'object',
                         properties: {
-                            language: {
+                            languageId: {
                                 type: 'string',
                             },
                             name: {
@@ -28,7 +30,7 @@ const createCategorySchema = {
                             },
                         },
                         required: [
-                            'language',
+                            'languageId',
                             'name',
                         ],
                     },
@@ -38,7 +40,7 @@ const createCategorySchema = {
                 },
             },
             required: [
-                'tenant',
+                'tenantId',
                 'translations',
             ],
         },
@@ -50,32 +52,27 @@ const updateCategorySchema = {
         params: {
             type: 'object',
             properties: {
-                id: {
+                tenantId: {
+                    type: 'string',
+                },
+                categoryId: {
                     type: 'string',
                 },
             },
             required: [
-                'id',
+                'tenantId',
+                'categoryId',
             ],
         },
         body: {
             type: 'object',
             properties: {
-                tenant: {
-                    type: 'string',
-                },
-                products: {
-                    type: 'array',
-                    items: {
-                        type: 'string',
-                    },
-                },
                 translations: {
                     type: 'array',
                     items: {
                         type: 'object',
                         properties: {
-                            language: {
+                            languageId: {
                                 type: 'string',
                             },
                             name: {
@@ -86,7 +83,7 @@ const updateCategorySchema = {
                             },
                         },
                         required: [
-                            'language',
+                            'languageId',
                             'name',
                         ],
                     },
@@ -96,7 +93,7 @@ const updateCategorySchema = {
                 },
             },
             required: [
-                'tenant',
+                'tenantId',
                 'translations',
             ],
         },
@@ -108,12 +105,16 @@ const deleteCategorySchema = {
         params: {
             type: 'object',
             properties: {
-                id: {
+                tenantId: {
+                    type: 'string',
+                },
+                categoryId: {
                     type: 'string',
                 },
             },
             required: [
-                'id',
+                'tenantId',
+                'categoryId',
             ],
         },
     },
@@ -124,18 +125,78 @@ const getByIdCategorySchema = {
         params: {
             type: 'object',
             properties: {
-                id: {
+                tenantId: {
+                    type: 'string',
+                },
+                categoryId: {
                     type: 'string',
                 },
             },
             required: [
-                'id',
+                'tenantId',
+                'categoryId',
             ],
         },
     },
 };
 
-const getAllCategoriesSchema = {};
+const getAllCategoriesSchema = {
+    schema: {
+        params: {
+            type: 'object',
+            properties: {
+                tenantId: {
+                    type: 'string',
+                },
+            },
+            required: [
+                'tenantId',
+            ],
+        },
+    },
+};
+
+const updateCategorySortSchema = {
+    schema: {
+        params: {
+            type: 'object',
+            properties: {
+                tenantId: {
+                    type: 'string',
+                },
+            },
+            required: [
+                'tenantId',
+            ],
+        },
+        body: {
+            type: 'object',
+            properties: {
+                items: {
+                    type: 'array',
+                    items: {
+                        type: 'object',
+                        properties: {
+                            categoryId: {
+                                type: 'string',
+                            },
+                            sort: {
+                                type: 'number',
+                            },
+                        },
+                        required: [
+                            'categoryId',
+                            'sort',
+                        ],
+                    },
+                },
+            },
+            required: [
+                'items',
+            ],
+        },
+    },
+};
 
 module.exports = {
     createCategorySchema,
@@ -143,4 +204,5 @@ module.exports = {
     deleteCategorySchema,
     getByIdCategorySchema,
     getAllCategoriesSchema,
+    updateCategorySortSchema,
 };

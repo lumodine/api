@@ -5,13 +5,6 @@ const userHook = require('./user.hook');
 const userMethod = require('./user.method');
 
 const schema = new mongoose.Schema({
-    tenants: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'tenant',
-            required: true,
-        },
-    ],
     email: {
         type: String,
         required: true,

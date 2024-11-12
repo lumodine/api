@@ -27,12 +27,12 @@ const updateCurrencySchema = {
         params: {
             type: 'object',
             properties: {
-                id: {
+                currencyId: {
                     type: 'string',
                 },
             },
             required: [
-                'id',
+                'currencyId',
             ],
         },
         body: {
@@ -62,12 +62,12 @@ const deleteCurrencySchema = {
         params: {
             type: 'object',
             properties: {
-                id: {
+                currencyId: {
                     type: 'string',
                 },
             },
             required: [
-                'id',
+                'currencyId',
             ],
         },
     },
@@ -78,12 +78,12 @@ const getByIdCurrencySchema = {
         params: {
             type: 'object',
             properties: {
-                id: {
+                currencyId: {
                     type: 'string',
                 },
             },
             required: [
-                'id',
+                'currencyId',
             ],
         },
     },

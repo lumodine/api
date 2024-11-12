@@ -23,18 +23,12 @@ module.exports = (fastify, opts, done) => {
 
     fastify.get(
         '/',
-        {
-            ...getAllLanguagesSchema,
-            preHandler: [
-                fastify.authenticate,
-                fastify.authorize(PERMISSIONS.GET_ALL_LANGUAGES),
-            ],
-        },
+        getAllLanguagesSchema,
         languageController.getAll
     );
 
     fastify.put(
-        '/:id',
+        '/:languageId',
         {
             ...updateLanguageSchema,
             preHandler: [
@@ -46,7 +40,7 @@ module.exports = (fastify, opts, done) => {
     );
 
     fastify.delete(
-        '/:id',
+        '/:languageId',
         {
             ...deleteLanguageSchema,
             preHandler: [
@@ -58,14 +52,8 @@ module.exports = (fastify, opts, done) => {
     );
 
     fastify.get(
-        '/:id',
-        {
-            ...getByIdLanguageSchema,
-            preHandler: [
-                fastify.authenticate,
-                fastify.authorize(PERMISSIONS.GET_LANGUAGE),
-            ],
-        },
+        '/:languageId',
+        getByIdLanguageSchema,
         languageController.getById
     );
 

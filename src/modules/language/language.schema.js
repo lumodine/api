@@ -42,12 +42,12 @@ const updateLanguageSchema = {
         params: {
             type: 'object',
             properties: {
-                id: {
+                languageId: {
                     type: 'string',
                 },
             },
             required: [
-                'id',
+                'languageId',
             ],
         },
         body: {
@@ -90,12 +90,12 @@ const deleteLanguageSchema = {
         params: {
             type: 'object',
             properties: {
-                id: {
+                languageId: {
                     type: 'string',
                 },
             },
             required: [
-                'id',
+                'languageId',
             ],
         },
     },
@@ -106,12 +106,12 @@ const getByIdLanguageSchema = {
         params: {
             type: 'object',
             properties: {
-                id: {
+                languageId: {
                     type: 'string',
                 },
             },
             required: [
-                'id',
+                'languageId',
             ],
         },
     },

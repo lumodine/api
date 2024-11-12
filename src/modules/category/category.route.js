@@ -6,6 +6,7 @@ const {
     deleteCategorySchema,
     getByIdCategorySchema,
     getAllCategoriesSchema,
+    updateCategorySortSchema,
 } = require('./category.schema');
 
 module.exports = (fastify, opts, done) => {
@@ -16,6 +17,7 @@ module.exports = (fastify, opts, done) => {
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.CREATE_CATEGORY),
+                fastify.checkTenantIdByParams,
             ],
         },
         categoryController.create,
@@ -26,47 +28,60 @@ module.exports = (fastify, opts, done) => {
         {
             ...getAllCategoriesSchema,
             preHandler: [
-                fastify.authenticate,
-                fastify.authorize(PERMISSIONS.GET_ALL_CATEGORIES),
+                fastify.checkTenantIdByParams,
             ],
         },
         categoryController.getAll,
     );
 
     fastify.put(
-        '/:id',
+        '/:categoryId',
         {
             ...updateCategorySchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.UPDATE_CATEGORY),
+                fastify.checkTenantIdByParams,
             ],
         },
         categoryController.update,
     );
 
     fastify.delete(
-        '/:id',
+        '/:categoryId',
         {
             ...deleteCategorySchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.DELETE_CATEGORY),
+                fastify.checkTenantIdByParams,
             ],
         },
         categoryController.remove,
     );
 
     fastify.get(
-        '/:id',
+        '/:categoryId',
         {
             ...getByIdCategorySchema,
             preHandler: [
-                fastify.authenticate,
-                fastify.authorize(PERMISSIONS.GET_CATEGORY),
+                fastify.checkTenantIdByParams,
             ],
         },
         categoryController.getById,
+    );
+
+    fastify.put(
+        '/sort',
+        {
+            ...updateCategorySortSchema,
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.UPDATE_CATEGORY),
+                fastify.checkTenantIdByParams,
+            ],
+        },
+        categoryController.updateSort,
     );
 
     done();

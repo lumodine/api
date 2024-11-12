@@ -1,4 +1,4 @@
-const currencyService = require('./currency.service');
+const Currency = require('./currency.model');
 
 const create = async (request, reply) => {
     const {
@@ -6,55 +6,154 @@ const create = async (request, reply) => {
         number,
         symbol,
     } = request.body;
-    
-    const data = await currencyService.create(
+
+    const currency = await Currency.findOne({
+        code,
+    });
+
+    if (currency) {
+        return reply.send({
+            success: false,
+            message: 'currency_already_exists',
+        });
+    }
+
+    const payload = {
         code,
         number,
-        symbol
-    );
+        symbol,
+    };
 
-    return reply.send(data);
+    const createdCurrency = await (new Currency(payload)).save();
+    if (!createdCurrency) {
+        return reply.send({
+            success: false,
+            message: 'currency_create_error',
+        });
+    }
+
+    return reply.send({
+        success: true,
+        message: 'currency_create_success',
+    });
 };
 
 const update = async (request, reply) => {
-    const { id } = request.params;
-    
+    const { currencyId } = request.params;
     const {
         code,
         number,
         symbol,
     } = request.body;
-    
-    const data = await currencyService.update(
-        id,
+
+    const currency = await Currency.findById(currencyId);
+
+    if (!currency) {
+        return reply.send({
+            success: false,
+            message: 'currency_not_found',
+        });
+    }
+
+    const hasCurrency = await Currency.findOne({
+        _id: {
+            $ne: currencyId,
+        },
+        code,
+    });
+
+    if (hasCurrency) {
+        return reply.send({
+            success: false,
+            message: 'currency_already_exists',
+        });
+    }
+
+    const payload = {
         code,
         number,
-        symbol
+        symbol,
+    };
+
+    const updatedCurrency = await Currency.findByIdAndUpdate(
+        currencyId,
+        payload,
+        {
+            new: true,
+        }
     );
 
-    return reply.send(data);
+    if (!updatedCurrency) {
+        return reply.send({
+            success: false,
+            message: 'currency_update_error',
+        });
+    }
+
+    return reply.send({
+        success: true,
+        data: updatedCurrency,
+    });
 };
 
 const remove = async (request, reply) => {
-    const { id } = request.params;
+    const { currencyId } = request.params;
 
-    const data = await currencyService.remove(id);
+    const currency = await Currency.findById(currencyId);
 
-    return reply.send(data);
+    if (!currency) {
+        return reply.send({
+            success: false,
+            message: 'currency_not_found',
+        });
+    }
+
+    const isRemoved = await Currency.findByIdAndDelete(currency._id);
+    if (!isRemoved) {
+        return reply.send({
+            success: false,
+            message: 'currency_remove_error',
+        });
+    }
+
+    return reply.send({
+        success: true,
+        message: 'currency_remove_success',
+    });
 };
 
 const getAll = async (request, reply) => {
-    const data = await currencyService.getAll();
+    const currencies = await Currency.find({});
 
-    return reply.send(data);
+    if (currencies.length === 0) {
+        return reply.send({
+            success: false,
+            message: 'currencies_not_found',
+        });
+    }
+
+    return reply.send({
+        success: true,
+        data: currencies,
+    });
 };
 
 const getById = async (request, reply) => {
-    const { id } = request.params;
+    const { currencyId } = request.params;
 
-    const data = await currencyService.getById(id);
+    const currency = await Currency.findById(currencyId);
 
-    return reply.send(data);
+    if (!currency) {
+        return reply.send({
+            success: false,
+            message: 'currency_not_found',
+        });
+    }
+
+    return reply.send({
+        success: true,
+        data: currency,
+    });
 };
 
 module.exports = {

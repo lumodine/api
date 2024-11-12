@@ -6,12 +6,10 @@ const schema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        unique: true,
     },
     shortName: {
         type: String,
         required: true,
-        unique: true,
     },
     culture: {
         type: String,

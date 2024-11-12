@@ -5,33 +5,11 @@ const {
     getMePermissionsSchema,
     loginSchema,
     registerSchema,
+    forgotPasswordSchema,
+    resetPasswordSchema,
 } = require('./auth.schema');
 
 module.exports = (fastify, opts, done) => {
-    fastify.get(
-        '/me',
-        {
-            ...getMeSchema,
-            preHandler: [
-                fastify.authenticate,
-                fastify.authorize(PERMISSIONS.GET_ME),
-            ],
-        },
-        authController.me,
-    );
-
-    fastify.get(
-        '/me/permissions',
-        {
-            ...getMePermissionsSchema,
-            preHandler: [
-                fastify.authenticate,
-                fastify.authorize(PERMISSIONS.GET_ME_PERMISSIONS),
-            ],
-        },
-        authController.mePermissions,
-    );
-
     fastify.post(
         '/login',
         loginSchema,
@@ -44,7 +22,41 @@ module.exports = (fastify, opts, done) => {
         authController.register
     );
 
-    // TODO: add reset password endpoints
+    fastify.post(
+        '/forgot-password',
+        forgotPasswordSchema,
+        authController.forgotPassword
+    );
+
+    fastify.post(
+        '/reset-password',
+        resetPasswordSchema,
+        authController.resetPassword
+    );
+
+    fastify.get(
+        '/me',
+        {
+            ...getMeSchema,
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.GET_ME),
+            ],
+        },
+        authController.getMe,
+    );
+
+    fastify.get(
+        '/me/permissions',
+        {
+            ...getMePermissionsSchema,
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.GET_ME_PERMISSIONS),
+            ],
+        },
+        authController.getMePermissions,
+    );
 
     done();
 };

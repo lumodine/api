@@ -23,18 +23,12 @@ module.exports = (fastify, opts, done) => {
 
     fastify.get(
         '/',
-        {
-            ...getAllCurrenciesSchema,
-            preHandler: [
-                fastify.authenticate,
-                fastify.authorize(PERMISSIONS.GET_ALL_CURRENCIES),
-            ],
-        },
+        getAllCurrenciesSchema,
         currencyController.getAll
     );
 
     fastify.put(
-        '/:id',
+        '/:currencyId',
         {
             ...updateCurrencySchema,
             preHandler: [
@@ -46,7 +40,7 @@ module.exports = (fastify, opts, done) => {
     );
 
     fastify.delete(
-        '/:id',
+        '/:currencyId',
         {
             ...deleteCurrencySchema,
             preHandler: [
@@ -58,14 +52,8 @@ module.exports = (fastify, opts, done) => {
     );
 
     fastify.get(
-        '/:id',
-        {
-            ...getByIdCurrencySchema,
-            preHandler: [
-                fastify.authenticate,
-                fastify.authorize(PERMISSIONS.GET_CURRENCY),
-            ],
-        },
+        '/:currencyId',
+        getByIdCurrencySchema,
         currencyController.getById
     );
 

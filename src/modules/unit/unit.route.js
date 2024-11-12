@@ -23,18 +23,12 @@ module.exports = (fastify, opts, done) => {
 
     fastify.get(
         '/',
-        {
-            ...getAllUnitsSchema,
-            preHandler: [
-                fastify.authenticate,
-                fastify.authorize(PERMISSIONS.GET_ALL_UNITS),
-            ],
-        },
+        getAllUnitsSchema,
         unitController.getAll
     );
 
     fastify.put(
-        '/:id',
+        '/:unitId',
         {
             ...updateUnitSchema,
             preHandler: [
@@ -46,7 +40,7 @@ module.exports = (fastify, opts, done) => {
     );
 
     fastify.delete(
-        '/:id',
+        '/:unitId',
         {
             ...deleteUnitSchema,
             preHandler: [
@@ -58,14 +52,8 @@ module.exports = (fastify, opts, done) => {
     );
 
     fastify.get(
-        '/:id',
-        {
-            ...getByIdUnitSchema,
-            preHandler: [
-                fastify.authenticate,
-                fastify.authorize(PERMISSIONS.GET_UNIT),
-            ],
-        },
+        '/:unitId',
+        getByIdUnitSchema,
         unitController.getById
     );
 

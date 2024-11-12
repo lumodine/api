@@ -16,6 +16,7 @@ module.exports = (fastify, opts, done) => {
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.CREATE_PRODUCT),
+                fastify.checkTenantIdByParams,
             ],
         },
         productController.create
@@ -26,8 +27,7 @@ module.exports = (fastify, opts, done) => {
         {
             ...getAllProductsSchema,
             preHandler: [
-                fastify.authenticate,
-                fastify.authorize(PERMISSIONS.GET_ALL_PRODUCTS),
+                fastify.checkTenantIdByParams,
             ],
         },
         productController.getAll
@@ -40,6 +40,7 @@ module.exports = (fastify, opts, done) => {
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.UPDATE_PRODUCT),
+                fastify.checkTenantIdByParams,
             ],
         },
         productController.update
@@ -52,6 +53,7 @@ module.exports = (fastify, opts, done) => {
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.DELETE_PRODUCT),
+                fastify.checkTenantIdByParams,
             ],
         },
         productController.remove
@@ -62,8 +64,7 @@ module.exports = (fastify, opts, done) => {
         {
             ...getByIdProductSchema,
             preHandler: [
-                fastify.authenticate,
-                fastify.authorize(PERMISSIONS.GET_PRODUCT),
+                fastify.checkTenantIdByParams,
             ],
         },
         productController.getById

@@ -1,7 +1,6 @@
-const httpStatus = require('http-status').default;
 const fp = require('fastify-plugin');
 const { USER_PERMISSIONS } = require('../modules/user/user.constant');
-const userService = require('../modules/user/user.service');
+const User = require('../modules/user/user.model');
 
 async function authPlugin(fastify, options) {
   fastify.register(require('@fastify/jwt'), {
@@ -12,7 +11,7 @@ async function authPlugin(fastify, options) {
     try {
       await request.jwtVerify();
     } catch (err) {
-      return reply.code(httpStatus.UNAUTHORIZED).send({
+      return reply.code(401).send({
         success: false,
         message: 'unauthorized'
       });
@@ -20,21 +19,24 @@ async function authPlugin(fastify, options) {
   });
 
   fastify.decorate('authorize', (requiredPermission) => async (request, reply) => {
-    const data = await userService.getById(request.user.sub);
+    const userId = request.user.sub;
 
-    if (!data.success) {
-      return reply.code(httpStatus.FORBIDDEN).send({
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return reply.code(403).send({
         success: false,
         message: 'forbidden'
       });
     }
 
-    const userRole = data.data.role;
+    //TODO: check tenant role
+    const userRole = user.role;
 
     const hasPermission = USER_PERMISSIONS[userRole].includes(requiredPermission);
 
     if (!hasPermission) {
-      return reply.code(httpStatus.FORBIDDEN).send({
+      return reply.code(403).send({
         success: false,
         message: 'forbidden'
       });

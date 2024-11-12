@@ -34,7 +34,7 @@ module.exports = (fastify, opts, done) => {
     );
 
     fastify.put(
-        '/:id',
+        '/:tenantId',
         {
             ...updateTenantSchema,
             preHandler: [
@@ -46,7 +46,7 @@ module.exports = (fastify, opts, done) => {
     );
 
     fastify.delete(
-        '/:id',
+        '/:tenantId',
         {
             ...deleteTenantSchema,
             preHandler: [
@@ -58,7 +58,7 @@ module.exports = (fastify, opts, done) => {
     );
 
     fastify.get(
-        '/:id',
+        '/:tenantId',
         {
             ...getByIdTenantSchema,
             preHandler: [
@@ -67,6 +67,20 @@ module.exports = (fastify, opts, done) => {
             ],
         },
         tenantController.getById
+    );
+
+    fastify.register(
+        require('../category'),
+        {
+            prefix: '/:tenantId',
+        },
+    );
+
+    fastify.register(
+        require('../product'),
+        {
+            prefix: '/:tenantId',
+        },
     );
 
     done();

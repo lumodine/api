@@ -1,64 +1,198 @@
-const categoryService = require('./category.service');
+const { mongoose } = require('@lumodine/mongodb');
+const Category = require('./category.model');
 
 const create = async (request, reply) => {
+    const { tenantId } = request.params;
+
     const {
-        tenant,
-        products,
         translations,
         image,
     } = request.body;
 
-    const data = await categoryService.create(
-        tenant,
-        products,
-        translations,
-        image
-    );
+    //TODO: check translations.languageId
 
-    return reply.send(data);
+    const payload = {
+        tenantId,
+        translations,
+        image,
+    };
+
+    const createdCategory = await (new Category(payload)).save();
+
+    if (!createdCategory) {
+        return reply.send({
+            success: false,
+            message: 'category_create_error',
+        });
+    }
+
+    return reply.send({
+        success: true,
+        message: 'category_create_success',
+    });
 };
 
 const update = async (request, reply) => {
-    const { id } = request.params;
+    const {
+        tenantId,
+        categoryId,
+    } = request.params;
 
     const {
-        tenant,
-        products,
         translations,
         image,
     } = request.body;
 
-    const data = await categoryService.update(
-        id,
-        tenant,
-        products,
+    const category = await Category
+        .findById(categoryId);
+
+    if (!category) {
+        return reply.send({
+            success: false,
+            message: 'category_not_found',
+        });
+    }
+
+    //TODO: check translations.languageId
+
+    const payload = {
+        tenantId,
         translations,
-        image
+        image,
+    };
+
+    const updatedCategory = await Category.findByIdAndUpdate(
+        categoryId,
+        payload,
+        {
+            new: true,
+        }
     );
 
-    return reply.send(data);
+    if (!updatedCategory) {
+        return reply.send({
+            success: false,
+            message: 'category_update_error',
+        });
+    }
+
+    return reply.send({
+        success: true,
+        data: updatedCategory,
+    });
 };
 
 const remove = async (request, reply) => {
-    const { id } = request.params;
+    const {
+        tenantId,
+        categoryId,
+    } = request.params;
 
-    const data = await categoryService.remove(id);
+    const category = await Category
+        .findOne({
+            tenantId,
+            _id: categoryId,
+        });
 
-    return reply.send(data);
+    if (!category) {
+        return reply.send({
+            success: false,
+            message: 'category_not_found',
+        });
+    }
+
+    const isRemoved = await Category.findByIdAndDelete(category._id);
+    if (!isRemoved) {
+        return reply.send({
+            success: false,
+            message: 'category_remove_error',
+        });
+    }
+
+    return reply.send({
+        success: true,
+        message: 'category_remove_success',
+    });
 };
 
 const getAll = async (request, reply) => {
-    const data = await categoryService.getAll();
+    const { tenantId } = request.params;
+    const categories = await Category
+        .find({
+            tenantId,
+        }).sort({
+            sort: 1
+        });
 
-    return reply.send(data);
+    if (categories.length === 0) {
+        return reply.send({
+            success: false,
+            message: 'categories_not_found',
+        });
+    }
+
+    return reply.send({
+        success: true,
+        data: categories,
+    });
 };
 
 const getById = async (request, reply) => {
-    const { id } = request.params;
+    const {
+        tenantId,
+        categoryId
+    } = request.params;
 
-    const data = await categoryService.getById(id);
+    const category = await Category
+        .findOne({
+            tenantId,
+            _id: categoryId,
+        });
 
-    return reply.send(data);
+    if (!category) {
+        return reply.send({
+            success: false,
+            message: 'category_not_found',
+        });
+    }
+
+    return reply.send({
+        success: true,
+        data: category,
+    });
+};
+
+const updateSort = async (request, reply) => {
+    const { items } = request.body;
+
+    //TODO: check items.categoryId
+
+    const bulkOperations = items.map(item => ({
+        updateOne: {
+            filter: {
+                _id: item.categoryId,
+            },
+            update: {
+                $set: {
+                    sort: item.sort,
+                },
+            },
+        },
+    }));
+
+    const result = await Category.bulkWrite(bulkOperations);
+
+    if (!result) {
+        return reply.send({
+            success: false,
+            message: 'category_sort_error',
+        });
+    }
+
+    return reply.send({
+        success: true,
+        message: 'category_sort_success',
+    });
 };
 
 module.exports = {
@@ -67,4 +201,5 @@ module.exports = {
     remove,
     getAll,
     getById,
+    updateSort,
 };

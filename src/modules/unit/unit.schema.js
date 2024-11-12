@@ -3,7 +3,7 @@ const createUnitSchema = {
         body: {
             type: 'object',
             properties: {
-                tenant: {
+                tenantId: {
                     type: 'string',
                 },
                 translations: {
@@ -11,7 +11,7 @@ const createUnitSchema = {
                     items: {
                         type: 'object',
                         properties: {
-                            language: {
+                            languageId: {
                                 type: 'string',
                             },
                             name: {
@@ -19,14 +19,14 @@ const createUnitSchema = {
                             },
                         },
                         required: [
-                            'language',
+                            'languageId',
                             'name',
                         ],
                     },
                 },
             },
             required: [
-                'tenant',
+                'tenantId',
                 'translations',
             ],
         },
@@ -38,18 +38,18 @@ const updateUnitSchema = {
         params: {
             type: 'object',
             properties: {
-                id: {
+                unitId: {
                     type: 'string',
                 },
             },
             required: [
-                'id',
+                'unitId',
             ],
         },
         body: {
             type: 'object',
             properties: {
-                tenant: {
+                tenantId: {
                     type: 'string',
                 },
                 translations: {
@@ -57,7 +57,7 @@ const updateUnitSchema = {
                     items: {
                         type: 'object',
                         properties: {
-                            language: {
+                            languageId: {
                                 type: 'string',
                             },
                             name: {
@@ -65,14 +65,14 @@ const updateUnitSchema = {
                             },
                         },
                         required: [
-                            'language',
+                            'languageId',
                             'name',
                         ],
                     },
                 },
             },
             required: [
-                'tenant',
+                'tenantId',
                 'translations',
             ],
         },
@@ -84,12 +84,12 @@ const deleteUnitSchema = {
         params: {
             type: 'object',
             properties: {
-                id: {
+                unitId: {
                     type: 'string',
                 },
             },
             required: [
-                'id',
+                'unitId',
             ],
         },
     },
@@ -100,12 +100,12 @@ const getByIdUnitSchema = {
         params: {
             type: 'object',
             properties: {
-                id: {
+                unitId: {
                     type: 'string',
                 },
             },
             required: [
-                'id',
+                'unitId',
             ],
         },
     },

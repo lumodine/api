@@ -18,22 +18,40 @@ const createTenantSchema = {
                 address: {
                     type: 'string',
                 },
-                defaultLanguage: {
-                    type: 'string',
-                },
                 languages: {
                     type: 'array',
                     items: {
-                        type: 'string',
+                        type: 'object',
+                        properties: {
+                            _id: {
+                                type: 'string',
+                            },
+                            isDefault: {
+                                type: 'boolean',
+                            },
+                        },
+                        required: [
+                            '_id',
+                            'isDefault',
+                        ],
                     },
-                },
-                defaultCurrency: {
-                    type: 'string',
                 },
                 currencies: {
                     type: 'array',
                     items: {
-                        type: 'string',
+                        type: 'object',
+                        properties: {
+                            _id: {
+                                type: 'string',
+                            },
+                            isDefault: {
+                                type: 'boolean',
+                            },
+                        },
+                        required: [
+                            '_id',
+                            'isDefault',
+                        ],
                     },
                 },
             },
@@ -41,9 +59,7 @@ const createTenantSchema = {
                 'alias',
                 'name',
                 'address',
-                'defaultLanguage',
                 'languages',
-                'defaultCurrency',
                 'currencies',
             ],
         },
@@ -55,12 +71,12 @@ const updateTenantSchema = {
         params: {
             type: 'object',
             properties: {
-                id: {
+                tenantId: {
                     type: 'string',
                 },
             },
             required: [
-                'id',
+                'tenantId',
             ],
         },
         body: {
@@ -81,22 +97,40 @@ const updateTenantSchema = {
                 address: {
                     type: 'string',
                 },
-                defaultLanguage: {
-                    type: 'string',
-                },
                 languages: {
                     type: 'array',
                     items: {
-                        type: 'string',
+                        type: 'object',
+                        properties: {
+                            _id: {
+                                type: 'string',
+                            },
+                            isDefault: {
+                                type: 'boolean',
+                            },
+                        },
+                        required: [
+                            '_id',
+                            'isDefault',
+                        ],
                     },
-                },
-                defaultCurrency: {
-                    type: 'string',
                 },
                 currencies: {
                     type: 'array',
                     items: {
-                        type: 'string',
+                        type: 'object',
+                        properties: {
+                            _id: {
+                                type: 'string',
+                            },
+                            isDefault: {
+                                type: 'boolean',
+                            },
+                        },
+                        required: [
+                            '_id',
+                            'isDefault',
+                        ],
                     },
                 },
             },
@@ -104,9 +138,7 @@ const updateTenantSchema = {
                 'alias',
                 'name',
                 'address',
-                'defaultLanguage',
                 'languages',
-                'defaultCurrency',
                 'currencies',
             ],
         },
@@ -118,12 +150,12 @@ const deleteTenantSchema = {
         params: {
             type: 'object',
             properties: {
-                id: {
+                tenantId: {
                     type: 'string',
                 },
             },
             required: [
-                'id',
+                'tenantId',
             ],
         },
     },
@@ -134,12 +166,12 @@ const getByIdTenantSchema = {
         params: {
             type: 'object',
             properties: {
-                id: {
+                tenantId: {
                     type: 'string',
                 },
             },
             required: [
-                'id',
+                'tenantId',
             ],
         },
     },

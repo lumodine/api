@@ -2,19 +2,17 @@ const { mongoose } = require('@lumodine/mongodb');
 const baseModel = require('../common/base.model');
 
 const schema = new mongoose.Schema({
-    tenant: {
+    tenantId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'tenant',
         required: true,
-        autopopulate: true,
     },
     translations: [
         {
-            language: {
+            languageId: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'language',
                 required: true,
-                autopopulate: true,
             },
             name: {
                 type: String,
