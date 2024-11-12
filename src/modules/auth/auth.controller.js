@@ -113,7 +113,7 @@ const forgotPassword = async (request, reply) => {
         }
 
         //TODO: 
-        const emailHtml = `<p>Reset your password via ${process.env.DASHBOARD_URL}/reset-password/?t=${token.data}</p>`;
+        const emailHtml = `<p>Reset your password via ${process.env.DASHBOARD_URL}/reset-password?t=${token.data}</p>`;
         emailService.send({
             from: 'noreply@lumodine.com',
             to: user.email,
@@ -144,7 +144,7 @@ const resetPassword = async (request, reply) => {
         });
     }
 
-    const updatedUser = await User.findByIdAndUpdate(token.user, {
+    const updatedUser = await User.findByIdAndUpdate(token.userId, {
         password,
     }, {
         new: true,
@@ -168,12 +168,10 @@ const resetPassword = async (request, reply) => {
         html: emailHtml,
     });
 
-    if (!updatedUser) {
-        return reply.send({
-            success: false,
-            message: 'password_update_success',
-        });
-    }
+    return reply.send({
+        success: true,
+        message: 'password_update_success',
+    });
 };
 
 const getMe = async (request, reply) => {
