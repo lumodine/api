@@ -1,4 +1,3 @@
-const { mongoose } = require('@lumodine/mongodb');
 const Category = require('./category.model');
 
 const create = async (request, reply) => {

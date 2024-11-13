@@ -1,15 +1,16 @@
 const { mongoose } = require('@lumodine/mongodb');
 const baseModel = require('../common/base.model');
+const { PRODUCT_STATUS } = require('./product.constant');
 
 const schema = new mongoose.Schema({
-    tenant: {
+    tenantId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'tenant',
         required: true,
     },
     translations: [
         {
-            language: {
+            languageId: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'language',
                 required: true,
@@ -35,12 +36,12 @@ const schema = new mongoose.Schema({
     ],
     prices: [
         {
-            currency: {
+            currencyId: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'currency',
                 required: true,
             },
-            unit: {
+            unitId: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'unit',
                 required: true,
@@ -54,6 +55,12 @@ const schema = new mongoose.Schema({
     sort: {
         type: Number,
         default: 1,
+    },
+    status: {
+        type: String,
+        required: true,
+        enum: Object.values(PRODUCT_STATUS),
+        default: PRODUCT_STATUS.PUBLISHED,
     },
     ...baseModel.fields,
 }, { ...baseModel.options });

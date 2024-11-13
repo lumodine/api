@@ -1,9 +1,22 @@
+const { PRODUCT_STATUS } = require("./product.constant");
+
 const createProductSchema = {
     schema: {
+        params: {
+            type: 'object',
+            properties: {
+                tenantId: {
+                    type: 'string',
+                },
+            },
+            required: [
+                'tenantId',
+            ],
+        },
         body: {
             type: 'object',
             properties: {
-                tenant: {
+                tenantId: {
                     type: 'string',
                 },
                 translations: {
@@ -11,7 +24,7 @@ const createProductSchema = {
                     items: {
                         type: 'object',
                         properties: {
-                            language: {
+                            languageId: {
                                 type: 'string',
                             },
                             name: {
@@ -22,7 +35,7 @@ const createProductSchema = {
                             },
                         },
                         required: [
-                            'language',
+                            'languageId',
                             'name',
                         ],
                     },
@@ -41,10 +54,10 @@ const createProductSchema = {
                     items: {
                         type: 'object',
                         properties: {
-                            currency: {
+                            currencyId: {
                                 type: 'string',
                             },
-                            unit: {
+                            unitId: {
                                 type: 'string',
                             },
                             price: {
@@ -52,15 +65,15 @@ const createProductSchema = {
                             },
                         },
                         required: [
-                            'currency',
-                            'unit',
+                            'currencyId',
+                            'unitId',
                             'price',
                         ],
                     },
                 },
             },
             required: [
-                'tenant',
+                'tenantId',
                 'translations',
                 'image',
                 'categories',
@@ -75,18 +88,22 @@ const updateProductSchema = {
         params: {
             type: 'object',
             properties: {
-                id: {
+                tenantId: {
+                    type: 'string',
+                },
+                productId: {
                     type: 'string',
                 },
             },
             required: [
-                'id',
+                'tenantId',
+                'productId',
             ],
         },
         body: {
             type: 'object',
             properties: {
-                tenant: {
+                tenantId: {
                     type: 'string',
                 },
                 translations: {
@@ -94,7 +111,7 @@ const updateProductSchema = {
                     items: {
                         type: 'object',
                         properties: {
-                            language: {
+                            languageId: {
                                 type: 'string',
                             },
                             name: {
@@ -105,7 +122,7 @@ const updateProductSchema = {
                             },
                         },
                         required: [
-                            'language',
+                            'languageId',
                             'name',
                         ],
                     },
@@ -124,10 +141,10 @@ const updateProductSchema = {
                     items: {
                         type: 'object',
                         properties: {
-                            currency: {
+                            currencyId: {
                                 type: 'string',
                             },
-                            unit: {
+                            unitId: {
                                 type: 'string',
                             },
                             price: {
@@ -135,15 +152,15 @@ const updateProductSchema = {
                             },
                         },
                         required: [
-                            'currency',
-                            'unit',
+                            'currencyId',
+                            'unitId',
                             'price',
                         ],
                     },
                 },
             },
             required: [
-                'tenant',
+                'tenantId',
                 'translations',
                 'image',
                 'categories',
@@ -158,12 +175,16 @@ const deleteProductSchema = {
         params: {
             type: 'object',
             properties: {
-                id: {
+                tenantId: {
+                    type: 'string',
+                },
+                productId: {
                     type: 'string',
                 },
             },
             required: [
-                'id',
+                'tenantId',
+                'productId',
             ],
         },
     },
@@ -174,18 +195,110 @@ const getByIdProductSchema = {
         params: {
             type: 'object',
             properties: {
-                id: {
+                tenantId: {
+                    type: 'string',
+                },
+                productId: {
                     type: 'string',
                 },
             },
             required: [
-                'id',
+                'tenantId',
+                'productId',
             ],
         },
     },
 };
 
-const getAllProductsSchema = {};
+const getAllProductsSchema = {
+    schema: {
+        params: {
+            type: 'object',
+            properties: {
+                tenantId: {
+                    type: 'string',
+                },
+            },
+            required: [
+                'tenantId',
+            ],
+        },
+    },
+};
+
+const updateProductSortSchema = {
+    schema: {
+        params: {
+            type: 'object',
+            properties: {
+                tenantId: {
+                    type: 'string',
+                },
+            },
+            required: [
+                'tenantId',
+            ],
+        },
+        body: {
+            type: 'object',
+            properties: {
+                items: {
+                    type: 'array',
+                    items: {
+                        type: 'object',
+                        properties: {
+                            productId: {
+                                type: 'string',
+                            },
+                            sort: {
+                                type: 'number',
+                            },
+                        },
+                        required: [
+                            'productId',
+                            'sort',
+                        ],
+                    },
+                },
+            },
+            required: [
+                'items',
+            ],
+        },
+    },
+};
+
+const updateProductStatusSchema = {
+    schema: {
+        params: {
+            type: 'object',
+            properties: {
+                tenantId: {
+                    type: 'string',
+                },
+                productId: {
+                    type: 'string',
+                },
+            },
+            required: [
+                'tenantId',
+                'productId',
+            ],
+        },
+        body: {
+            type: 'object',
+            properties: {
+                status: {
+                    type: 'string',
+                    enum: Object.values(PRODUCT_STATUS),
+                },
+            },
+            required: [
+                'status',
+            ],
+        },
+    },
+};
 
 module.exports = {
     createProductSchema,
@@ -193,4 +306,6 @@ module.exports = {
     deleteProductSchema,
     getByIdProductSchema,
     getAllProductsSchema,
+    updateProductSortSchema,
+    updateProductStatusSchema,
 };

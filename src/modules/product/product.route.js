@@ -6,6 +6,8 @@ const {
     deleteProductSchema,
     getByIdProductSchema,
     getAllProductsSchema,
+    updateProductSortSchema,
+    updateProductStatusSchema,
 } = require('./product.schema');
 
 module.exports = (fastify, opts, done) => {
@@ -34,7 +36,7 @@ module.exports = (fastify, opts, done) => {
     );
 
     fastify.put(
-        '/:id',
+        '/:productId',
         {
             ...updateProductSchema,
             preHandler: [
@@ -47,7 +49,7 @@ module.exports = (fastify, opts, done) => {
     );
 
     fastify.delete(
-        '/:id',
+        '/:productId',
         {
             ...deleteProductSchema,
             preHandler: [
@@ -60,7 +62,7 @@ module.exports = (fastify, opts, done) => {
     );
 
     fastify.get(
-        '/:id',
+        '/:productId',
         {
             ...getByIdProductSchema,
             preHandler: [
@@ -68,6 +70,32 @@ module.exports = (fastify, opts, done) => {
             ],
         },
         productController.getById
+    );
+
+    fastify.put(
+        '/sort',
+        {
+            ...updateProductSortSchema,
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.UPDATE_CATEGORY),
+                fastify.checkTenantIdByParams,
+            ],
+        },
+        productController.updateSort,
+    );
+
+    fastify.put(
+        '/:productId/status',
+        {
+            ...updateProductStatusSchema,
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.UPDATE_CATEGORY),
+                fastify.checkTenantIdByParams,
+            ],
+        },
+        productController.updateStatus,
     );
 
     done();
