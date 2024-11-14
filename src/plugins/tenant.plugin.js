@@ -1,6 +1,5 @@
 const fp = require('fastify-plugin');
 const Tenant = require('../modules/tenant/tenant.model');
-const { mongoose } = require('@lumodine/mongodb');
 
 async function tenantPlugin(fastify, options) {
     fastify.decorate('checkTenantIdByParams', async (request, reply) => {
@@ -14,6 +13,8 @@ async function tenantPlugin(fastify, options) {
                 message: 'tenant_not_found',
             });
         }
+
+        request.tenant = tenant;
     });
 
     //TODO: check tenant by alias

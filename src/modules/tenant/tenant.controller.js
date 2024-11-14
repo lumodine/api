@@ -1,5 +1,6 @@
 const Tenant = require('./tenant.model');
 const { USER_ROLES } = require('../user/user.constant');
+const { MENUS } = require('./tenant.constant');
 
 const create = async (request, reply) => {
     const {
@@ -59,7 +60,6 @@ const create = async (request, reply) => {
 };
 
 const update = async (request, reply) => {
-    const { tenantId } = request.params;
     const {
         alias,
         name,
@@ -70,21 +70,12 @@ const update = async (request, reply) => {
         currencies,
     } = request.body;
 
-    const tenant = await Tenant.findById(tenantId);
-
-    if (!tenant) {
-        return reply.send({
-            success: false,
-            message: 'tenant_not_found',
-        });
-    }
-
     //TODO: check languages._id
     //TODO: check currencies._id
 
     const hasTenant = await Tenant.findOne({
         _id: {
-            $ne: tenantId,
+            $ne: request.tenant._id,
         },
         alias,
     });
@@ -131,18 +122,7 @@ const update = async (request, reply) => {
 };
 
 const remove = async (request, reply) => {
-    const { tenantId } = request.params;
-
-    const tenant = await Tenant.findById(tenantId);
-
-    if (!tenant) {
-        return reply.send({
-            success: false,
-            message: 'tenant_not_found',
-        });
-    }
-
-    const isRemoved = await Tenant.findByIdAndDelete(tenant._id);
+    const isRemoved = await Tenant.findByIdAndDelete(request.tenant._id);
     if (!isRemoved) {
         return reply.send({
             success: false,
@@ -173,20 +153,16 @@ const getAll = async (request, reply) => {
 };
 
 const getById = async (request, reply) => {
-    const { tenantId } = request.params;
-
-    const tenant = await Tenant.findById(tenantId);
-
-    if (!tenant) {
-        return reply.send({
-            success: false,
-            message: 'tenant_not_found',
-        });
-    }
-
     return reply.send({
         success: true,
-        data: tenant,
+        data: request.tenant,
+    });
+};
+
+const getMenus = async (request, reply) => {
+    return reply.send({
+        success: true,
+        data: MENUS(request.tenant._id),
     });
 };
 
@@ -196,4 +172,5 @@ module.exports = {
     remove,
     getAll,
     getById,
+    getMenus,
 };

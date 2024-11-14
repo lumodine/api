@@ -6,6 +6,7 @@ const {
     deleteTenantSchema,
     getByIdTenantSchema,
     getAllTenantsSchema,
+    getMenusTenantSchema,
 } = require('./tenant.schema');
 
 module.exports = (fastify, opts, done) => {
@@ -40,6 +41,7 @@ module.exports = (fastify, opts, done) => {
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.UPDATE_TENANT),
+                fastify.checkTenantIdByParams,
             ],
         },
         tenantController.update
@@ -52,6 +54,7 @@ module.exports = (fastify, opts, done) => {
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.DELETE_TENANT),
+                fastify.checkTenantIdByParams,
             ],
         },
         tenantController.remove
@@ -64,9 +67,23 @@ module.exports = (fastify, opts, done) => {
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.GET_TENANT),
+                fastify.checkTenantIdByParams,
             ],
         },
         tenantController.getById
+    );
+
+    fastify.get(
+        '/:tenantId/menus',
+        {
+            ...getMenusTenantSchema,
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.GET_TENANT),
+                fastify.checkTenantIdByParams,
+            ],
+        },
+        tenantController.getMenus
     );
 
     fastify.register(

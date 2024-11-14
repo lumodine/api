@@ -177,6 +177,22 @@ const getByIdTenantSchema = {
     },
 };
 
+const getMenusTenantSchema = {
+    schema: {
+        params: {
+            type: 'object',
+            properties: {
+                tenantId: {
+                    type: 'string',
+                },
+            },
+            required: [
+                'tenantId',
+            ],
+        },
+    },
+};
+
 const getAllTenantsSchema = {};
 
 module.exports = {
@@ -185,4 +201,5 @@ module.exports = {
     deleteTenantSchema,
     getByIdTenantSchema,
     getAllTenantsSchema,
+    getMenusTenantSchema,
 };
