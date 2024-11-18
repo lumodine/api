@@ -17,7 +17,7 @@ module.exports = (fastify, opts, done) => {
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.CREATE_CATEGORY),
-                fastify.checkTenantIdByParams,
+                fastify.checkTenantByParams,
             ],
         },
         categoryController.create,
@@ -28,7 +28,7 @@ module.exports = (fastify, opts, done) => {
         {
             ...getAllCategoriesSchema,
             preHandler: [
-                fastify.checkTenantIdByParams,
+                fastify.checkTenantByParams,
             ],
         },
         categoryController.getAll,
@@ -41,7 +41,7 @@ module.exports = (fastify, opts, done) => {
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.UPDATE_CATEGORY),
-                fastify.checkTenantIdByParams,
+                fastify.checkTenantByParams,
             ],
         },
         categoryController.update,
@@ -54,7 +54,7 @@ module.exports = (fastify, opts, done) => {
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.DELETE_CATEGORY),
-                fastify.checkTenantIdByParams,
+                fastify.checkTenantByParams,
             ],
         },
         categoryController.remove,
@@ -65,7 +65,7 @@ module.exports = (fastify, opts, done) => {
         {
             ...getByIdCategorySchema,
             preHandler: [
-                fastify.checkTenantIdByParams,
+                fastify.checkTenantByParams,
             ],
         },
         categoryController.getById,
@@ -78,7 +78,7 @@ module.exports = (fastify, opts, done) => {
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.UPDATE_CATEGORY),
-                fastify.checkTenantIdByParams,
+                fastify.checkTenantByParams,
             ],
         },
         categoryController.updateSort,

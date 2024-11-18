@@ -7,6 +7,7 @@ const {
     getByIdTenantSchema,
     getAllTenantsSchema,
     getMenusTenantSchema,
+    getQrMenuTenantSchema,
 } = require('./tenant.schema');
 
 module.exports = (fastify, opts, done) => {
@@ -41,7 +42,7 @@ module.exports = (fastify, opts, done) => {
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.UPDATE_TENANT),
-                fastify.checkTenantIdByParams,
+                fastify.checkTenantByParams,
             ],
         },
         tenantController.update
@@ -54,7 +55,7 @@ module.exports = (fastify, opts, done) => {
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.DELETE_TENANT),
-                fastify.checkTenantIdByParams,
+                fastify.checkTenantByParams,
             ],
         },
         tenantController.remove
@@ -67,7 +68,7 @@ module.exports = (fastify, opts, done) => {
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.GET_TENANT),
-                fastify.checkTenantIdByParams,
+                fastify.checkTenantByParams,
             ],
         },
         tenantController.getById
@@ -80,10 +81,21 @@ module.exports = (fastify, opts, done) => {
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.GET_TENANT),
-                fastify.checkTenantIdByParams,
+                fastify.checkTenantByParams,
             ],
         },
         tenantController.getMenus
+    );
+
+    fastify.get(
+        '/:tenantAlias/qr-menu',
+        {
+            ...getQrMenuTenantSchema,
+            preHandler: [
+                fastify.checkTenantByParams,
+            ],
+        },
+        tenantController.getQrMenu
     );
 
     fastify.register(

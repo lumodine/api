@@ -177,6 +177,8 @@ const getByIdTenantSchema = {
     },
 };
 
+const getAllTenantsSchema = {};
+
 const getMenusTenantSchema = {
     schema: {
         params: {
@@ -193,7 +195,21 @@ const getMenusTenantSchema = {
     },
 };
 
-const getAllTenantsSchema = {};
+const getQrMenuTenantSchema = {
+    schema: {
+        params: {
+            type: 'object',
+            properties: {
+                tenantAlias: {
+                    type: 'string',
+                },
+            },
+            required: [
+                'tenantAlias',
+            ],
+        },
+    },
+};
 
 module.exports = {
     createTenantSchema,
@@ -202,4 +218,5 @@ module.exports = {
     getByIdTenantSchema,
     getAllTenantsSchema,
     getMenusTenantSchema,
+    getQrMenuTenantSchema,
 };

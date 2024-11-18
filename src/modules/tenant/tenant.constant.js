@@ -50,7 +50,7 @@ const MENUS = (id) => [
         title: "statistics",
         items: [
             {
-                title: "Görüntülenme",
+                title: "views",
                 href: `/d/${id}/views`,
             },
         ],

@@ -5,40 +5,40 @@ const USER_ROLES = {
 };
 
 const PERMISSIONS = {
-    GET_ALL_TENANTS: 'get_all_tenants',
-    GET_TENANT: 'get_tenant',
-    CREATE_TENANT: 'create_tenant',
-    UPDATE_TENANT: 'update_tenant',
-    DELETE_TENANT: 'delete_tenant',
+    GET_ALL_TENANTS: 'get:tenants',
+    GET_TENANT: 'get:tenant',
+    CREATE_TENANT: 'create:tenant',
+    UPDATE_TENANT: 'update:tenant',
+    DELETE_TENANT: 'delete:tenant',
 
-    CREATE_LANGUAGE: 'create_language',
-    UPDATE_LANGUAGE: 'update_language',
-    DELETE_LANGUAGE: 'delete_language',
+    CREATE_LANGUAGE: 'create:language',
+    UPDATE_LANGUAGE: 'update:language',
+    DELETE_LANGUAGE: 'delete:language',
 
-    CREATE_CURRENCY: 'create_currency',
-    UPDATE_CURRENCY: 'update_currency',
-    DELETE_CURRENCY: 'delete_currency',
+    CREATE_CURRENCY: 'create:currency',
+    UPDATE_CURRENCY: 'update:currency',
+    DELETE_CURRENCY: 'delete:currency',
 
-    CREATE_UNIT: 'create_unit',
-    UPDATE_UNIT: 'update_unit',
-    DELETE_UNIT: 'delete_unit',
+    CREATE_UNIT: 'create:unit',
+    UPDATE_UNIT: 'update:unit',
+    DELETE_UNIT: 'delete:unit',
 
-    GET_ALL_USERS: 'get_all_users',
-    GET_USER: 'get_user',
-    CREATE_USER: 'create_user',
-    UPDATE_USER: 'update_user',
-    DELETE_USER: 'delete_user',
+    GET_ALL_USERS: 'get:users',
+    GET_USER: 'get:user',
+    CREATE_USER: 'create:user',
+    UPDATE_USER: 'update:user',
+    DELETE_USER: 'delete:user',
 
-    CREATE_CATEGORY: 'create_category',
-    UPDATE_CATEGORY: 'update_category',
-    DELETE_CATEGORY: 'delete_category',
+    CREATE_CATEGORY: 'create:category',
+    UPDATE_CATEGORY: 'update:category',
+    DELETE_CATEGORY: 'delete:category',
 
-    CREATE_PRODUCT: 'create_product',
-    UPDATE_PRODUCT: 'update_product',
-    DELETE_PRODUCT: 'delete_product',
+    CREATE_PRODUCT: 'create:product',
+    UPDATE_PRODUCT: 'update:product',
+    DELETE_PRODUCT: 'delete:product',
 
-    GET_ME: 'get_me',
-    GET_ME_PERMISSIONS: 'get_me_permissions',
+    GET_ME: 'get:me',
+    GET_ME_PERMISSIONS: 'get:me_permissions',
 };
 
 // TODO: move to db

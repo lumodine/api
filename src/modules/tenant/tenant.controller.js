@@ -80,9 +80,6 @@ const update = async (request, reply) => {
         alias,
     });
 
-    console.log(hasTenant);
-    
-
     if (hasTenant) {
         return reply.send({
             success: false,
@@ -166,6 +163,13 @@ const getMenus = async (request, reply) => {
     });
 };
 
+const getQrMenu = async (request, reply) => {
+    return reply.send({
+        success: true,
+        data: request.tenant,
+    });
+};
+
 module.exports = {
     create,
     update,
@@ -173,4 +177,5 @@ module.exports = {
     getAll,
     getById,
     getMenus,
+    getQrMenu,
 };

@@ -18,7 +18,7 @@ module.exports = (fastify, opts, done) => {
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.CREATE_PRODUCT),
-                fastify.checkTenantIdByParams,
+                fastify.checkTenantByParams,
             ],
         },
         productController.create
@@ -29,7 +29,7 @@ module.exports = (fastify, opts, done) => {
         {
             ...getAllProductsSchema,
             preHandler: [
-                fastify.checkTenantIdByParams,
+                fastify.checkTenantByParams,
             ],
         },
         productController.getAll
@@ -42,7 +42,7 @@ module.exports = (fastify, opts, done) => {
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.UPDATE_PRODUCT),
-                fastify.checkTenantIdByParams,
+                fastify.checkTenantByParams,
             ],
         },
         productController.update
@@ -55,7 +55,7 @@ module.exports = (fastify, opts, done) => {
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.DELETE_PRODUCT),
-                fastify.checkTenantIdByParams,
+                fastify.checkTenantByParams,
             ],
         },
         productController.remove
@@ -66,7 +66,7 @@ module.exports = (fastify, opts, done) => {
         {
             ...getByIdProductSchema,
             preHandler: [
-                fastify.checkTenantIdByParams,
+                fastify.checkTenantByParams,
             ],
         },
         productController.getById
@@ -79,7 +79,7 @@ module.exports = (fastify, opts, done) => {
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.UPDATE_CATEGORY),
-                fastify.checkTenantIdByParams,
+                fastify.checkTenantByParams,
             ],
         },
         productController.updateSort,
@@ -92,7 +92,7 @@ module.exports = (fastify, opts, done) => {
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.UPDATE_CATEGORY),
-                fastify.checkTenantIdByParams,
+                fastify.checkTenantByParams,
             ],
         },
         productController.updateStatus,
