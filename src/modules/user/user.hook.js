@@ -1,10 +1,10 @@
-const crypto = require('@lumodine/crypto');
+const bcrypt = require('@lumodine/bcrypt');
 
 module.exports = {
     save: async function (next) {
         const user = this;
 
-        user.password = await crypto.create(user.password, process.env.CRYPTO_SALT_ROUNDS);
+        user.password = await bcrypt.create(user.password, process.env.BCRYPT_SALT_ROUNDS);
 
         return next();
     },
@@ -12,7 +12,7 @@ module.exports = {
         const user = this._update;
 
         if (user.password) {
-            user.password = await crypto.create(user.password, process.env.CRYPTO_SALT_ROUNDS);
+            user.password = await bcrypt.create(user.password, process.env.BCRYPT_SALT_ROUNDS);
         }
 
         return next();

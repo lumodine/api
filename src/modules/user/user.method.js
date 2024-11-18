@@ -1,9 +1,9 @@
-const crypto = require('@lumodine/crypto');
+const bcrypt = require('@lumodine/bcrypt');
 
 module.exports = {
     comparePassword: async function (password) {
         const user = this;
 
-        return await await crypto.compare(password, user.password);
+        return await await bcrypt.compare(password, user.password);
     },
 };

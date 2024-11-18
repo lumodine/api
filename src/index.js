@@ -5,7 +5,7 @@ const requiredEnvs = [
     'NODE_ENV',
     'MONGODB_URL',
     'PORT',
-    'CRYPTO_SALT_ROUNDS',
+    'BCRYPT_SALT_ROUNDS',
     'JWT_SECRET_KEY',
     'EMAIL_HOST',
     'EMAIL_PORT',
