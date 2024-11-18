@@ -134,7 +134,17 @@ const remove = async (request, reply) => {
 };
 
 const getAll = async (request, reply) => {
-    const tenants = await Tenant.find({});
+    const userId = request.user.sub;
+
+    const tenants = await Tenant.find({
+        users: {
+            $in: [
+                {
+                    _id: userId,
+                },
+            ],
+        },
+    });
 
     if (tenants.length === 0) {
         return reply.send({

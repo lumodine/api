@@ -8,14 +8,36 @@ async function tenantPlugin(fastify, options) {
             tenantAlias,
         } = request.params;
 
-        let tenant = null;
+        const userId = request.user.sub;
+
+        let query = {};
+
+        if (userId !== undefined) {
+            query = {
+                ...query,
+                users: {
+                    $in: [
+                        {
+                            _id: userId,
+                        },
+                    ],
+                },
+            };
+        }
+
         if (tenantId !== undefined) {
-            tenant = await Tenant.findById(tenantId);
+            query = {
+                ...query,
+                _id: tenantId,
+            };
         } else if (tenantAlias !== undefined) {
-            tenant = await Tenant.findOne({
+            query = {
+                ...query,
                 alias: tenantAlias,
-            });
-        }        
+            };
+        }
+
+        let tenant = await Tenant.findOne(query);
 
         if (!tenant) {
             return reply.send({
@@ -26,8 +48,6 @@ async function tenantPlugin(fastify, options) {
 
         request.tenant = tenant;
     });
-
-    //TODO: check user permission for tenant
 }
 
 module.exports = fp(tenantPlugin);
