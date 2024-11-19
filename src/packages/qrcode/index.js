@@ -5,8 +5,8 @@ const create = async (url, options = {}) => {
     return await qrcode.toDataURL(url, options);
 };
 
-const createTenantAlias = async (alias) => {
-    const url = process.env.QR_MENU_URL.replace("{alias}", alias);
+const createTenantById = async (id) => {
+    const url = process.env.QR_URL.replace("{id}", id);
 
     const defaultOptions = {
         errorCorrectionLevel: 'H',
@@ -42,5 +42,5 @@ const createTenantAlias = async (alias) => {
 };
 
 module.exports = {
-    createTenantAlias,
+    createTenantById,
 };

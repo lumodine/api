@@ -2,6 +2,7 @@ const Tenant = require('./tenant.model');
 const { USER_ROLES } = require('../user/user.constant');
 const { MENUS } = require('./tenant.constant');
 const qrcode = require("@lumodine/qrcode");
+const { mongoose } = require('@lumodine/mongodb');
 
 const create = async (request, reply) => {
     const {
@@ -28,10 +29,12 @@ const create = async (request, reply) => {
     //TODO: check languages._id
     //TODO: check currencies._id
 
+    const id = new mongoose.Types.ObjectId();
     const userId = request.user.sub;
-    const qrCodes = await qrcode.createTenantAlias(alias);
+    const qrCodes = await qrcode.createTenantById(id);
 
     const payload = {
+        _id: id,
         users: [
             {
                 _id: userId,
