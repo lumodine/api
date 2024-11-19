@@ -33,6 +33,24 @@ const schema = new mongoose.Schema({
     background: {
         type: String,
     },
+    qrCodes: {
+        small: {
+            type: String,
+            required: true,
+        },
+        medium: {
+            type: String,
+            required: true,
+        },
+        large: {
+            type: String,
+            required: true,
+        },
+        xlarge: {
+            type: String,
+            required: true,
+        },
+    },
     address: {
         type: String,
         required: true,

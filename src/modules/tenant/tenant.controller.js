@@ -1,6 +1,7 @@
 const Tenant = require('./tenant.model');
 const { USER_ROLES } = require('../user/user.constant');
 const { MENUS } = require('./tenant.constant');
+const qrcode = require("@lumodine/qrcode");
 
 const create = async (request, reply) => {
     const {
@@ -28,6 +29,7 @@ const create = async (request, reply) => {
     //TODO: check currencies._id
 
     const userId = request.user.sub;
+    const qrCodes = await qrcode.createTenantAlias(alias);
 
     const payload = {
         users: [
@@ -40,6 +42,7 @@ const create = async (request, reply) => {
         name,
         logo,
         background,
+        qrCodes,
         address,
         languages,
         currencies,
