@@ -186,6 +186,13 @@ const getQrMenu = async (request, reply) => {
     });
 };
 
+const getAliasById = async (request, reply) => {
+    return reply.send({
+        success: true,
+        data: request.tenant.alias,
+    });
+};
+
 module.exports = {
     create,
     update,
@@ -194,4 +201,5 @@ module.exports = {
     getById,
     getMenus,
     getQrMenu,
+    getAliasById,
 };

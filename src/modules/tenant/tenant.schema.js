@@ -211,6 +211,22 @@ const getQrMenuTenantSchema = {
     },
 };
 
+const getAliasByIdTenantSchema = {
+    schema: {
+        params: {
+            type: 'object',
+            properties: {
+                tenantId: {
+                    type: 'string',
+                },
+            },
+            required: [
+                'tenantId',
+            ],
+        },
+    },
+};
+
 module.exports = {
     createTenantSchema,
     updateTenantSchema,
@@ -219,4 +235,5 @@ module.exports = {
     getAllTenantsSchema,
     getMenusTenantSchema,
     getQrMenuTenantSchema,
+    getAliasByIdTenantSchema,
 };

@@ -8,6 +8,7 @@ const {
     getAllTenantsSchema,
     getMenusTenantSchema,
     getQrMenuTenantSchema,
+    getAliasByIdTenantSchema,
 } = require('./tenant.schema');
 
 module.exports = (fastify, opts, done) => {
@@ -96,6 +97,17 @@ module.exports = (fastify, opts, done) => {
             ],
         },
         tenantController.getQrMenu
+    );
+
+    fastify.get(
+        '/:tenantId/alias',
+        {
+            ...getAliasByIdTenantSchema,
+            preHandler: [
+                fastify.checkTenantByParams,
+            ],
+        },
+        tenantController.getAliasById
     );
 
     fastify.register(
