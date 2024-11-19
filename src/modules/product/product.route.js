@@ -29,6 +29,8 @@ module.exports = (fastify, opts, done) => {
         {
             ...getAllProductsSchema,
             preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.GET_ALL_PRODUCTS),
                 fastify.checkTenantByParams,
             ],
         },
@@ -66,6 +68,8 @@ module.exports = (fastify, opts, done) => {
         {
             ...getByIdProductSchema,
             preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.GET_PRODUCT),
                 fastify.checkTenantByParams,
             ],
         },

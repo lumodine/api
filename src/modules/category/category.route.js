@@ -28,6 +28,8 @@ module.exports = (fastify, opts, done) => {
         {
             ...getAllCategoriesSchema,
             preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.GET_ALL_CATEGORIES),
                 fastify.checkTenantByParams,
             ],
         },
@@ -65,6 +67,8 @@ module.exports = (fastify, opts, done) => {
         {
             ...getByIdCategorySchema,
             preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.GET_CATEGORY),
                 fastify.checkTenantByParams,
             ],
         },

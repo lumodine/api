@@ -8,7 +8,7 @@ async function tenantPlugin(fastify, options) {
             tenantAlias,
         } = request.params;
 
-        const userId = request.user.sub;
+        const userId = request?.user?.sub;
 
         let query = {};
 
