@@ -10,7 +10,6 @@ const create = async (request, reply) => {
         name,
         logo,
         background,
-        address,
         languages,
         currencies,
     } = request.body;
@@ -46,7 +45,6 @@ const create = async (request, reply) => {
         logo,
         background,
         qrCodes,
-        address,
         languages,
         currencies,
     };

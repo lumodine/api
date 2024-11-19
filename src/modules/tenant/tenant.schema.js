@@ -15,9 +15,6 @@ const createTenantSchema = {
                 background: {
                     type: 'string',
                 },
-                address: {
-                    type: 'string',
-                },
                 languages: {
                     type: 'array',
                     items: {
@@ -58,7 +55,6 @@ const createTenantSchema = {
             required: [
                 'alias',
                 'name',
-                'address',
                 'languages',
                 'currencies',
             ],
@@ -137,7 +133,6 @@ const updateTenantSchema = {
             required: [
                 'alias',
                 'name',
-                'address',
                 'languages',
                 'currencies',
             ],

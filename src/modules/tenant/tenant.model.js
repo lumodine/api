@@ -53,7 +53,6 @@ const schema = new mongoose.Schema({
     },
     address: {
         type: String,
-        required: true,
     },
     languages: [
         {
