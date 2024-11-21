@@ -12,6 +12,7 @@ const create = async (request, reply) => {
         name,
         logo,
         background,
+        theme,
         languages,
         currencies,
     } = request.body;
@@ -46,6 +47,7 @@ const create = async (request, reply) => {
         name,
         logo,
         background,
+        theme,
         qrCodes,
         languages,
         currencies,
@@ -72,6 +74,7 @@ const update = async (request, reply) => {
         logo,
         background,
         address,
+        theme,
         languages,
         currencies,
     } = request.body;
@@ -99,6 +102,7 @@ const update = async (request, reply) => {
         logo,
         background,
         address,
+        theme,
         languages,
         currencies,
     };

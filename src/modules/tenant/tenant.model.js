@@ -1,6 +1,7 @@
 const { mongoose } = require('@lumodine/mongodb');
 const baseModel = require('../common/base.model');
 const { USER_ROLES } = require('../user/user.constant');
+const { THEMES } = require('./tenant.constant');
 
 const schema = new mongoose.Schema({
     users: [
@@ -32,6 +33,11 @@ const schema = new mongoose.Schema({
     },
     background: {
         type: String,
+    },
+    theme: {
+        type: String,
+        enum: Object.values(THEMES),
+        default: THEMES.ZINC,
     },
     qrCodes: {
         small: {

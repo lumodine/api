@@ -15,6 +15,9 @@ const createTenantSchema = {
                 background: {
                     type: 'string',
                 },
+                theme: {
+                    type: 'string',
+                },
                 languages: {
                     type: 'array',
                     items: {
@@ -91,6 +94,9 @@ const updateTenantSchema = {
                     type: 'string',
                 },
                 address: {
+                    type: 'string',
+                },
+                theme: {
                     type: 'string',
                 },
                 languages: {
