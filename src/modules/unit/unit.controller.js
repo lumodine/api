@@ -7,15 +7,6 @@ const create = async (request, reply) => {
         translations,
     } = request.body;
 
-    const tenant = await Tenant.findById(tenantId);
-
-    if (!tenant) {
-        return reply.send({
-            success: false,
-            message: 'tenant_not_found',
-        });
-    }
-
     //TODO: check translations.languageId
 
     const payload = {
@@ -38,27 +29,24 @@ const create = async (request, reply) => {
 };
 
 const update = async (request, reply) => {
-    const { unitId } = request.params;
     const {
         tenantId,
+        unitId,
+    } = request.params;
+    const {
         translations,
     } = request.body;
 
-    const unit = await Unit.findById(unitId);
+    const unit = await Unit
+        .findOne({
+            tenantId,
+            _id: unitId,
+        });
 
     if (!unit) {
         return reply.send({
             success: false,
             message: 'unit_not_found',
-        });
-    }
-
-    const tenant = await Tenant.findById(tenantId);
-
-    if (!tenant) {
-        return reply.send({
-            success: false,
-            message: 'tenant_not_found',
         });
     }
 
@@ -91,9 +79,16 @@ const update = async (request, reply) => {
 };
 
 const remove = async (request, reply) => {
-    const { unitId } = request.params;
+    const {
+        tenantId,
+        unitId,
+    } = request.params;
 
-    const unit = await Unit.findById(unitId);
+    const unit = await Unit
+        .findOne({
+            tenantId,
+            _id: unitId,
+        });
 
     if (!unit) {
         return reply.send({
@@ -117,7 +112,11 @@ const remove = async (request, reply) => {
 };
 
 const getAll = async (request, reply) => {
-    const units = await Unit.find({});
+    const { tenantId } = request.params;
+    const units = await Unit
+        .find({
+            tenantId,
+        });
 
     if (units.length === 0) {
         return reply.send({
@@ -133,9 +132,16 @@ const getAll = async (request, reply) => {
 };
 
 const getById = async (request, reply) => {
-    const { unitId } = request.params;
+    const {
+        tenantId,
+        unitId
+    } = request.params;
 
-    const unit = await Unit.findById(unitId);
+    const unit = await Unit
+        .findOne({
+            tenantId,
+            _id: unitId,
+        });
 
     if (!unit) {
         return reply.send({

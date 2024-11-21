@@ -43,7 +43,10 @@ const update = async (request, reply) => {
     } = request.body;
 
     const category = await Category
-        .findById(categoryId);
+        .findOne({
+            tenantId,
+            _id: categoryId,
+        });
 
     if (!category) {
         return reply.send({

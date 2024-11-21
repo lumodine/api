@@ -3,8 +3,6 @@ const { USER_ROLES } = require('../user/user.constant');
 const { MENUS } = require('./tenant.constant');
 const qrcode = require("@lumodine/qrcode");
 const { mongoose } = require('@lumodine/mongodb');
-const Category = require('../category/category.model');
-const Product = require('../product/product.model');
 
 const create = async (request, reply) => {
     const {
@@ -64,6 +62,7 @@ const create = async (request, reply) => {
     return reply.send({
         success: true,
         message: 'tenant_create_success',
+        data: createdTenant,
     });
 };
 

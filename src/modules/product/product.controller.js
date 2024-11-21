@@ -52,7 +52,10 @@ const update = async (request, reply) => {
     } = request.body;
 
     const product = await Product
-        .findById(productId);
+        .findOne({
+            tenantId,
+            _id: productId,
+        });
 
     if (!product) {
         return reply.send({
@@ -227,7 +230,7 @@ const updateStatus = async (request, reply) => {
             message: 'product_not_found',
         });
     }
-    
+
     const updatedProduct = await Product.findByIdAndUpdate(
         productId,
         {
