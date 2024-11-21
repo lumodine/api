@@ -175,13 +175,6 @@ const getById = async (request, reply) => {
     });
 };
 
-const getMenus = async (request, reply) => {
-    return reply.send({
-        success: true,
-        data: MENUS(request.tenant._id),
-    });
-};
-
 const getAliasById = async (request, reply) => {
     return reply.send({
         success: true,
@@ -195,6 +188,5 @@ module.exports = {
     remove,
     getAll,
     getById,
-    getMenus,
     getAliasById,
 };

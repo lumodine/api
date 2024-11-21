@@ -2,7 +2,6 @@ const authController = require('./auth.controller');
 const { PERMISSIONS } = require('../user/user.constant');
 const {
     getMeSchema,
-    getMePermissionsSchema,
     loginSchema,
     registerSchema,
     forgotPasswordSchema,
