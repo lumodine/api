@@ -46,17 +46,5 @@ module.exports = (fastify, opts, done) => {
         authController.getMe,
     );
 
-    fastify.get(
-        '/me/permissions',
-        {
-            ...getMePermissionsSchema,
-            preHandler: [
-                fastify.authenticate,
-                fastify.authorize(PERMISSIONS.GET_ME_PERMISSIONS),
-            ],
-        },
-        authController.getMePermissions,
-    );
-
     done();
 };

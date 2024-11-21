@@ -35,20 +35,22 @@ const registerSchema = {
                 password: {
                     type: 'string',
                 },
+                confirmPassword: {
+                    type: 'string',
+                },
             },
             required: [
                 'email',
                 'name',
                 'surname',
                 'password',
+                'confirmPassword',
             ],
         },
     },
 };
 
 const getMeSchema = {};
-
-const getMePermissionsSchema = {};
 
 const forgotPasswordSchema = {
     schema: {
@@ -85,9 +87,13 @@ const resetPasswordSchema = {
                 password: {
                     type: 'string',
                 },
+                confirmPassword: {
+                    type: 'string',
+                },
             },
             required: [
                 'password',
+                'confirmPassword',
             ],
         },
     },
@@ -95,7 +101,6 @@ const resetPasswordSchema = {
 
 module.exports = {
     getMeSchema,
-    getMePermissionsSchema,
     loginSchema,
     registerSchema,
     forgotPasswordSchema,

@@ -19,7 +19,7 @@ async function authPlugin(fastify, options) {
   });
 
   fastify.decorate('authorize', (requiredPermission) => async (request, reply) => {
-    const userId = request.user.sub;
+    /*const userId = request.user.sub;
 
     const user = await User.findById(userId);
 
@@ -40,7 +40,7 @@ async function authPlugin(fastify, options) {
         success: false,
         message: 'forbidden'
       });
-    }
+    }*/
   });
 }
 

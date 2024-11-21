@@ -49,8 +49,16 @@ const register = async (request, reply) => {
         email,
         name,
         surname,
-        password
+        password,
+        confirmPassword
     } = request.body;
+
+    if (password != confirmPassword) {
+        return reply.send({
+            success: false,
+            message: 'passwords_does_not_match',
+        });
+    }
 
     const user = await User.findOne({
         email,
@@ -130,7 +138,10 @@ const forgotPassword = async (request, reply) => {
 
 const resetPassword = async (request, reply) => {
     const { t } = request.query;
-    const { password } = request.body;
+    const {
+        password,
+        confirmPassword
+    } = request.body;
 
     const token = await Token.findOne({
         data: t,
@@ -141,6 +152,13 @@ const resetPassword = async (request, reply) => {
         return reply.send({
             success: false,
             message: 'token_not_found_or_expire',
+        });
+    }
+
+    if (password != confirmPassword) {
+        return reply.send({
+            success: false,
+            message: 'passwords_does_not_match',
         });
     }
 
@@ -192,29 +210,10 @@ const getMe = async (request, reply) => {
     });
 };
 
-const getMePermissions = async (request, reply) => {
-    const userId = request.user.sub;
-
-    const user = await User.findById(userId);
-
-    if (!user) {
-        return reply.send({
-            success: false,
-            message: 'user_not_found',
-        });
-    }
-
-    return reply.send({
-        success: true,
-        data: USER_PERMISSIONS[user.role],
-    });
-};
-
 module.exports = {
     login,
     register,
     forgotPassword,
     resetPassword,
     getMe,
-    getMePermissions,
 };
