@@ -27,24 +27,67 @@ const getCategories = async (request, reply) => {
         })
         .populate('translations.languageId');
 
+    if (categories.length === 0) {
+        return reply.send({
+            success: false,
+            message: 'categories_not_found',
+        });
+    }
+
     return reply.send({
         success: true,
         data: categories,
     });
 };
 
+const getCategoryById = async (request, reply) => {
+    const tenantId = request.tenant._id;
+    const { categoryId } = request.params;
+
+    const category = await Category
+        .findOne({
+            _id: categoryId,
+            tenantId,
+        })
+        .populate('translations.languageId');
+
+    if (!category) {
+        return reply.send({
+            success: false,
+            message: 'category_not_found',
+        });
+    }
+
+    return reply.send({
+        success: true,
+        data: category,
+    });
+};
+
 const getProducts = async (request, reply) => {
     const tenantId = request.tenant._id;
+    const { categoryId } = request.params;
 
     const products = await Product
         .find({
             tenantId,
+            categories: {
+                $in: categoryId,
+            },
         })
         .populate('translations.languageId')
         .populate('categories')
-        .populate('categories.translations.languageId')
+        .populate('categories.translations.languageId') //TODO
         .populate('prices.currencyId')
-        .populate('prices.unitId');
+        .populate('prices.unitId')
+        .populate('prices.unitId.translations.languageId'); //TODO
+
+    if (products.length === 0) {
+        return reply.send({
+            success: false,
+            message: 'products_not_found',
+        });
+    }
 
     return reply.send({
         success: true,
@@ -55,5 +98,6 @@ const getProducts = async (request, reply) => {
 module.exports = {
     getDetail,
     getCategories,
+    getCategoryById,
     getProducts,
 };

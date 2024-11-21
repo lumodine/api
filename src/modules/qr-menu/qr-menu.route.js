@@ -3,6 +3,7 @@ const {
     getDetailSchema,
     getCategoriesSchema,
     getProductsSchema,
+    getCategoryByIdSchema,
 } = require('./qr-menu.schema');
 
 module.exports = (fastify, opts, done) => {
@@ -29,7 +30,18 @@ module.exports = (fastify, opts, done) => {
     );
 
     fastify.get(
-        '/:tenantAlias/products',
+        '/:tenantAlias/categories/:categoryId',
+        {
+            ...getCategoryByIdSchema,
+            preHandler: [
+                fastify.checkTenantByParams,
+            ],
+        },
+        qrMenuController.getCategoryById
+    );
+
+    fastify.get(
+        '/:tenantAlias/categories/:categoryId/products',
         {
             ...getProductsSchema,
             preHandler: [

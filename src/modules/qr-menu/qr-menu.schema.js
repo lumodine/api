@@ -30,6 +30,26 @@ const getCategoriesSchema = {
     },
 };
 
+const getCategoryByIdSchema = {
+    schema: {
+        params: {
+            type: 'object',
+            properties: {
+                tenantAlias: {
+                    type: 'string',
+                },
+                categoryId: {
+                    type: 'string',
+                },
+            },
+            required: [
+                'tenantAlias',
+                'categoryId',
+            ],
+        },
+    },
+};
+
 const getProductsSchema = {
     schema: {
         params: {
@@ -38,9 +58,13 @@ const getProductsSchema = {
                 tenantAlias: {
                     type: 'string',
                 },
+                categoryId: {
+                    type: 'string',
+                },
             },
             required: [
                 'tenantAlias',
+                'categoryId',
             ],
         },
     },
@@ -49,5 +73,6 @@ const getProductsSchema = {
 module.exports = {
     getDetailSchema,
     getCategoriesSchema,
+    getCategoryByIdSchema,
     getProductsSchema,
 };
