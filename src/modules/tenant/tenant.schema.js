@@ -99,6 +99,48 @@ const updateTenantSettingsSchema = {
     },
 };
 
+const updateTenantLanguageSettingsSchema = {
+    schema: {
+        params: {
+            type: 'object',
+            properties: {
+                tenantId: {
+                    type: 'string',
+                },
+            },
+            required: [
+                'tenantId',
+            ],
+        },
+        body: {
+            type: 'object',
+            properties: {
+                languages: {
+                    type: 'array',
+                    items: {
+                        type: 'object',
+                        properties: {
+                            _id: {
+                                type: 'string',
+                            },
+                            isDefault: {
+                                type: 'boolean',
+                            },
+                        },
+                        required: [
+                            '_id',
+                            'isDefault',
+                        ],
+                    },
+                },
+            },
+            required: [
+                'languages',
+            ],
+        },
+    },
+};
+
 const deleteTenantSchema = {
     schema: {
         params: {
@@ -152,6 +194,7 @@ const getAliasByIdTenantSchema = {
 module.exports = {
     createTenantSchema,
     updateTenantSettingsSchema,
+    updateTenantLanguageSettingsSchema,
     deleteTenantSchema,
     getByIdTenantSchema,
     getAllTenantsSchema,

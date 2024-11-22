@@ -7,6 +7,7 @@ const {
     getByIdTenantSchema,
     getAllTenantsSchema,
     getAliasByIdTenantSchema,
+    updateTenantLanguageSettingsSchema,
 } = require('./tenant.schema');
 
 module.exports = (fastify, opts, done) => {
@@ -45,6 +46,19 @@ module.exports = (fastify, opts, done) => {
             ],
         },
         tenantController.updateSettings
+    );
+
+    fastify.put(
+        '/:tenantId/languages',
+        {
+            ...updateTenantLanguageSettingsSchema,
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.UPDATE_TENANT),
+                fastify.checkTenantByParams,
+            ],
+        },
+        tenantController.updateLanguageSettings
     );
 
     fastify.delete(

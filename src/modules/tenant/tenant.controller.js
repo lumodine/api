@@ -118,6 +118,40 @@ const updateSettings = async (request, reply) => {
     });
 };
 
+const updateLanguageSettings = async (request, reply) => {
+    const {
+        tenantId,
+    } = request.params;
+    const {
+        languages,
+    } = request.body;
+
+    const payload = {
+        languages,
+    };
+
+    const updatedTenant = await Tenant.findByIdAndUpdate(
+        tenantId,
+        payload,
+        {
+            new: true,
+        }
+    );
+
+    if (!updatedTenant) {
+        return reply.send({
+            success: false,
+            message: 'tenant_update_error',
+        });
+    }
+
+    return reply.send({
+        success: true,
+        message: 'tenant_update_success',
+        data: updatedTenant,
+    });
+};
+
 const remove = async (request, reply) => {
     const isRemoved = await Tenant.findByIdAndDelete(request.tenant._id);
     if (!isRemoved) {
@@ -136,15 +170,19 @@ const remove = async (request, reply) => {
 const getAll = async (request, reply) => {
     const userId = request.user.sub;
 
-    const tenants = await Tenant.find({
-        users: {
-            $in: [
-                {
-                    _id: userId,
-                },
-            ],
-        },
-    });
+    const tenants = await Tenant.find(
+        {
+            users: {
+                $in: [
+                    {
+                        _id: userId,
+                    },
+                ],
+            },
+        }
+    )
+        .populate('languages._id')
+        .populate('currencies._id');
 
     if (tenants.length === 0) {
         return reply.send({
@@ -160,9 +198,20 @@ const getAll = async (request, reply) => {
 };
 
 const getById = async (request, reply) => {
+    const tenantId = request.tenant._id;
+
+    const tenant = await Tenant
+        .findOne(
+            {
+                _id: tenantId,
+            }
+        )
+        .populate('languages._id')
+        .populate('currencies._id');
+
     return reply.send({
         success: true,
-        data: request.tenant,
+        data: tenant,
     });
 };
 
@@ -176,6 +225,7 @@ const getAliasById = async (request, reply) => {
 module.exports = {
     create,
     updateSettings,
+    updateLanguageSettings,
     remove,
     getAll,
     getById,
