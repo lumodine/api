@@ -1,11 +1,19 @@
 const createUnitSchema = {
     schema: {
-        body: {
+        params: {
             type: 'object',
             properties: {
                 tenantId: {
                     type: 'string',
                 },
+            },
+            required: [
+                'tenantId',
+            ],
+        },
+        body: {
+            type: 'object',
+            properties: {
                 translations: {
                     type: 'array',
                     items: {
@@ -26,7 +34,6 @@ const createUnitSchema = {
                 },
             },
             required: [
-                'tenantId',
                 'translations',
             ],
         },
@@ -38,20 +45,21 @@ const updateUnitSchema = {
         params: {
             type: 'object',
             properties: {
+                tenantId: {
+                    type: 'string',
+                },
                 unitId: {
                     type: 'string',
                 },
             },
             required: [
+                'tenantId',
                 'unitId',
             ],
         },
         body: {
             type: 'object',
             properties: {
-                tenantId: {
-                    type: 'string',
-                },
                 translations: {
                     type: 'array',
                     items: {
@@ -72,7 +80,6 @@ const updateUnitSchema = {
                 },
             },
             required: [
-                'tenantId',
                 'translations',
             ],
         },
@@ -84,11 +91,15 @@ const deleteUnitSchema = {
         params: {
             type: 'object',
             properties: {
+                tenantId: {
+                    type: 'string',
+                },
                 unitId: {
                     type: 'string',
                 },
             },
             required: [
+                'tenantId',
                 'unitId',
             ],
         },
@@ -100,18 +111,36 @@ const getByIdUnitSchema = {
         params: {
             type: 'object',
             properties: {
+                tenantId: {
+                    type: 'string',
+                },
                 unitId: {
                     type: 'string',
                 },
             },
             required: [
+                'tenantId',
                 'unitId',
             ],
         },
     },
 };
 
-const getAllUnitsSchema = {};
+const getAllUnitsSchema = {
+    schema: {
+        params: {
+            type: 'object',
+            properties: {
+                tenantId: {
+                    type: 'string',
+                },
+            },
+            required: [
+                'tenantId',
+            ],
+        },
+    },
+};
 
 module.exports = {
     createUnitSchema,

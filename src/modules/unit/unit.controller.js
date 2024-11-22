@@ -4,6 +4,9 @@ const Tenant = require('../tenant/tenant.model');
 const create = async (request, reply) => {
     const {
         tenantId,
+    } = request.params;
+    
+    const {
         translations,
     } = request.body;
 
@@ -33,6 +36,7 @@ const update = async (request, reply) => {
         tenantId,
         unitId,
     } = request.params;
+
     const {
         translations,
     } = request.body;
@@ -74,6 +78,7 @@ const update = async (request, reply) => {
 
     return reply.send({
         success: true,
+        message: 'unit_update_success',
         data: updatedUnit,
     });
 };
@@ -112,11 +117,15 @@ const remove = async (request, reply) => {
 };
 
 const getAll = async (request, reply) => {
-    const { tenantId } = request.params;
+    const {
+        tenantId,
+    } = request.params;
+
     const units = await Unit
         .find({
             tenantId,
-        });
+        })
+        .populate('translations.languageId');
 
     if (units.length === 0) {
         return reply.send({
@@ -134,14 +143,15 @@ const getAll = async (request, reply) => {
 const getById = async (request, reply) => {
     const {
         tenantId,
-        unitId
+        unitId,
     } = request.params;
 
     const unit = await Unit
         .findOne({
             tenantId,
             _id: unitId,
-        });
+        })
+        .populate('translations.languageId');
 
     if (!unit) {
         return reply.send({
