@@ -65,7 +65,7 @@ const createTenantSchema = {
     },
 };
 
-const updateTenantSchema = {
+const updateTenantSettingsSchema = {
     schema: {
         params: {
             type: 'object',
@@ -87,60 +87,13 @@ const updateTenantSchema = {
                 name: {
                     type: 'string',
                 },
-                logo: {
-                    type: 'string',
-                },
-                background: {
-                    type: 'string',
-                },
                 address: {
                     type: 'string',
-                },
-                theme: {
-                    type: 'string',
-                },
-                languages: {
-                    type: 'array',
-                    items: {
-                        type: 'object',
-                        properties: {
-                            _id: {
-                                type: 'string',
-                            },
-                            isDefault: {
-                                type: 'boolean',
-                            },
-                        },
-                        required: [
-                            '_id',
-                            'isDefault',
-                        ],
-                    },
-                },
-                currencies: {
-                    type: 'array',
-                    items: {
-                        type: 'object',
-                        properties: {
-                            _id: {
-                                type: 'string',
-                            },
-                            isDefault: {
-                                type: 'boolean',
-                            },
-                        },
-                        required: [
-                            '_id',
-                            'isDefault',
-                        ],
-                    },
                 },
             },
             required: [
                 'alias',
                 'name',
-                'languages',
-                'currencies',
             ],
         },
     },
@@ -198,7 +151,7 @@ const getAliasByIdTenantSchema = {
 
 module.exports = {
     createTenantSchema,
-    updateTenantSchema,
+    updateTenantSettingsSchema,
     deleteTenantSchema,
     getByIdTenantSchema,
     getAllTenantsSchema,

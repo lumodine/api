@@ -66,24 +66,19 @@ const create = async (request, reply) => {
     });
 };
 
-const update = async (request, reply) => {
+const updateSettings = async (request, reply) => {
     const {
-        alias,
+        tenantId,
+    } = request.params;
+    const {
         name,
-        logo,
-        background,
+        alias,
         address,
-        theme,
-        languages,
-        currencies,
     } = request.body;
-
-    //TODO: check languages._id
-    //TODO: check currencies._id
 
     const hasTenant = await Tenant.findOne({
         _id: {
-            $ne: request.tenant._id,
+            $ne: tenantId,
         },
         alias,
     });
@@ -96,14 +91,9 @@ const update = async (request, reply) => {
     }
 
     const payload = {
-        alias,
         name,
-        logo,
-        background,
+        alias,
         address,
-        theme,
-        languages,
-        currencies,
     };
 
     const updatedTenant = await Tenant.findByIdAndUpdate(
@@ -123,6 +113,7 @@ const update = async (request, reply) => {
 
     return reply.send({
         success: true,
+        message: 'tenant_update_success',
         data: updatedTenant,
     });
 };
@@ -184,7 +175,7 @@ const getAliasById = async (request, reply) => {
 
 module.exports = {
     create,
-    update,
+    updateSettings,
     remove,
     getAll,
     getById,
