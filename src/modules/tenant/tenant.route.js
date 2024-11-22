@@ -8,6 +8,7 @@ const {
     getAllTenantsSchema,
     getAliasByIdTenantSchema,
     updateTenantLanguageSettingsSchema,
+    updateTenantCurrencySettingsSchema,
 } = require('./tenant.schema');
 
 module.exports = (fastify, opts, done) => {
@@ -59,6 +60,19 @@ module.exports = (fastify, opts, done) => {
             ],
         },
         tenantController.updateLanguageSettings
+    );
+
+    fastify.put(
+        '/:tenantId/currencies',
+        {
+            ...updateTenantCurrencySettingsSchema,
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.UPDATE_TENANT),
+                fastify.checkTenantByParams,
+            ],
+        },
+        tenantController.updateCurrencySettings
     );
 
     fastify.delete(

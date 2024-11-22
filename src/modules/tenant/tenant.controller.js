@@ -152,6 +152,40 @@ const updateLanguageSettings = async (request, reply) => {
     });
 };
 
+const updateCurrencySettings = async (request, reply) => {
+    const {
+        tenantId,
+    } = request.params;
+    const {
+        currencies,
+    } = request.body;
+
+    const payload = {
+        currencies,
+    };
+
+    const updatedTenant = await Tenant.findByIdAndUpdate(
+        tenantId,
+        payload,
+        {
+            new: true,
+        }
+    );
+
+    if (!updatedTenant) {
+        return reply.send({
+            success: false,
+            message: 'tenant_update_error',
+        });
+    }
+
+    return reply.send({
+        success: true,
+        message: 'tenant_update_success',
+        data: updatedTenant,
+    });
+};
+
 const remove = async (request, reply) => {
     const isRemoved = await Tenant.findByIdAndDelete(request.tenant._id);
     if (!isRemoved) {
@@ -226,6 +260,7 @@ module.exports = {
     create,
     updateSettings,
     updateLanguageSettings,
+    updateCurrencySettings,
     remove,
     getAll,
     getById,

@@ -141,6 +141,48 @@ const updateTenantLanguageSettingsSchema = {
     },
 };
 
+const updateTenantCurrencySettingsSchema = {
+    schema: {
+        params: {
+            type: 'object',
+            properties: {
+                tenantId: {
+                    type: 'string',
+                },
+            },
+            required: [
+                'tenantId',
+            ],
+        },
+        body: {
+            type: 'object',
+            properties: {
+                currencies: {
+                    type: 'array',
+                    items: {
+                        type: 'object',
+                        properties: {
+                            _id: {
+                                type: 'string',
+                            },
+                            isDefault: {
+                                type: 'boolean',
+                            },
+                        },
+                        required: [
+                            '_id',
+                            'isDefault',
+                        ],
+                    },
+                },
+            },
+            required: [
+                'currencies',
+            ],
+        },
+    },
+};
+
 const deleteTenantSchema = {
     schema: {
         params: {
@@ -195,6 +237,7 @@ module.exports = {
     createTenantSchema,
     updateTenantSettingsSchema,
     updateTenantLanguageSettingsSchema,
+    updateTenantCurrencySettingsSchema,
     deleteTenantSchema,
     getByIdTenantSchema,
     getAllTenantsSchema,
