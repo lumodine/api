@@ -1,6 +1,6 @@
 const Tenant = require('./tenant.model');
 const { USER_ROLES } = require('../user/user.constant');
-const { MENUS } = require('./tenant.constant');
+const { MENUS, THEMES } = require('./tenant.constant');
 const qrcode = require("@lumodine/qrcode");
 const { mongoose } = require('@lumodine/mongodb');
 
@@ -186,6 +186,40 @@ const updateCurrencySettings = async (request, reply) => {
     });
 };
 
+const updateTheme = async (request, reply) => {
+    const {
+        tenantId,
+    } = request.params;
+    const {
+        theme,
+    } = request.body;
+
+    const payload = {
+        theme,
+    };
+
+    const updatedTenant = await Tenant.findByIdAndUpdate(
+        tenantId,
+        payload,
+        {
+            new: true,
+        }
+    );
+
+    if (!updatedTenant) {
+        return reply.send({
+            success: false,
+            message: 'tenant_update_error',
+        });
+    }
+
+    return reply.send({
+        success: true,
+        message: 'tenant_update_success',
+        data: updatedTenant,
+    });
+};
+
 const remove = async (request, reply) => {
     const isRemoved = await Tenant.findByIdAndDelete(request.tenant._id);
     if (!isRemoved) {
@@ -256,13 +290,24 @@ const getAliasById = async (request, reply) => {
     });
 };
 
+const getAllThemes = async (request, reply) => {
+    const themes = Object.values(THEMES);
+
+    return reply.send({
+        success: true,
+        data: themes,
+    });
+};
+
 module.exports = {
     create,
     updateSettings,
     updateLanguageSettings,
     updateCurrencySettings,
+    updateTheme,
     remove,
     getAll,
     getById,
     getAliasById,
+    getAllThemes,
 };

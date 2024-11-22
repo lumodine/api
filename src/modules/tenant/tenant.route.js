@@ -9,6 +9,8 @@ const {
     getAliasByIdTenantSchema,
     updateTenantLanguageSettingsSchema,
     updateTenantCurrencySettingsSchema,
+    updateTenantThemeSchema,
+    getAllTenantThemesSchema,
 } = require('./tenant.schema');
 
 module.exports = (fastify, opts, done) => {
@@ -75,6 +77,19 @@ module.exports = (fastify, opts, done) => {
         tenantController.updateCurrencySettings
     );
 
+    fastify.put(
+        '/:tenantId/theme',
+        {
+            ...updateTenantThemeSchema,
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.UPDATE_TENANT),
+                fastify.checkTenantByParams,
+            ],
+        },
+        tenantController.updateTheme
+    );
+
     fastify.delete(
         '/:tenantId',
         {
@@ -110,6 +125,18 @@ module.exports = (fastify, opts, done) => {
             ],
         },
         tenantController.getAliasById
+    );
+
+    fastify.get(
+        '/themes',
+        {
+            ...getAllTenantThemesSchema,
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.GET_ALL_TENANTS),
+            ],
+        },
+        tenantController.getAllThemes
     );
 
     fastify.register(
