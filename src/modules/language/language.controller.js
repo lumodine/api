@@ -5,8 +5,6 @@ const create = async (request, reply) => {
         name,
         shortName,
         culture,
-        prefix,
-        flag,
         direction,
     } = request.body;
 
@@ -32,8 +30,6 @@ const create = async (request, reply) => {
         name,
         shortName,
         culture,
-        prefix,
-        flag,
         direction,
     };
 
@@ -57,8 +53,6 @@ const update = async (request, reply) => {
         name,
         shortName,
         culture,
-        prefix,
-        flag,
         direction,
     } = request.body;
 
@@ -96,8 +90,6 @@ const update = async (request, reply) => {
         name,
         shortName,
         culture,
-        prefix,
-        flag,
         direction,
     };
 

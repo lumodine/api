@@ -1,6 +1,6 @@
 const Tenant = require('./tenant.model');
 const { USER_ROLES } = require('../user/user.constant');
-const { MENUS, THEMES } = require('./tenant.constant');
+const { THEMES } = require('./tenant.constant');
 const qrcode = require("@lumodine/qrcode");
 const { mongoose } = require('@lumodine/mongodb');
 
@@ -8,9 +8,6 @@ const create = async (request, reply) => {
     const {
         alias,
         name,
-        logo,
-        background,
-        theme,
         languages,
         currencies,
     } = request.body;
@@ -26,29 +23,26 @@ const create = async (request, reply) => {
         });
     }
 
-    //TODO: check languages._id
-    //TODO: check currencies._id
+    //TODO: check languages.language
+    //TODO: check currencies.currency
 
     const id = new mongoose.Types.ObjectId();
-    const userId = request.user.sub;
+    const { sub } = request.user;
     const qrCodes = await qrcode.createTenantById(id);
 
     const payload = {
         _id: id,
         users: [
             {
-                _id: userId,
+                user: sub,
                 role: USER_ROLES.TENANT_ADMIN,
             },
         ],
         alias,
         name,
-        logo,
-        background,
-        theme,
-        qrCodes,
         languages,
         currencies,
+        qrCodes,
     };
 
     const createdTenant = await (new Tenant(payload)).save();
@@ -236,21 +230,20 @@ const remove = async (request, reply) => {
 };
 
 const getAll = async (request, reply) => {
-    const userId = request.user.sub;
+    const { sub } = request.user;
 
-    const tenants = await Tenant.find(
-        {
-            users: {
-                $in: [
-                    {
-                        _id: userId,
-                    },
-                ],
-            },
-        }
-    )
-        .populate('languages._id')
-        .populate('currencies._id');
+    const tenants = await Tenant
+        .find(
+            {
+                'users.user': {
+                    $in: [
+                        sub,
+                    ],
+                },
+            }
+        )
+        .populate('languages.language')
+        .populate('currencies.currency');
 
     if (tenants.length === 0) {
         return reply.send({
@@ -267,15 +260,24 @@ const getAll = async (request, reply) => {
 
 const getById = async (request, reply) => {
     const tenantId = request.tenant._id;
+    const { sub } = request.user;
+
+    console.log(tenantId);
+    
 
     const tenant = await Tenant
         .findOne(
             {
                 _id: tenantId,
+                'users.user': {
+                    $in: [
+                        sub,
+                    ],
+                },
             }
         )
-        .populate('languages._id')
-        .populate('currencies._id');
+        .populate('languages.language')
+        .populate('currencies.currency');
 
     return reply.send({
         success: true,

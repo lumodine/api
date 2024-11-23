@@ -3,7 +3,7 @@ const crypto = require('@lumodine/crypto');
 const { TOKEN_TYPES } = require('./token.constant');
 
 const schema = new mongoose.Schema({
-    userId: {
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'user',

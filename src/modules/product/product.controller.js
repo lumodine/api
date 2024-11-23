@@ -6,20 +6,19 @@ const create = async (request, reply) => {
     const {
         translations,
         image,
-        categories,
+        category,
         prices,
     } = request.body;
 
-    //TODO: check translations.languageId
-    //TODO: check categories
-    //TODO: check prices.currencyId
-    //TODO: check prices.unitId
+    //TODO: check translations.language
+    //TODO: check category
+    //TODO: check prices.currency
 
     const payload = {
-        tenantId,
+        tenant: tenantId,
         translations,
         image,
-        categories,
+        category,
         prices,
     };
 
@@ -47,13 +46,13 @@ const update = async (request, reply) => {
     const {
         translations,
         image,
-        categories,
+        category,
         prices,
     } = request.body;
 
     const product = await Product
         .findOne({
-            tenantId,
+            tenant: tenantId,
             _id: productId,
         });
 
@@ -64,16 +63,15 @@ const update = async (request, reply) => {
         });
     }
 
-    //TODO: check translations.languageId
-    //TODO: check categories
-    //TODO: check prices.currencyId
-    //TODO: check prices.unitId
+    //TODO: check translations.language
+    //TODO: check category
+    //TODO: check prices.currency
 
     const payload = {
-        tenantId,
+        tenant: tenantId,
         translations,
         image,
-        categories,
+        category,
         prices,
     };
 
@@ -106,7 +104,7 @@ const remove = async (request, reply) => {
 
     const product = await Product
         .findOne({
-            tenantId,
+            tenant: tenantId,
             _id: productId,
         });
 
@@ -135,7 +133,7 @@ const getAll = async (request, reply) => {
     const { tenantId } = request.params;
     const products = await Product
         .find({
-            tenantId,
+            tenant: tenantId,
         }).sort({
             sort: 1
         });
@@ -161,7 +159,7 @@ const getById = async (request, reply) => {
 
     const product = await Product
         .findOne({
-            tenantId,
+            tenant: tenantId,
             _id: productId,
         });
 
@@ -220,7 +218,7 @@ const updateStatus = async (request, reply) => {
 
     const product = await Product
         .findOne({
-            tenantId,
+            tenant: tenantId,
             _id: productId,
         });
 
@@ -254,6 +252,49 @@ const updateStatus = async (request, reply) => {
     });
 };
 
+const updateType = async (request, reply) => {
+    const {
+        tenantId,
+        productId
+    } = request.params;
+    const { type } = request.body;
+
+    const product = await Product
+        .findOne({
+            tenant: tenantId,
+            _id: productId,
+        });
+
+    if (!product) {
+        return reply.send({
+            success: false,
+            message: 'product_not_found',
+        });
+    }
+
+    const updatedProduct = await Product.findByIdAndUpdate(
+        productId,
+        {
+            type,
+        },
+        {
+            new: true,
+        }
+    );
+
+    if (!updatedProduct) {
+        return reply.send({
+            success: false,
+            message: 'product_type_error',
+        });
+    }
+
+    return reply.send({
+        success: true,
+        message: 'product_type_success',
+    });
+};
+
 module.exports = {
     create,
     update,
@@ -262,4 +303,5 @@ module.exports = {
     getById,
     updateSort,
     updateStatus,
+    updateType,
 };

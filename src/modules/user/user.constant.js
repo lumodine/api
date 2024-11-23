@@ -19,10 +19,6 @@ const PERMISSIONS = {
     UPDATE_CURRENCY: 'update:currency',
     DELETE_CURRENCY: 'delete:currency',
 
-    CREATE_UNIT: 'create:unit',
-    UPDATE_UNIT: 'update:unit',
-    DELETE_UNIT: 'delete:unit',
-
     GET_ALL_USERS: 'get:users',
     GET_USER: 'get:user',
     CREATE_USER: 'create:user',
@@ -61,10 +57,6 @@ const USER_PERMISSIONS = {
         PERMISSIONS.CREATE_CURRENCY,
         PERMISSIONS.UPDATE_CURRENCY,
         PERMISSIONS.DELETE_CURRENCY,
-
-        PERMISSIONS.CREATE_UNIT,
-        PERMISSIONS.UPDATE_UNIT,
-        PERMISSIONS.DELETE_UNIT,
 
         PERMISSIONS.GET_ALL_USERS,
         PERMISSIONS.GET_USER,

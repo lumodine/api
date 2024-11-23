@@ -1,21 +1,14 @@
 const userController = require('./user.controller');
 const { PERMISSIONS } = require('../user/user.constant');
-const {
-    createUserSchema,
-    updateUserSchema,
-    deleteUserSchema,
-    getByIdUserSchema,
-    getAllUsersSchema,
-} = require('./user.schema');
 
 module.exports = (fastify, opts, done) => {
     fastify.post(
         '/',
         {
-            ...createUserSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.CREATE_USER),
+                fastify.checkTenantByParams,
             ],
         },
         userController.create
@@ -24,10 +17,10 @@ module.exports = (fastify, opts, done) => {
     fastify.get(
         '/',
         {
-            ...getAllUsersSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.GET_ALL_USERS),
+                fastify.checkTenantByParams,
             ],
         },
         userController.getAll
@@ -36,10 +29,10 @@ module.exports = (fastify, opts, done) => {
     fastify.put(
         '/:id',
         {
-            ...updateUserSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.UPDATE_USER),
+                fastify.checkTenantByParams,
             ],
         },
         userController.update
@@ -48,10 +41,10 @@ module.exports = (fastify, opts, done) => {
     fastify.delete(
         '/:id',
         {
-            ...deleteUserSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.DELETE_USER),
+                fastify.checkTenantByParams,
             ],
         },
         userController.remove
@@ -60,10 +53,10 @@ module.exports = (fastify, opts, done) => {
     fastify.get(
         '/:id',
         {
-            ...getByIdUserSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.GET_USER),
+                fastify.checkTenantByParams,
             ],
         },
         userController.getById

@@ -16,15 +16,6 @@ const schema = new mongoose.Schema({
         required: true,
         unique: true,
     },
-    prefix: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    flag: {
-        type: String,
-        required: true,
-    },
     direction: {
         type: String,
         required: true,

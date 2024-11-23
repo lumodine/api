@@ -1,16 +1,16 @@
 const { mongoose } = require('@lumodine/mongodb');
 const baseModel = require('../common/base.model');
-const { PRODUCT_STATUS } = require('./product.constant');
+const { PRODUCT_STATUS, PRODUCT_TYPES } = require('./product.constant');
 
 const schema = new mongoose.Schema({
-    tenantId: {
+    tenant: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'tenant',
         required: true,
     },
     translations: [
         {
-            languageId: {
+            language: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'language',
                 required: true,
@@ -27,40 +27,39 @@ const schema = new mongoose.Schema({
     image: {
         type: String,
     },
-    categories: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'category',
-            required: true,
-        },
-    ],
+    category: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'category',
+        required: true,
+    },
     prices: [
         {
-            currencyId: {
+            currency: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'currency',
                 required: true,
             },
-            unitId: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'unit',
-                required: true,
-            },
-            price: {
+            amount: {
                 type: Number,
                 required: true,
             },
         },
     ],
-    sort: {
-        type: Number,
-        default: 1,
+    type: {
+        type: String,
+        required: true,
+        enum: Object.values(PRODUCT_TYPES),
+        default: PRODUCT_TYPES.ROW,
     },
     status: {
         type: String,
         required: true,
         enum: Object.values(PRODUCT_STATUS),
         default: PRODUCT_STATUS.PUBLISHED,
+    },
+    sort: {
+        type: Number,
+        default: 1,
     },
     ...baseModel.fields,
 }, { ...baseModel.options });

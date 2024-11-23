@@ -1,19 +1,10 @@
 const categoryController = require('./category.controller');
 const { PERMISSIONS } = require('../user/user.constant');
-const {
-    createCategorySchema,
-    updateCategorySchema,
-    deleteCategorySchema,
-    getByIdCategorySchema,
-    getAllCategoriesSchema,
-    updateCategorySortSchema,
-} = require('./category.schema');
 
 module.exports = (fastify, opts, done) => {
     fastify.post(
         '/',
         {
-            ...createCategorySchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.CREATE_CATEGORY),
@@ -26,7 +17,6 @@ module.exports = (fastify, opts, done) => {
     fastify.get(
         '/',
         {
-            ...getAllCategoriesSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.GET_ALL_CATEGORIES),
@@ -39,7 +29,6 @@ module.exports = (fastify, opts, done) => {
     fastify.put(
         '/:categoryId',
         {
-            ...updateCategorySchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.UPDATE_CATEGORY),
@@ -52,7 +41,6 @@ module.exports = (fastify, opts, done) => {
     fastify.delete(
         '/:categoryId',
         {
-            ...deleteCategorySchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.DELETE_CATEGORY),
@@ -65,7 +53,6 @@ module.exports = (fastify, opts, done) => {
     fastify.get(
         '/:categoryId',
         {
-            ...getByIdCategorySchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.GET_CATEGORY),
@@ -78,7 +65,6 @@ module.exports = (fastify, opts, done) => {
     fastify.put(
         '/sort',
         {
-            ...updateCategorySortSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.UPDATE_CATEGORY),
@@ -86,6 +72,30 @@ module.exports = (fastify, opts, done) => {
             ],
         },
         categoryController.updateSort,
+    );
+
+    fastify.put(
+        '/:categoryId/status',
+        {
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.UPDATE_CATEGORY),
+                fastify.checkTenantByParams,
+            ],
+        },
+        categoryController.updateStatus,
+    );
+
+    fastify.put(
+        '/:categoryId/type',
+        {
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.UPDATE_CATEGORY),
+                fastify.checkTenantByParams,
+            ],
+        },
+        categoryController.updateType,
     );
 
     done();

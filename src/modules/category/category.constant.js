@@ -1,14 +1,14 @@
-const PRODUCT_STATUS = {
+const CATEGORY_STATUS = {
     PUBLISHED: 'published',
     NOT_AVAILABLE: 'not_available',
 };
 
-const PRODUCT_TYPES = {
+const CATEGORY_TYPES = {
     ROW: 'row',
     GRID: 'grid',
 };
 
 module.exports = {
-    PRODUCT_STATUS,
-    PRODUCT_TYPES,
+    CATEGORY_STATUS,
+    CATEGORY_TYPES,
 };

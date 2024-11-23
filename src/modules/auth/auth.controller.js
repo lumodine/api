@@ -1,4 +1,3 @@
-const { USER_PERMISSIONS } = require('../user/user.constant');
 const User = require('../user/user.model');
 const Token = require('../token/token.model');
 const { TOKEN_TYPES } = require('../token/token.constant');
@@ -109,13 +108,13 @@ const forgotPassword = async (request, reply) => {
 
     if (user) {
         let token = await Token.findOne({
-            userId: user._id,
+            user: user._id,
             type: TOKEN_TYPES.FORGOT_PASSWORD,
         });
 
         if (!token) {
             token = await (new Token({
-                userId: user._id,
+                user: user._id,
                 type: TOKEN_TYPES.FORGOT_PASSWORD,
             })).save();
         }
@@ -162,7 +161,7 @@ const resetPassword = async (request, reply) => {
         });
     }
 
-    const updatedUser = await User.findByIdAndUpdate(token.userId, {
+    const updatedUser = await User.findByIdAndUpdate(token.user, {
         password,
     }, {
         new: true,
@@ -193,9 +192,9 @@ const resetPassword = async (request, reply) => {
 };
 
 const getMe = async (request, reply) => {
-    const userId = request.user.sub;
+    const { sub } = request.user;
 
-    const user = await User.findById(userId);
+    const user = await User.findById(sub);
 
     if (!user) {
         return reply.send({

@@ -19,9 +19,9 @@ async function authPlugin(fastify, options) {
   });
 
   fastify.decorate('authorize', (requiredPermission) => async (request, reply) => {
-    /*const userId = request.user.sub;
+    /*const { sub } = request.user;
 
-    const user = await User.findById(userId);
+    const user = await User.findById(sub);
 
     if (!user) {
       return reply.code(403).send({

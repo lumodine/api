@@ -1,15 +1,16 @@
 const { mongoose } = require('@lumodine/mongodb');
 const baseModel = require('../common/base.model');
+const { CATEGORY_STATUS, CATEGORY_TYPES } = require('./category.constant');
 
 const schema = new mongoose.Schema({
-    tenantId: {
+    tenant: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'tenant',
         required: true,
     },
     translations: [
         {
-            languageId: {
+            language: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'language',
                 required: true,
@@ -25,6 +26,22 @@ const schema = new mongoose.Schema({
     ],
     image: {
         type: String,
+    },
+    parentCategory: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'category',
+    },
+    type: {
+        type: String,
+        required: true,
+        enum: Object.values(CATEGORY_TYPES),
+        default: CATEGORY_TYPES.ROW,
+    },
+    status: {
+        type: String,
+        required: true,
+        enum: Object.values(CATEGORY_STATUS),
+        default: CATEGORY_STATUS.PUBLISHED,
     },
     sort: {
         type: Number,

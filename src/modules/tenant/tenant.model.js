@@ -6,7 +6,7 @@ const { THEMES } = require('./tenant.constant');
 const schema = new mongoose.Schema({
     users: [
         {
-            _id: {
+            user: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'user',
                 required: true,
@@ -62,7 +62,7 @@ const schema = new mongoose.Schema({
     },
     languages: [
         {
-            _id: {
+            language: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'language',
                 required: true,
@@ -75,7 +75,7 @@ const schema = new mongoose.Schema({
     ],
     currencies: [
         {
-            _id: {
+            currency: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'currency',
                 required: true,

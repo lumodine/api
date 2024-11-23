@@ -1,18 +1,10 @@
 const currencyController = require('./currency.controller');
 const { PERMISSIONS } = require('../user/user.constant');
-const {
-    createCurrencySchema,
-    updateCurrencySchema,
-    deleteCurrencySchema,
-    getByIdCurrencySchema,
-    getAllCurrenciesSchema,
-} = require('./currency.schema');
 
 module.exports = (fastify, opts, done) => {
     fastify.post(
         '/',
         {
-            ...createCurrencySchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.CREATE_CURRENCY),
@@ -23,14 +15,12 @@ module.exports = (fastify, opts, done) => {
 
     fastify.get(
         '/',
-        getAllCurrenciesSchema,
         currencyController.getAll
     );
 
     fastify.put(
         '/:currencyId',
         {
-            ...updateCurrencySchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.UPDATE_CURRENCY),
@@ -42,7 +32,6 @@ module.exports = (fastify, opts, done) => {
     fastify.delete(
         '/:currencyId',
         {
-            ...deleteCurrencySchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.DELETE_CURRENCY),
@@ -53,7 +42,6 @@ module.exports = (fastify, opts, done) => {
 
     fastify.get(
         '/:currencyId',
-        getByIdCurrencySchema,
         currencyController.getById
     );
 

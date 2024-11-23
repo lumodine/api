@@ -8,18 +8,16 @@ async function tenantPlugin(fastify, options) {
             tenantAlias,
         } = request.params;
 
-        const userId = request?.user?.sub;
+        const { sub } = request?.user ?? {};
 
         let query = {};
 
-        if (userId !== undefined) {
+        if (sub !== undefined) {
             query = {
                 ...query,
-                users: {
+                'users.user': {
                     $in: [
-                        {
-                            _id: userId,
-                        },
+                        sub,
                     ],
                 },
             };

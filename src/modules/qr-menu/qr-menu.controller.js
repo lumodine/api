@@ -9,8 +9,8 @@ const getDetail = async (request, reply) => {
         .findOne({
             _id: tenantId,
         }, '-qrCodes -users')
-        .populate('languages._id')
-        .populate('currencies._id');
+        .populate('languages.language')
+        .populate('currencies.currency');
 
     return reply.send({
         success: true,
@@ -23,9 +23,9 @@ const getCategories = async (request, reply) => {
 
     const categories = await Category
         .find({
-            tenantId,
+            tenant: tenantId,
         })
-        .populate('translations.languageId');
+        .populate('translations.language');
 
     if (categories.length === 0) {
         return reply.send({
@@ -47,9 +47,9 @@ const getCategoryById = async (request, reply) => {
     const category = await Category
         .findOne({
             _id: categoryId,
-            tenantId,
+            tenant: tenantId,
         })
-        .populate('translations.languageId');
+        .populate('translations.language');
 
     if (!category) {
         return reply.send({
@@ -70,17 +70,13 @@ const getProducts = async (request, reply) => {
 
     const products = await Product
         .find({
-            tenantId,
-            categories: {
-                $in: categoryId,
-            },
+            tenant: tenantId,
+            category: categoryId,
         })
-        .populate('translations.languageId')
-        .populate('categories')
-        .populate('categories.translations.languageId') //TODO
-        .populate('prices.currencyId')
-        .populate('prices.unitId')
-        .populate('prices.unitId.translations.languageId'); //TODO
+        .populate('translations.language')
+        .populate('category')
+        .populate('category.translations.language') //TODO
+        .populate('prices.currency');
 
     if (products.length === 0) {
         return reply.send({

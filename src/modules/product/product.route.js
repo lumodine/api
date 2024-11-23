@@ -1,20 +1,10 @@
 const productController = require('./product.controller');
 const { PERMISSIONS } = require('../user/user.constant');
-const {
-    createProductSchema,
-    updateProductSchema,
-    deleteProductSchema,
-    getByIdProductSchema,
-    getAllProductsSchema,
-    updateProductSortSchema,
-    updateProductStatusSchema,
-} = require('./product.schema');
 
 module.exports = (fastify, opts, done) => {
     fastify.post(
         '/',
         {
-            ...createProductSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.CREATE_PRODUCT),
@@ -27,7 +17,6 @@ module.exports = (fastify, opts, done) => {
     fastify.get(
         '/',
         {
-            ...getAllProductsSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.GET_ALL_PRODUCTS),
@@ -40,7 +29,6 @@ module.exports = (fastify, opts, done) => {
     fastify.put(
         '/:productId',
         {
-            ...updateProductSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.UPDATE_PRODUCT),
@@ -53,7 +41,6 @@ module.exports = (fastify, opts, done) => {
     fastify.delete(
         '/:productId',
         {
-            ...deleteProductSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.DELETE_PRODUCT),
@@ -66,7 +53,6 @@ module.exports = (fastify, opts, done) => {
     fastify.get(
         '/:productId',
         {
-            ...getByIdProductSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.GET_PRODUCT),
@@ -79,7 +65,6 @@ module.exports = (fastify, opts, done) => {
     fastify.put(
         '/sort',
         {
-            ...updateProductSortSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.UPDATE_CATEGORY),
@@ -92,7 +77,6 @@ module.exports = (fastify, opts, done) => {
     fastify.put(
         '/:productId/status',
         {
-            ...updateProductStatusSchema,
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.UPDATE_CATEGORY),
@@ -100,6 +84,18 @@ module.exports = (fastify, opts, done) => {
             ],
         },
         productController.updateStatus,
+    );
+
+    fastify.put(
+        '/:productId/type',
+        {
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.UPDATE_CATEGORY),
+                fastify.checkTenantByParams,
+            ],
+        },
+        productController.updateType,
     );
 
     done();
