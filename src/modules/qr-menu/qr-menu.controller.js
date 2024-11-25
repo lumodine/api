@@ -25,6 +25,9 @@ const getCategories = async (request, reply) => {
         .find({
             tenant: tenantId,
         })
+        .sort({
+            sort: 1,
+        })
         .populate('translations.language');
 
     if (categories.length === 0) {
@@ -72,6 +75,9 @@ const getProducts = async (request, reply) => {
         .find({
             tenant: tenantId,
             category: categoryId,
+        })
+        .sort({
+            sort: 1,
         })
         .populate('translations.language')
         .populate('category')
