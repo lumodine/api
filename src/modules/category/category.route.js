@@ -98,5 +98,12 @@ module.exports = (fastify, opts, done) => {
         categoryController.updateType,
     );
 
+    fastify.register(
+        require('../product'),
+        {
+            prefix: '/:categoryId',
+        },
+    );
+
     done();
 };

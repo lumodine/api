@@ -122,9 +122,12 @@ const getAll = async (request, reply) => {
     const categories = await Category
         .find({
             tenant: tenantId,
-        }).sort({
+        })
+        .sort({
             sort: 1,
-        });
+        })
+        .populate('translations.language')
+        .populate('parentCategory');
 
     if (categories.length === 0) {
         return reply.send({

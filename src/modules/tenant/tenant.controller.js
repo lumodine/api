@@ -262,9 +262,6 @@ const getById = async (request, reply) => {
     const tenantId = request.tenant._id;
     const { sub } = request.user;
 
-    console.log(tenantId);
-    
-
     const tenant = await Tenant
         .findOne(
             {

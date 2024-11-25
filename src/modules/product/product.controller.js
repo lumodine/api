@@ -1,12 +1,14 @@
 const Product = require('./product.model');
 
 const create = async (request, reply) => {
-    const { tenantId } = request.params;
+    const {
+        tenantId,
+        categoryId,
+    } = request.params;
 
     const {
         translations,
         image,
-        category,
         prices,
     } = request.body;
 
@@ -18,7 +20,7 @@ const create = async (request, reply) => {
         tenant: tenantId,
         translations,
         image,
-        category,
+        category: categoryId,
         prices,
     };
 
@@ -40,6 +42,7 @@ const create = async (request, reply) => {
 const update = async (request, reply) => {
     const {
         tenantId,
+        categoryId,
         productId,
     } = request.params;
 
@@ -53,6 +56,7 @@ const update = async (request, reply) => {
     const product = await Product
         .findOne({
             tenant: tenantId,
+            category: categoryId,
             _id: productId,
         });
 
@@ -99,12 +103,14 @@ const update = async (request, reply) => {
 const remove = async (request, reply) => {
     const {
         tenantId,
+        categoryId,
         productId,
     } = request.params;
 
     const product = await Product
         .findOne({
             tenant: tenantId,
+            category: categoryId,
             _id: productId,
         });
 
@@ -130,10 +136,14 @@ const remove = async (request, reply) => {
 };
 
 const getAll = async (request, reply) => {
-    const { tenantId } = request.params;
+    const {
+        tenantId,
+        categoryId,
+    } = request.params;
     const products = await Product
         .find({
             tenant: tenantId,
+            category: categoryId,
         }).sort({
             sort: 1
         });
@@ -154,12 +164,14 @@ const getAll = async (request, reply) => {
 const getById = async (request, reply) => {
     const {
         tenantId,
-        productId
+        categoryId,
+        productId,
     } = request.params;
 
     const product = await Product
         .findOne({
             tenant: tenantId,
+            category: categoryId,
             _id: productId,
         });
 

@@ -125,13 +125,6 @@ module.exports = (fastify, opts, done) => {
     );
 
     fastify.register(
-        require('../product'),
-        {
-            prefix: '/:tenantId',
-        },
-    );
-
-    fastify.register(
         require('../user'),
         {
             prefix: '/:tenantId',
