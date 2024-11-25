@@ -81,6 +81,7 @@ const update = async (request, reply) => {
     return reply.send({
         success: true,
         data: updatedCategory,
+        message: 'category_update_success',
     });
 };
 
@@ -152,7 +153,9 @@ const getById = async (request, reply) => {
         .findOne({
             tenant: tenantId,
             _id: categoryId,
-        });
+        })
+        .populate('translations.language')
+        .populate('parentCategory');
 
     if (!category) {
         return reply.send({
