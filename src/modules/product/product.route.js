@@ -67,7 +67,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.UPDATE_CATEGORY),
+                fastify.authorize(PERMISSIONS.UPDATE_PRODUCT),
                 fastify.checkTenantByParams,
             ],
         },
@@ -79,7 +79,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.UPDATE_CATEGORY),
+                fastify.authorize(PERMISSIONS.UPDATE_PRODUCT),
                 fastify.checkTenantByParams,
             ],
         },
@@ -91,11 +91,23 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.UPDATE_CATEGORY),
+                fastify.authorize(PERMISSIONS.UPDATE_PRODUCT),
                 fastify.checkTenantByParams,
             ],
         },
         productController.updateType,
+    );
+
+    fastify.post(
+        '/:productId/upload/image',
+        {
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.UPDATE_PRODUCT),
+                fastify.checkTenantByParams,
+            ],
+        },
+        productController.uploadImage
     );
 
     done();

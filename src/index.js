@@ -3,16 +3,26 @@ require('dotenv')
 
 const requiredEnvs = [
     'NODE_ENV',
-    'MONGODB_URL',
     'PORT',
+    'MONGODB_URL',
     'BCRYPT_SALT_ROUNDS',
     'JWT_SECRET_KEY',
+    'LANDING_URL',
+    'DASHBOARD_URL',
+    'API_URL',
+    'QR_MENU_URL',
+    'QR_URL',
+    'CDN_URL',
     'EMAIL_HOST',
     'EMAIL_PORT',
     'EMAIL_SECURE',
     'EMAIL_USER_NAME',
     'EMAIL_USER_EMAIL',
     'EMAIL_PASSWORD',
+    'AWS_ACCESS_KEY',
+    'AWS_SECRET_ACCESS_KEY',
+    'AWS_S3_BUCKET',
+    'AWS_S3_REGION',
 ];
 
 const requiredEnvErrors = [];

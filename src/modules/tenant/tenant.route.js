@@ -117,6 +117,30 @@ module.exports = (fastify, opts, done) => {
         tenantController.getAllThemes
     );
 
+    fastify.post(
+        '/:tenantId/upload/logo',
+        {
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.UPDATE_TENANT),
+                fastify.checkTenantByParams,
+            ],
+        },
+        tenantController.uploadLogo
+    );
+
+    fastify.post(
+        '/:tenantId/upload/background',
+        {
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.UPDATE_TENANT),
+                fastify.checkTenantByParams,
+            ],
+        },
+        tenantController.uploadBackground
+    );
+
     fastify.register(
         require('../category'),
         {

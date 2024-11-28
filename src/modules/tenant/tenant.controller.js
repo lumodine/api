@@ -5,6 +5,8 @@ const { USER_ROLES } = require('../user/user.constant');
 const { THEMES } = require('./tenant.constant');
 const qrcode = require("@lumodine/qrcode");
 const { mongoose } = require('@lumodine/mongodb');
+const { s3 } = require('@lumodine/aws');
+const crypto = require('@lumodine/crypto');
 
 const create = async (request, reply) => {
     const {
@@ -232,7 +234,7 @@ const remove = async (request, reply) => {
             tenant: tenantId,
         }),
     ]);
-    
+
     if (!isRemovedTenant) {
         return reply.send({
             success: false,
@@ -315,6 +317,84 @@ const getAllThemes = async (request, reply) => {
     });
 };
 
+const uploadLogo = async (request, reply) => {
+    const { tenantId } = request.params;
+
+    const data = await request.file();
+    const ext = data.filename.split('.').at(-1);
+    const dataBody = await data.toBuffer();
+
+    const { url } = await s3.uploadFile(
+        dataBody,
+        data.mimetype,
+        `${tenantId}/t/${new mongoose.Types.ObjectId()}.${ext}`,
+        {
+            Tagging: `tenantId=${tenantId}&type=tenant-logo`
+        }
+    );
+
+    const updatedTenant = await Tenant.findByIdAndUpdate(
+        tenantId,
+        {
+            logo: url,
+        },
+        {
+            new: true,
+        }
+    );
+
+    if (!updatedTenant) {
+        return reply.send({
+            success: false,
+            message: 'tenant_update_error',
+        });
+    }
+
+    return reply.send({
+        success: true,
+        message: 'tenant_update_success',
+    });
+};
+
+const uploadBackground = async (request, reply) => {
+    const { tenantId } = request.params;
+
+    const data = await request.file();
+    const ext = data.filename.split('.').at(-1);
+    const dataBody = await data.toBuffer();
+
+    const { url } = await s3.uploadFile(
+        dataBody,
+        data.mimetype,
+        `${tenantId}/t/${crypto.random()}.${ext}`,
+        {
+            Tagging: `tenantId=${tenantId}&type=tenant-background`
+        }
+    );
+
+    const updatedTenant = await Tenant.findByIdAndUpdate(
+        tenantId,
+        {
+            background: url,
+        },
+        {
+            new: true,
+        }
+    );
+
+    if (!updatedTenant) {
+        return reply.send({
+            success: false,
+            message: 'tenant_update_error',
+        });
+    }
+
+    return reply.send({
+        success: true,
+        message: 'tenant_update_success',
+    });
+};
+
 module.exports = {
     create,
     updateSettings,
@@ -326,4 +406,6 @@ module.exports = {
     getById,
     getAliasById,
     getAllThemes,
+    uploadLogo,
+    uploadBackground,
 };

@@ -98,6 +98,18 @@ module.exports = (fastify, opts, done) => {
         categoryController.updateType,
     );
 
+    fastify.post(
+        '/:categoryId/upload/image',
+        {
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.UPDATE_CATEGORY),
+                fastify.checkTenantByParams,
+            ],
+        },
+        categoryController.uploadImage
+    );
+
     fastify.register(
         require('../product'),
         {

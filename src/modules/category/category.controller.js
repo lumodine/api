@@ -1,5 +1,7 @@
 const Category = require('./category.model');
 const Product = require('../product/product.model');
+const { s3 } = require('@lumodine/aws');
+const crypto = require('@lumodine/crypto');
 
 const create = async (request, reply) => {
     const { tenantId } = request.params;
@@ -299,6 +301,48 @@ const updateType = async (request, reply) => {
     });
 };
 
+const uploadImage = async (request, reply) => {
+    const {
+        tenantId,
+        categoryId
+    } = request.params;
+
+    const data = await request.file();
+    const ext = data.filename.split('.').at(-1);
+    const dataBody = await data.toBuffer();
+
+    const { url } = await s3.uploadFile(
+        dataBody,
+        data.mimetype,
+        `${tenantId}/c/${crypto.random()}.${ext}`,
+        {
+            Tagging: `tenantId=${tenantId}&categoryId=${categoryId}&type=category-image`
+        }
+    );
+
+    const updatedCategory = await Category.findByIdAndUpdate(
+        categoryId,
+        {
+            image: url,
+        },
+        {
+            new: true,
+        }
+    );
+
+    if (!updatedCategory) {
+        return reply.send({
+            success: false,
+            message: 'category_update_error',
+        });
+    }
+
+    return reply.send({
+        success: true,
+        message: 'category_update_success',
+    });
+};
+
 module.exports = {
     create,
     update,
@@ -308,4 +352,5 @@ module.exports = {
     updateSort,
     updateStatus,
     updateType,
+    uploadImage,
 };

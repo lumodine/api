@@ -22,6 +22,8 @@ fastify.setValidatorCompiler(({ schema, method, url, httpPart }) => {
 });
 
 fastify.register(cors);
+fastify.register(require('@fastify/multipart'));
+
 fastify.register(require('./plugins/auth.plugin'));
 fastify.register(require('./plugins/tenant.plugin'));
 
@@ -29,7 +31,6 @@ fastify.register(require('./modules/auth'));
 fastify.register(require('./modules/language'));
 fastify.register(require('./modules/currency'));
 fastify.register(require('./modules/tenant'));
-fastify.register(require('./modules/user'));
 fastify.register(require('./modules/qr-menu'));
 
 const port = process.env.PORT || 3000;
