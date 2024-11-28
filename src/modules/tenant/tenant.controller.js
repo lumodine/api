@@ -384,7 +384,7 @@ const uploadBackground = async (request, reply) => {
     const { url } = await s3.uploadFile(
         dataBody,
         data.mimetype,
-        `${tenantId}/t/${crypto.random()}.${ext}`,
+        `${tenantId}/t/${crypto.random(32)}.${ext}`,
         {
             Tagging: `tenantId=${tenantId}&type=tenant-background`
         }

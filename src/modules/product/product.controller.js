@@ -327,7 +327,7 @@ const uploadImage = async (request, reply) => {
     const { url } = await s3.uploadFile(
         dataBody,
         data.mimetype,
-        `${tenantId}/p/${crypto.random()}.${ext}`,
+        `${tenantId}/p/${crypto.random(32)}.${ext}`,
         {
             Tagging: `tenantId=${tenantId}&productId=${productId}&type=product-image`
         }
