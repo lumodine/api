@@ -24,8 +24,8 @@ fastify.setValidatorCompiler(({ schema, method, url, httpPart }) => {
 fastify.register(cors);
 fastify.register(require('@fastify/multipart'));
 
-fastify.register(require('./plugins/auth.plugin'));
-fastify.register(require('./plugins/tenant.plugin'));
+fastify.register(require('./modules/auth/auth.plugin'));
+fastify.register(require('./modules/tenant/tenant.plugin'));
 
 fastify.register(require('./modules/auth'));
 fastify.register(require('./modules/language'));

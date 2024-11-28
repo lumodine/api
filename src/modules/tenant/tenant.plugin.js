@@ -1,5 +1,5 @@
 const fp = require('fastify-plugin');
-const Tenant = require('../modules/tenant/tenant.model');
+const Tenant = require('./tenant.model');
 
 async function tenantPlugin(fastify, options) {
     fastify.decorate('checkTenantByParams', async (request, reply) => {

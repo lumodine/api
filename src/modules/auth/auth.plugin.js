@@ -1,6 +1,6 @@
 const fp = require('fastify-plugin');
-const { USER_PERMISSIONS } = require('../modules/user/user.constant');
-const User = require('../modules/user/user.model');
+const { USER_PERMISSIONS } = require('../user/user.constant');
+const User = require('../user/user.model');
 
 async function authPlugin(fastify, options) {
   fastify.register(require('@fastify/jwt'), {
