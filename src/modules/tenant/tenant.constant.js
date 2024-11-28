@@ -9,6 +9,9 @@ const THEMES = {
     VIOLET: 'violet',
 };
 
+const DISALLOWED_ALIASES = process.env.DISALLOWED_TENANT_ALIASES.split(',');
+
 module.exports = {
     THEMES,
+    DISALLOWED_ALIASES,
 };

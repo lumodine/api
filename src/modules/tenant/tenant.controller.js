@@ -2,7 +2,7 @@ const Tenant = require('./tenant.model');
 const Category = require('../category/category.model');
 const Product = require('../product/product.model');
 const { USER_ROLES } = require('../user/user.constant');
-const { THEMES } = require('./tenant.constant');
+const { THEMES, DISALLOWED_ALIASES } = require('./tenant.constant');
 const qrcode = require("@lumodine/qrcode");
 const { mongoose } = require('@lumodine/mongodb');
 const { s3 } = require('@lumodine/aws');
@@ -15,6 +15,15 @@ const create = async (request, reply) => {
         languages,
         currencies,
     } = request.body;
+
+    const isDisallowedAlias = DISALLOWED_ALIASES.includes(alias);
+
+    if (isDisallowedAlias) {
+        return reply.send({
+            success: false,
+            message: 'tenant_already_exists',
+        });
+    }
 
     const tenant = await Tenant.findOne({
         alias,
@@ -73,6 +82,15 @@ const updateSettings = async (request, reply) => {
         alias,
         address,
     } = request.body;
+
+    const isDisallowedAlias = DISALLOWED_ALIASES.includes(alias);
+
+    if (isDisallowedAlias) {
+        return reply.send({
+            success: false,
+            message: 'tenant_already_exists',
+        });
+    }
 
     const hasTenant = await Tenant.findOne({
         _id: {

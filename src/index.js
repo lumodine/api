@@ -23,6 +23,7 @@ const requiredEnvs = [
     'AWS_SECRET_ACCESS_KEY',
     'AWS_S3_BUCKET',
     'AWS_S3_REGION',
+    'DISALLOWED_TENANT_ALIASES',
 ];
 
 const requiredEnvErrors = [];
