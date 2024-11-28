@@ -27,7 +27,6 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.GET_ME),
             ],
         },
         authController.getMe,
