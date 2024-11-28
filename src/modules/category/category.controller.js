@@ -1,4 +1,5 @@
 const Category = require('./category.model');
+const Product = require('../product/product.model');
 
 const create = async (request, reply) => {
     const { tenantId } = request.params;
@@ -104,8 +105,17 @@ const remove = async (request, reply) => {
         });
     }
 
-    const isRemoved = await Category.findByIdAndDelete(category._id);
-    if (!isRemoved) {
+    const [
+        isRemovedCategory,
+        isRemovedProduct,
+    ] = await Promise.all([
+        Category.findByIdAndDelete(categoryId),
+        Product.deleteMany({
+            category: categoryId,
+        }),
+    ]);
+
+    if (!isRemovedCategory) {
         return reply.send({
             success: false,
             message: 'category_remove_error',

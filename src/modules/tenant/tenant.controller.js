@@ -1,4 +1,6 @@
 const Tenant = require('./tenant.model');
+const Category = require('../category/category.model');
+const Product = require('../product/product.model');
 const { USER_ROLES } = require('../user/user.constant');
 const { THEMES } = require('./tenant.constant');
 const qrcode = require("@lumodine/qrcode");
@@ -215,8 +217,23 @@ const updateTheme = async (request, reply) => {
 };
 
 const remove = async (request, reply) => {
-    const isRemoved = await Tenant.findByIdAndDelete(request.tenant._id);
-    if (!isRemoved) {
+    const tenantId = request.tenant._id;
+
+    const [
+        isRemovedTenant,
+        isRemovedCategory,
+        isRemovedProduct,
+    ] = await Promise.all([
+        Tenant.findByIdAndDelete(tenantId),
+        Category.deleteMany({
+            tenant: tenantId,
+        }),
+        Product.deleteMany({
+            tenant: tenantId,
+        }),
+    ]);
+    
+    if (!isRemovedTenant) {
         return reply.send({
             success: false,
             message: 'tenant_remove_error',
