@@ -96,6 +96,7 @@ const update = async (request, reply) => {
 
     return reply.send({
         success: true,
+        message: 'product_update_success',
         data: updatedProduct,
     });
 };
@@ -146,7 +147,9 @@ const getAll = async (request, reply) => {
             category: categoryId,
         }).sort({
             sort: 1
-        });
+        })
+        .populate('translations.language')
+        .populate('prices.currency');
 
     if (products.length === 0) {
         return reply.send({
@@ -173,7 +176,9 @@ const getById = async (request, reply) => {
             tenant: tenantId,
             category: categoryId,
             _id: productId,
-        });
+        })
+        .populate('translations.language')
+        .populate('prices.currency');
 
     if (!product) {
         return reply.send({
