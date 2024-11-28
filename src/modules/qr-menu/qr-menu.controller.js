@@ -1,6 +1,8 @@
 const Tenant = require('../tenant/tenant.model');
 const Category = require('../category/category.model');
 const Product = require('../product/product.model');
+const { CATEGORY_STATUS } = require('../category/category.constant');
+const { PRODUCT_STATUS } = require('../product/product.constant');
 
 const getDetail = async (request, reply) => {
     const tenantId = request.tenant._id;
@@ -24,6 +26,7 @@ const getCategories = async (request, reply) => {
     const categories = await Category
         .find({
             tenant: tenantId,
+            status: CATEGORY_STATUS.PUBLISHED,
         })
         .sort({
             sort: 1,
@@ -51,6 +54,7 @@ const getCategoryById = async (request, reply) => {
         .findOne({
             _id: categoryId,
             tenant: tenantId,
+            status: CATEGORY_STATUS.PUBLISHED,
         })
         .populate('translations.language');
 
@@ -75,6 +79,7 @@ const getProducts = async (request, reply) => {
         .find({
             tenant: tenantId,
             category: categoryId,
+            status: PRODUCT_STATUS.PUBLISHED,
         })
         .sort({
             sort: 1,
