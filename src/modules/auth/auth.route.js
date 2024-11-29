@@ -32,5 +32,35 @@ module.exports = (fastify, opts, done) => {
         authController.getMe,
     );
 
+    fastify.put(
+        '/me/info',
+        {
+            preHandler: [
+                fastify.authenticate,
+            ],
+        },
+        authController.updateMeInfo,
+    );
+
+    fastify.put(
+        '/me/email',
+        {
+            preHandler: [
+                fastify.authenticate,
+            ],
+        },
+        authController.updateMeEmail,
+    );
+
+    fastify.put(
+        '/me/password',
+        {
+            preHandler: [
+                fastify.authenticate,
+            ],
+        },
+        authController.updateMePassword,
+    );
+
     done();
 };

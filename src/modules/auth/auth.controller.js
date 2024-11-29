@@ -209,10 +209,173 @@ const getMe = async (request, reply) => {
     });
 };
 
+const updateMeInfo = async (request, reply) => {
+    const { sub } = request.user;
+
+    const {
+        name,
+        surname,
+    } = request.body;
+
+    const user = await User.findById(sub);
+
+    if (!user) {
+        return reply.send({
+            success: false,
+            message: 'user_not_found',
+        });
+    }
+
+    const payload = {
+        name,
+        surname,
+    };
+
+    const updatedUser = await User.findByIdAndUpdate(
+        user._id,
+        payload,
+        {
+            new: true,
+        }
+    );
+
+    if (!updatedUser) {
+        return reply.send({
+            success: false,
+            message: 'user_update_error',
+        });
+    }
+
+    return reply.send({
+        success: true,
+        message: 'user_update_success',
+    });
+};
+
+const updateMeEmail = async (request, reply) => {
+    const { sub } = request.user;
+
+    const {
+        email,
+    } = request.body;
+
+    const user = await User.findById(sub);
+
+    if (!user) {
+        return reply.send({
+            success: false,
+            message: 'user_not_found',
+        });
+    }
+
+    const hasUserEmail = await User.findOne({
+        _id: {
+            $ne: user._id,
+        },
+        email,
+    });
+
+    if (hasUserEmail) {
+        return reply.send({
+            success: false,
+            message: 'user_already_exists',
+        });
+    }
+
+    const payload = {
+        email,
+    };
+
+    const updatedUser = await User.findByIdAndUpdate(
+        user._id,
+        payload,
+        {
+            new: true,
+        }
+    );
+
+    if (!updatedUser) {
+        return reply.send({
+            success: false,
+            message: 'user_update_error',
+        });
+    }
+
+    return reply.send({
+        success: true,
+        message: 'user_update_success',
+    });
+};
+
+const updateMePassword = async (request, reply) => {
+    const { sub } = request.user;
+
+    const {
+        currentPassword,
+        newPassword,
+        confirmNewPassword,
+    } = request.body;
+
+    if (newPassword != confirmNewPassword) {
+        return reply.send({
+            success: false,
+            message: 'passwords_does_not_match',
+        });
+    }
+
+    const user = await User.findById(
+        sub,
+        [
+            'password'
+        ]);
+
+    if (!user) {
+        return reply.send({
+            success: false,
+            message: 'user_not_found',
+        });
+    }
+
+    const isCompoarePassword = await user.comparePassword(currentPassword);
+    if (!isCompoarePassword) {
+        return reply.send({
+            success: false,
+            message: 'incorrect_password',
+        });
+    }
+
+    const payload = {
+        password: newPassword,
+    };
+
+    const updatedUser = await User.findByIdAndUpdate(
+        user._id,
+        payload,
+        {
+            new: true,
+        }
+    );
+
+    if (!updatedUser) {
+        return reply.send({
+            success: false,
+            message: 'password_update_error',
+        });
+    }
+
+    return reply.send({
+        success: true,
+        message: 'password_update_success',
+    });
+};
+
 module.exports = {
     login,
     register,
     forgotPassword,
     resetPassword,
     getMe,
+    updateMeInfo,
+    updateMeEmail,
+    updateMePassword,
 };
