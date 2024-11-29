@@ -1,4 +1,5 @@
 const PRODUCT_STATUS = {
+    HIDDEN: 'hidden',
     PUBLISHED: 'published',
     NOT_AVAILABLE: 'not_available',
 };

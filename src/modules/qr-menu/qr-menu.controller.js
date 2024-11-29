@@ -79,7 +79,9 @@ const getProducts = async (request, reply) => {
         .find({
             tenant: tenantId,
             category: categoryId,
-            status: PRODUCT_STATUS.PUBLISHED,
+            status: {
+                $ne: PRODUCT_STATUS.HIDDEN,
+            },
         })
         .sort({
             sort: 1,
