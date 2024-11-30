@@ -35,7 +35,7 @@ const schema = new mongoose.Schema({
         type: String,
         required: true,
         enum: Object.values(CATEGORY_TYPES),
-        default: CATEGORY_TYPES.ROW,
+        default: CATEGORY_TYPES.ROW_1_COL_2,
     },
     status: {
         type: String,

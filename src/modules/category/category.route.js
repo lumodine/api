@@ -86,6 +86,18 @@ module.exports = (fastify, opts, done) => {
         categoryController.updateStatus,
     );
 
+    fastify.put(
+        '/:categoryId/type',
+        {
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.UPDATE_CATEGORY),
+                fastify.checkTenantByParams,
+            ],
+        },
+        categoryController.updateType,
+    );
+
     fastify.post(
         '/:categoryId/upload/image',
         {
