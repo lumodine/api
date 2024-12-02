@@ -37,11 +37,9 @@ const schema = new mongoose.Schema({
             currency: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'currency',
-                required: true,
             },
             amount: {
                 type: Number,
-                required: true,
             },
         },
     ],
