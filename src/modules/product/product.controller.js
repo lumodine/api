@@ -327,10 +327,7 @@ const uploadImage = async (request, reply) => {
     const { url } = await s3.uploadFile(
         dataBody,
         data.mimetype,
-        `${tenantId}/p/${crypto.random(32)}.${ext}`,
-        {
-            Tagging: `tenantId=${tenantId}&productId=${productId}&type=product-image`
-        }
+        `${tenantId}/p/${crypto.random(32)}.${ext}`
     );
 
     const updatedProduct = await Product.findByIdAndUpdate(

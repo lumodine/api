@@ -345,10 +345,7 @@ const uploadLogo = async (request, reply) => {
     const { url } = await s3.uploadFile(
         dataBody,
         data.mimetype,
-        `${tenantId}/t/${new mongoose.Types.ObjectId()}.${ext}`,
-        {
-            Tagging: `tenantId=${tenantId}&type=tenant-logo`
-        }
+        `${tenantId}/t/${new mongoose.Types.ObjectId()}.${ext}`
     );
 
     const updatedTenant = await Tenant.findByIdAndUpdate(
@@ -384,10 +381,7 @@ const uploadBackground = async (request, reply) => {
     const { url } = await s3.uploadFile(
         dataBody,
         data.mimetype,
-        `${tenantId}/t/${crypto.random(32)}.${ext}`,
-        {
-            Tagging: `tenantId=${tenantId}&type=tenant-background`
-        }
+        `${tenantId}/t/${crypto.random(32)}.${ext}`
     );
 
     const updatedTenant = await Tenant.findByIdAndUpdate(
