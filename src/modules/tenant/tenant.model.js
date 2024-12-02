@@ -39,23 +39,9 @@ const schema = new mongoose.Schema({
         enum: Object.values(THEMES),
         default: THEMES.ZINC,
     },
-    qrCodes: {
-        small: {
-            type: String,
-            required: true,
-        },
-        medium: {
-            type: String,
-            required: true,
-        },
-        large: {
-            type: String,
-            required: true,
-        },
-        xlarge: {
-            type: String,
-            required: true,
-        },
+    qrCode: {
+        type: String,
+        required: true,
     },
     address: {
         type: String,

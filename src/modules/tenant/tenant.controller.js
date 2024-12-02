@@ -41,7 +41,12 @@ const create = async (request, reply) => {
 
     const id = new mongoose.Types.ObjectId();
     const { sub } = request.user;
-    const qrCodes = await qrcode.createTenantById(id);
+    const qrCodeBase64 = await qrcode.createTenantById(id);
+    const qrCode = await s3.uploadFileFromBase64(
+        qrCodeBase64,
+        'image/png',
+        `${id}/t/${crypto.random(32)}.png`
+    );
 
     const payload = {
         _id: id,
@@ -55,7 +60,7 @@ const create = async (request, reply) => {
         name,
         languages,
         currencies,
-        qrCodes,
+        qrCode,
     };
 
     const createdTenant = await (new Tenant(payload)).save();
@@ -342,7 +347,7 @@ const uploadLogo = async (request, reply) => {
     const ext = data.filename.split('.').at(-1);
     const dataBody = await data.toBuffer();
 
-    const { url } = await s3.uploadFile(
+    const url = await s3.uploadFile(
         dataBody,
         data.mimetype,
         `${tenantId}/t/${new mongoose.Types.ObjectId()}.${ext}`
@@ -378,7 +383,7 @@ const uploadBackground = async (request, reply) => {
     const ext = data.filename.split('.').at(-1);
     const dataBody = await data.toBuffer();
 
-    const { url } = await s3.uploadFile(
+    const url = await s3.uploadFile(
         dataBody,
         data.mimetype,
         `${tenantId}/t/${crypto.random(32)}.${ext}`

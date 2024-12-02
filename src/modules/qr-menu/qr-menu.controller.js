@@ -10,7 +10,7 @@ const getDetail = async (request, reply) => {
     const tenant = await Tenant
         .findOne({
             _id: tenantId,
-        }, '-qrCodes -users')
+        }, '-qrCode -users')
         .populate('languages.language')
         .populate('currencies.currency');
 

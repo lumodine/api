@@ -6,39 +6,20 @@ const create = async (url, options = {}) => {
 };
 
 const createTenantById = async (id) => {
-    const url = process.env.QR_URL.replace("{id}", id);
+    let url = process.env.QR_URL.replace("{id}", id);
+    url = `${url}?event=scan-qr-code`;
 
     const defaultOptions = {
         errorCorrectionLevel: 'H',
         margin: 1,
     };
 
-    const small = await create(url, {
-        ...defaultOptions,
-        ...SIZES.SMALL,
-    });
-
-    const medium = await create(url, {
-        ...defaultOptions,
-        ...SIZES.MEDIUM,
-    });
-
-    const large = await create(url, {
-        ...defaultOptions,
-        ...SIZES.LARGE,
-    });
-
     const xlarge = await create(url, {
         ...defaultOptions,
         ...SIZES.XLARGE,
     });
 
-    return {
-        small,
-        medium,
-        large,
-        xlarge,
-    };
+    return xlarge;
 };
 
 module.exports = {

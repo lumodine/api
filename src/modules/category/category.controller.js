@@ -311,7 +311,7 @@ const uploadImage = async (request, reply) => {
     const ext = data.filename.split('.').at(-1);
     const dataBody = await data.toBuffer();
 
-    const { url } = await s3.uploadFile(
+    const url = await s3.uploadFile(
         dataBody,
         data.mimetype,
         `${tenantId}/c/${crypto.random(32)}.${ext}`
