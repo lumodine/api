@@ -412,6 +412,58 @@ const uploadBackground = async (request, reply) => {
     });
 };
 
+const removeLogo = async (request, reply) => {
+    const { tenantId } = request.params;
+
+    const updatedTenant = await Tenant.findByIdAndUpdate(
+        tenantId,
+        {
+            logo: null,
+        },
+        {
+            new: true,
+        }
+    );
+
+    if (!updatedTenant) {
+        return reply.send({
+            success: false,
+            message: 'tenant_update_error',
+        });
+    }
+
+    return reply.send({
+        success: true,
+        message: 'tenant_update_success',
+    });
+};
+
+const removeBackground = async (request, reply) => {
+    const { tenantId } = request.params;
+
+    const updatedTenant = await Tenant.findByIdAndUpdate(
+        tenantId,
+        {
+            background: null,
+        },
+        {
+            new: true,
+        }
+    );
+
+    if (!updatedTenant) {
+        return reply.send({
+            success: false,
+            message: 'tenant_update_error',
+        });
+    }
+
+    return reply.send({
+        success: true,
+        message: 'tenant_update_success',
+    });
+};
+
 module.exports = {
     create,
     updateSettings,
@@ -425,4 +477,6 @@ module.exports = {
     getAllThemes,
     uploadLogo,
     uploadBackground,
+    removeLogo,
+    removeBackground,
 };

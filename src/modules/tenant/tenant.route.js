@@ -141,6 +141,30 @@ module.exports = (fastify, opts, done) => {
         tenantController.uploadBackground
     );
 
+    fastify.delete(
+        '/:tenantId/upload/logo',
+        {
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.UPDATE_TENANT),
+                fastify.checkTenantByParams,
+            ],
+        },
+        tenantController.removeLogo
+    );
+
+    fastify.delete(
+        '/:tenantId/upload/background',
+        {
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.UPDATE_TENANT),
+                fastify.checkTenantByParams,
+            ],
+        },
+        tenantController.removeBackground
+    );
+
     fastify.register(
         require('../category'),
         {
