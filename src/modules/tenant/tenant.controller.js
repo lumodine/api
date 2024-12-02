@@ -45,7 +45,7 @@ const create = async (request, reply) => {
     const qrCode = await s3.uploadFileFromBase64(
         qrCodeBase64,
         'image/png',
-        `${id}/t/${crypto.random(32)}.png`
+        `${id}/q/${crypto.random(32)}.png`
     );
 
     const payload = {
@@ -248,6 +248,7 @@ const remove = async (request, reply) => {
         isRemovedTenant,
         isRemovedCategory,
         isRemovedProduct,
+        isRemovedS3Folder,
     ] = await Promise.all([
         Tenant.findByIdAndDelete(tenantId),
         Category.deleteMany({
@@ -256,6 +257,7 @@ const remove = async (request, reply) => {
         Product.deleteMany({
             tenant: tenantId,
         }),
+        s3.removeFolder(`${tenantId}/`),
     ]);
 
     if (!isRemovedTenant) {
@@ -350,7 +352,7 @@ const uploadLogo = async (request, reply) => {
     const url = await s3.uploadFile(
         dataBody,
         data.mimetype,
-        `${tenantId}/t/${new mongoose.Types.ObjectId()}.${ext}`
+        `${tenantId}/t/${crypto.random(32)}.${ext}`
     );
 
     const updatedTenant = await Tenant.findByIdAndUpdate(
