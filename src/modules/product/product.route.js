@@ -110,5 +110,17 @@ module.exports = (fastify, opts, done) => {
         productController.uploadImage
     );
 
+    fastify.delete(
+        '/:productId/upload/image',
+        {
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.UPDATE_PRODUCT),
+                fastify.checkTenantByParams,
+            ],
+        },
+        productController.removeImage
+    );
+
     done();
 };

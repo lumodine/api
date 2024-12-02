@@ -110,6 +110,18 @@ module.exports = (fastify, opts, done) => {
         categoryController.uploadImage
     );
 
+    fastify.delete(
+        '/:categoryId/upload/image',
+        {
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.UPDATE_CATEGORY),
+                fastify.checkTenantByParams,
+            ],
+        },
+        categoryController.removeImage
+    );
+
     fastify.register(
         require('../product'),
         {

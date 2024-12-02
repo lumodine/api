@@ -353,6 +353,34 @@ const uploadImage = async (request, reply) => {
     });
 };
 
+const removeImage = async (request, reply) => {
+    const {
+        productId
+    } = request.params;
+
+    const updatedProduct = await Product.findByIdAndUpdate(
+        productId,
+        {
+            image: null,
+        },
+        {
+            new: true,
+        }
+    );
+
+    if (!updatedProduct) {
+        return reply.send({
+            success: false,
+            message: 'product_update_error',
+        });
+    }
+
+    return reply.send({
+        success: true,
+        message: 'product_update_success',
+    });
+};
+
 module.exports = {
     create,
     update,
@@ -363,4 +391,5 @@ module.exports = {
     updateStatus,
     updateType,
     uploadImage,
+    removeImage,
 };
