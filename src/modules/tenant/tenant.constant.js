@@ -11,7 +11,16 @@ const THEMES = {
 
 const DISALLOWED_ALIASES = process.env.DISALLOWED_TENANT_ALIASES.split(',');
 
+const SOCIAL_MEDIAS = {
+    INSTAGRAM: 'instagram',
+    X: 'x',
+    FACEBOOK: 'facebook',
+    YOUTUBE: 'youtube',
+    WEBSITE: 'website',
+};
+
 module.exports = {
     THEMES,
     DISALLOWED_ALIASES,
+    SOCIAL_MEDIAS,
 };

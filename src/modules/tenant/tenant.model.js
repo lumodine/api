@@ -1,7 +1,7 @@
 const { mongoose } = require('@lumodine/mongodb');
 const baseModel = require('../common/base.model');
 const { USER_ROLES } = require('../user/user.constant');
-const { THEMES } = require('./tenant.constant');
+const { THEMES, SOCIAL_MEDIAS } = require('./tenant.constant');
 
 const schema = new mongoose.Schema({
     users: [
@@ -70,6 +70,17 @@ const schema = new mongoose.Schema({
                 type: Boolean,
                 default: false,
             }
+        },
+    ],
+    socialMedias: [
+        {
+            type: {
+                type: String,
+                enum: Object.values(SOCIAL_MEDIAS),
+            },
+            value: {
+                type: String,
+            },
         },
     ],
     ...baseModel.fields,

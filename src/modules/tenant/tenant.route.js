@@ -165,6 +165,18 @@ module.exports = (fastify, opts, done) => {
         tenantController.removeBackground
     );
 
+    fastify.put(
+        '/:tenantId/social-media',
+        {
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.UPDATE_TENANT),
+                fastify.checkTenantByParams,
+            ],
+        },
+        tenantController.updateSocialMedia
+    );
+
     fastify.register(
         require('../category'),
         {
