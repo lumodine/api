@@ -1,7 +1,7 @@
 const { mongoose } = require('@lumodine/mongodb');
 const baseModel = require('../common/base.model');
 const { USER_ROLES } = require('../user/user.constant');
-const { THEMES, SOCIAL_MEDIAS } = require('./tenant.constant');
+const { THEMES, SOCIAL_MEDIAS, TENANT_STATUS } = require('./tenant.constant');
 
 const schema = new mongoose.Schema({
     users: [
@@ -83,6 +83,12 @@ const schema = new mongoose.Schema({
             },
         },
     ],
+    status: {
+        type: String,
+        required: true,
+        enum: Object.values(TENANT_STATUS),
+        default: TENANT_STATUS.PUBLISHED,
+    },
     ...baseModel.fields,
 }, { ...baseModel.options });
 

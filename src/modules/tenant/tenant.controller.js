@@ -85,6 +85,7 @@ const updateSettings = async (request, reply) => {
     const {
         name,
         alias,
+        status,
     } = request.body;
 
     const isDisallowedAlias = DISALLOWED_ALIASES.includes(alias);
@@ -113,6 +114,7 @@ const updateSettings = async (request, reply) => {
     const payload = {
         name,
         alias,
+        status,
     };
 
     const updatedTenant = await Tenant.findByIdAndUpdate(

@@ -19,8 +19,14 @@ const SOCIAL_MEDIAS = {
     WEBSITE: 'website',
 };
 
+const TENANT_STATUS = {
+    MAINTENANCE: 'maintenance',
+    PUBLISHED: 'published',
+};
+
 module.exports = {
     THEMES,
     DISALLOWED_ALIASES,
     SOCIAL_MEDIAS,
+    TENANT_STATUS,
 };
