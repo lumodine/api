@@ -1,5 +1,5 @@
 const { mongoose } = require('@lumodine/mongodb');
-const baseModel = require('../common/base.model');
+const baseModel = require('../common/mongodb.base.model');
 const { PRODUCT_STATUS, PRODUCT_TYPES } = require('./product.constant');
 
 const schema = new mongoose.Schema({

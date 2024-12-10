@@ -1,5 +1,5 @@
 const { mongoose } = require('@lumodine/mongodb');
-const baseModel = require('../common/base.model');
+const baseModel = require('../common/mongodb.base.model');
 const { USER_ROLES } = require('../user/user.constant');
 const { THEMES, SOCIAL_MEDIAS, TENANT_STATUS } = require('./tenant.constant');
 

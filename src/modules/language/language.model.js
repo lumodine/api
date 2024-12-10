@@ -1,5 +1,5 @@
 const { mongoose } = require('@lumodine/mongodb');
-const baseModel = require('../common/base.model');
+const baseModel = require('../common/mongodb.base.model');
 const { LANGUAGE_DIRECTIONS } = require('./language.constant');
 
 const schema = new mongoose.Schema({
