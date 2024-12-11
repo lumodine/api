@@ -50,17 +50,5 @@ module.exports = (fastify, opts, done) => {
         userController.remove
     );
 
-    fastify.get(
-        '/:id',
-        {
-            preHandler: [
-                fastify.authenticate,
-                fastify.authorize(PERMISSIONS.GET_USER),
-                fastify.checkTenantByParams,
-            ],
-        },
-        userController.getById
-    );
-
     done();
 };
