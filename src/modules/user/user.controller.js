@@ -24,7 +24,7 @@ const create = async (request, reply) => {
 
     const hasUserInTenant = await Tenant.findOne({
         _id: tenantId,
-        users: {
+        'users.user': {
             $in: user._id,
         },
     });
