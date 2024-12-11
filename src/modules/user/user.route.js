@@ -27,7 +27,7 @@ module.exports = (fastify, opts, done) => {
     );
 
     fastify.put(
-        '/:id',
+        '/:userId',
         {
             preHandler: [
                 fastify.authenticate,
@@ -39,7 +39,7 @@ module.exports = (fastify, opts, done) => {
     );
 
     fastify.delete(
-        '/:id',
+        '/:userId',
         {
             preHandler: [
                 fastify.authenticate,

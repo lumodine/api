@@ -68,14 +68,16 @@ const update = async (request, reply) => {
         role,
     } = request.body;
 
-    const updatedTenant = await Tenant.findByIdAndUpdate(tenantId, {
-        $set: {
-            users: {
-                user: userId,
-                role,
-            },
+    const updatedTenant = await Tenant.findOneAndUpdate(
+        {
+            _id: tenantId,
+            'users.user': userId,
         },
-    });
+        {
+            $set: {
+                'users.$.role': role,
+            },
+        });
 
     if (!updatedTenant) {
         return reply.send({
