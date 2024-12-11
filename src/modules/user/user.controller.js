@@ -124,15 +124,11 @@ const getAll = async (request, reply) => {
 
     const { sub } = request.user;
 
-    const tenantUsers = request.tenant.users
-        .filter(user => user.user.toString() !== sub)
-        .map(user => user.user.toString());
+    const tenant = await Tenant
+        .findById(tenantId)
+        .populate('users.user');
 
-    const users = await User.find({
-        _id: {
-            $in: tenantUsers,
-        },
-    });
+    const users = tenant.users.filter(user => user.user._id.toString() != sub);
 
     if (users.length === 0) {
         return reply.send({
