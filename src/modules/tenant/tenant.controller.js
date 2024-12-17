@@ -2,7 +2,7 @@ const Tenant = require('./tenant.model');
 const Category = require('../category/category.model');
 const Product = require('../product/product.model');
 const { USER_ROLES } = require('../user/user.constant');
-const { THEMES, DISALLOWED_ALIASES } = require('./tenant.constant');
+const { COLORS, DISALLOWED_ALIASES } = require('./tenant.constant');
 const qrcode = require("@lumodine/qrcode");
 const { mongoose } = require('@lumodine/mongodb');
 const { s3 } = require('@lumodine/aws');
@@ -207,16 +207,18 @@ const updateCurrencySettings = async (request, reply) => {
     });
 };
 
-const updateTheme = async (request, reply) => {
+const updateColor = async (request, reply) => {
     const {
         tenantId,
     } = request.params;
     const {
-        theme,
+        color,
     } = request.body;
 
     const payload = {
-        theme,
+        theme: {
+            color,
+        },
     };
 
     const updatedTenant = await Tenant.findByIdAndUpdate(
@@ -333,12 +335,12 @@ const getAliasById = async (request, reply) => {
     });
 };
 
-const getAllThemes = async (request, reply) => {
-    const themes = Object.values(THEMES);
+const getAllColors = async (request, reply) => {
+    const colors = Object.values(COLORS);
 
     return reply.send({
         success: true,
-        data: themes,
+        data: colors,
     });
 };
 
@@ -505,12 +507,12 @@ module.exports = {
     updateSettings,
     updateLanguageSettings,
     updateCurrencySettings,
-    updateTheme,
+    updateColor,
     remove,
     getAll,
     getById,
     getAliasById,
-    getAllThemes,
+    getAllColors,
     uploadLogo,
     uploadBackground,
     removeLogo,

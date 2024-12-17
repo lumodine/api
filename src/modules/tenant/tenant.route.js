@@ -61,7 +61,7 @@ module.exports = (fastify, opts, done) => {
     );
 
     fastify.put(
-        '/:tenantId/theme',
+        '/:tenantId/theme/color',
         {
             preHandler: [
                 fastify.authenticate,
@@ -69,7 +69,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        tenantController.updateTheme
+        tenantController.updateColor
     );
 
     fastify.delete(
@@ -107,14 +107,14 @@ module.exports = (fastify, opts, done) => {
     );
 
     fastify.get(
-        '/themes',
+        '/theme/colors',
         {
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.GET_ALL_TENANTS),
             ],
         },
-        tenantController.getAllThemes
+        tenantController.getAllColors
     );
 
     fastify.post(

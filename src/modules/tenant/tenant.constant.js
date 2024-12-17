@@ -1,4 +1,4 @@
-const THEMES = {
+const COLORS = {
     ZINC: 'zinc',
     RED: 'red',
     ROSE: 'rose',
@@ -25,7 +25,7 @@ const TENANT_STATUS = {
 };
 
 module.exports = {
-    THEMES,
+    COLORS,
     DISALLOWED_ALIASES,
     SOCIAL_MEDIAS,
     TENANT_STATUS,
