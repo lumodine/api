@@ -1,5 +1,14 @@
-const productController = require('./product.controller');
 const { PERMISSIONS } = require('../user/user.constant');
+const createProduct = require('./createProduct');
+const updateProduct = require('./updateProduct');
+const removeProduct = require('./removeProduct');
+const getProductById = require('./getProductById');
+const getAllProducts = require('./getAllProducts');
+const updateProductSort = require('./updateProductSort');
+const updateProductStatus = require('./updateProductStatus');
+const updateProductType = require('./updateProductType');
+const uploadProductImage = require('./uploadProductImage');
+const removeProductImage = require('./removeProductImage');
 
 module.exports = (fastify, opts, done) => {
     fastify.post(
@@ -11,7 +20,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        productController.create
+        createProduct
     );
 
     fastify.get(
@@ -23,7 +32,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        productController.getAll
+        getAllProducts
     );
 
     fastify.put(
@@ -35,7 +44,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        productController.update
+        updateProduct
     );
 
     fastify.delete(
@@ -47,7 +56,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        productController.remove
+        removeProduct
     );
 
     fastify.get(
@@ -59,7 +68,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        productController.getById
+        getProductById
     );
 
     fastify.put(
@@ -71,7 +80,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        productController.updateSort,
+        updateProductSort,
     );
 
     fastify.put(
@@ -83,7 +92,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        productController.updateStatus,
+        updateProductStatus,
     );
 
     fastify.put(
@@ -95,7 +104,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        productController.updateType,
+        updateProductType,
     );
 
     fastify.post(
@@ -107,7 +116,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        productController.uploadImage
+        uploadProductImage
     );
 
     fastify.delete(
@@ -119,7 +128,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        productController.removeImage
+        removeProductImage
     );
 
     done();
