@@ -8,7 +8,7 @@ module.exports = async (request, reply) => {
     const products = await Product
         .find({
             tenant: tenantId,
-            category: categoryId,
+            parentItem: categoryId,
         }).sort({
             sort: 1
         })

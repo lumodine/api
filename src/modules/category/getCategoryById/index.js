@@ -11,8 +11,7 @@ module.exports = async (request, reply) => {
             tenant: tenantId,
             _id: categoryId,
         })
-        .populate('translations.language')
-        .populate('parentCategory');
+        .populate('translations.language');
 
     if (!category) {
         return reply.send({

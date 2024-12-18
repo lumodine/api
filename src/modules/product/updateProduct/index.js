@@ -17,7 +17,7 @@ module.exports = async (request, reply) => {
     const product = await Product
         .findOne({
             tenant: tenantId,
-            category: categoryId,
+            parentItem: categoryId,
             _id: productId,
         });
 

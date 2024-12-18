@@ -9,8 +9,7 @@ module.exports = async (request, reply) => {
         .sort({
             sort: 1,
         })
-        .populate('translations.language')
-        .populate('parentCategory');
+        .populate('translations.language');
 
     if (categories.length === 0) {
         return reply.send({

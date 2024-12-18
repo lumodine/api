@@ -8,7 +8,7 @@ module.exports = async (request, reply) => {
     const products = await Product
         .find({
             tenant: tenantId,
-            category: categoryId,
+            parentItem: categoryId,
             status: {
                 $ne: PRODUCT_STATUS.HIDDEN,
             },
@@ -17,8 +17,6 @@ module.exports = async (request, reply) => {
             sort: 1,
         })
         .populate('translations.language')
-        .populate('category')
-        .populate('category.translations.language') //TODO
         .populate('prices.currency');
 
     if (products.length === 0) {

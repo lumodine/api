@@ -26,7 +26,7 @@ const PERMISSIONS = {
     DELETE_USER: 'delete:user',
 
     GET_ALL_CATEGORIES: 'get:categories',
-    GET_CATEGORY: 'get:catrgory',
+    GET_CATEGORY: 'get:category',
     CREATE_CATEGORY: 'create:category',
     UPDATE_CATEGORY: 'update:category',
     DELETE_CATEGORY: 'delete:category',

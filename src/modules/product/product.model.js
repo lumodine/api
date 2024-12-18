@@ -7,11 +7,6 @@ const schema = new mongoose.Schema({
     image: {
         type: String,
     },
-    category: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'category',
-        required: true,
-    },
     prices: [
         {
             currency: {
