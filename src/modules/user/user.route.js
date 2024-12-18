@@ -1,5 +1,8 @@
-const userController = require('./user.controller');
 const { PERMISSIONS } = require('../user/user.constant');
+const addUserToTenant = require('./addUserToTenant');
+const getAllUsersByTenant = require('./getAllUsersByTenant');
+const updateUserByTenant = require('./updateUserByTenant');
+const removeUserFromTenant = require('./removeUserFromTenant');
 
 module.exports = (fastify, opts, done) => {
     fastify.post(
@@ -11,7 +14,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        userController.create
+        addUserToTenant
     );
 
     fastify.get(
@@ -23,7 +26,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        userController.getAll
+        getAllUsersByTenant
     );
 
     fastify.put(
@@ -35,7 +38,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        userController.update
+        updateUserByTenant
     );
 
     fastify.delete(
@@ -47,7 +50,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        userController.remove
+        removeUserFromTenant
     );
 
     done();
