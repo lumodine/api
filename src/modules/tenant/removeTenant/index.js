@@ -10,6 +10,7 @@ module.exports = async (request, reply) => {
         isRemovedTenant,
         isRemovedCategory,
         isRemovedProduct,
+        isRemovedTag,
         isRemovedS3Folder,
     ] = await Promise.all([
         Tenant.findByIdAndDelete(tenantId),
@@ -17,6 +18,9 @@ module.exports = async (request, reply) => {
             tenant: tenantId,
         }),
         Product.deleteMany({
+            tenant: tenantId,
+        }),
+        Tag.deleteMany({
             tenant: tenantId,
         }),
         s3.removeFolder(`${tenantId}/`),
