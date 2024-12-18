@@ -1,5 +1,9 @@
-const tagController = require('./tag.controller');
 const { PERMISSIONS } = require('../user/user.constant');
+const createTag = require('./createTag');
+const updateTag = require('./updateTag');
+const removeTag = require('./removeTag');
+const getTagById = require('./getTagById');
+const getAllTags = require('./getAllTags');
 
 module.exports = (fastify, opts, done) => {
     fastify.post(
@@ -11,7 +15,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        tagController.create,
+        createTag
     );
 
     fastify.get(
@@ -23,7 +27,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        tagController.getAll,
+        getAllTags
     );
 
     fastify.put(
@@ -35,7 +39,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        tagController.update,
+        updateTag
     );
 
     fastify.delete(
@@ -47,7 +51,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        tagController.remove,
+        removeTag
     );
 
     fastify.get(
@@ -59,7 +63,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        tagController.getById,
+        getTagById
     );
 
     done();
