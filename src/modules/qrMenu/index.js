@@ -1,6 +1,6 @@
 module.exports = (fastify, opts, done) => {
     fastify.register(
-        require('./qr-menu.route'),
+        require('./qrMenu.route'),
         {
             prefix: '/qr-menu',
         },

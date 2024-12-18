@@ -1,4 +1,7 @@
-const qrMenuController = require('./qr-menu.controller');
+const getMenu = require('./getMenu');
+const getAllMenuCategories = require('./getAllMenuCategories');
+const getMenuCategoryById = require('./getMenuCategoryById');
+const getAllProductsByCategoryId = require('./getAllProductsByCategoryId');
 
 module.exports = (fastify, opts, done) => {
     fastify.get(
@@ -8,7 +11,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        qrMenuController.getDetail
+        getMenu
     );
 
     fastify.get(
@@ -18,7 +21,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        qrMenuController.getCategories
+        getAllMenuCategories
     );
 
     fastify.get(
@@ -28,7 +31,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        qrMenuController.getCategoryById
+        getMenuCategoryById
     );
 
     fastify.get(
@@ -38,7 +41,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        qrMenuController.getProducts
+        getAllProductsByCategoryId
     );
 
     done();
