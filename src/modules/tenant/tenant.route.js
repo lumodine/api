@@ -1,5 +1,19 @@
-const tenantController = require('./tenant.controller');
 const { PERMISSIONS } = require('../user/user.constant');
+const createTenant = require('./createTenant');
+const getAllTenants = require('./getAllTenants');
+const updateTenantSettings = require('./updateTenantSettings');
+const updateTenantLanguageSettings = require('./updateTenantLanguageSettings');
+const updateTenantCurrencySettings = require('./updateTenantCurrencySettings');
+const updateTenantThemeColor = require('./updateTenantThemeColor');
+const removeTenant = require('./removeTenant');
+const getTenantById = require('./getTenantById');
+const getTenantByAlias = require('./getTenantByAlias');
+const getAllTenantColors = require('./getAllTenantColors');
+const uploadTenantLogo = require('./uploadTenantLogo');
+const uploadTenantBackground = require('./uploadTenantBackground');
+const removeTenantLogo = require('./removeTenantLogo');
+const removeTenantBackground = require('./removeTenantBackground');
+const updateTenantSocialMedia = require('./updateTenantSocialMedia');
 
 module.exports = (fastify, opts, done) => {
     fastify.post(
@@ -10,7 +24,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.authorize(PERMISSIONS.CREATE_TENANT),
             ],
         },
-        tenantController.create
+        createTenant
     );
 
     fastify.get(
@@ -21,7 +35,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.authorize(PERMISSIONS.GET_ALL_TENANTS),
             ],
         },
-        tenantController.getAll
+        getAllTenants
     );
 
     fastify.put(
@@ -33,7 +47,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        tenantController.updateSettings
+        updateTenantSettings
     );
 
     fastify.put(
@@ -45,7 +59,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        tenantController.updateLanguageSettings
+        updateTenantLanguageSettings
     );
 
     fastify.put(
@@ -57,7 +71,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        tenantController.updateCurrencySettings
+        updateTenantCurrencySettings
     );
 
     fastify.put(
@@ -69,7 +83,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        tenantController.updateColor
+        updateTenantThemeColor
     );
 
     fastify.delete(
@@ -81,7 +95,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        tenantController.remove
+        removeTenant
     );
 
     fastify.get(
@@ -93,7 +107,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        tenantController.getById
+        getTenantById
     );
 
     fastify.get(
@@ -103,7 +117,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        tenantController.getAliasById
+        getTenantByAlias
     );
 
     fastify.get(
@@ -114,7 +128,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.authorize(PERMISSIONS.GET_ALL_TENANTS),
             ],
         },
-        tenantController.getAllColors
+        getAllTenantColors
     );
 
     fastify.post(
@@ -126,7 +140,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        tenantController.uploadLogo
+        uploadTenantLogo
     );
 
     fastify.post(
@@ -138,7 +152,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        tenantController.uploadBackground
+        uploadTenantBackground
     );
 
     fastify.delete(
@@ -150,7 +164,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        tenantController.removeLogo
+        removeTenantLogo
     );
 
     fastify.delete(
@@ -162,7 +176,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        tenantController.removeBackground
+        removeTenantBackground
     );
 
     fastify.put(
@@ -174,7 +188,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        tenantController.updateSocialMedia
+        updateTenantSocialMedia
     );
 
     fastify.register(
