@@ -1,5 +1,14 @@
-const categoryController = require('./category.controller');
 const { PERMISSIONS } = require('../user/user.constant');
+const createCategory = require('./createCategory');
+const getAllCategories = require('./getAllCategories');
+const updateCategory = require('./updateCategory');
+const removeCategory = require('./removeCategory');
+const getCategoryById = require('./getCategoryById');
+const updateCategorySort = require('./updateCategorySort');
+const updateCategoryStatus = require('./updateCategoryStatus');
+const updateCategoryType = require('./updateCategoryType');
+const uploadCategoryImage = require('./uploadCategoryImage');
+const removeCategoryImage = require('./removeCategoryImage');
 
 module.exports = (fastify, opts, done) => {
     fastify.post(
@@ -11,7 +20,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        categoryController.create,
+        createCategory,
     );
 
     fastify.get(
@@ -23,7 +32,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        categoryController.getAll,
+        getAllCategories,
     );
 
     fastify.put(
@@ -35,7 +44,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        categoryController.update,
+        updateCategory,
     );
 
     fastify.delete(
@@ -47,7 +56,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        categoryController.remove,
+        removeCategory,
     );
 
     fastify.get(
@@ -59,7 +68,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        categoryController.getById,
+        getCategoryById,
     );
 
     fastify.put(
@@ -71,7 +80,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        categoryController.updateSort,
+        updateCategorySort,
     );
 
     fastify.put(
@@ -83,7 +92,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        categoryController.updateStatus,
+        updateCategoryStatus,
     );
 
     fastify.put(
@@ -95,7 +104,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        categoryController.updateType,
+        updateCategoryType,
     );
 
     fastify.post(
@@ -107,7 +116,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        categoryController.uploadImage
+        uploadCategoryImage
     );
 
     fastify.delete(
@@ -119,7 +128,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.checkTenantByParams,
             ],
         },
-        categoryController.removeImage
+        removeCategoryImage
     );
 
     fastify.register(
