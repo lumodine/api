@@ -1,5 +1,9 @@
-const currencyController = require('./currency.controller');
 const { PERMISSIONS } = require('../user/user.constant');
+const createCurrency = require('./createCurrency');
+const updateCurrency = require('./updateCurrency');
+const removeCurrency = require('./removeCurrency');
+const getCurrencyById = require('./getCurrencyById');
+const getAllCurrencies = require('./getAllCurrencies');
 
 module.exports = (fastify, opts, done) => {
     fastify.post(
@@ -10,12 +14,12 @@ module.exports = (fastify, opts, done) => {
                 fastify.authorize(PERMISSIONS.CREATE_CURRENCY),
             ],
         },
-        currencyController.create
+        createCurrency
     );
 
     fastify.get(
         '/',
-        currencyController.getAll
+        getAllCurrencies
     );
 
     fastify.put(
@@ -26,7 +30,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.authorize(PERMISSIONS.UPDATE_CURRENCY),
             ],
         },
-        currencyController.update
+        updateCurrency
     );
 
     fastify.delete(
@@ -37,12 +41,12 @@ module.exports = (fastify, opts, done) => {
                 fastify.authorize(PERMISSIONS.DELETE_CURRENCY),
             ],
         },
-        currencyController.remove
+        removeCurrency
     );
 
     fastify.get(
         '/:currencyId',
-        currencyController.getById
+        getCurrencyById
     );
 
     done();
