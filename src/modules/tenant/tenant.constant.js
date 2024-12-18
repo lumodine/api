@@ -24,9 +24,15 @@ const TENANT_STATUS = {
     PUBLISHED: 'published',
 };
 
+const HEADER_POSITIONS = {
+    TOP: 'top',
+    BOTTOM: 'bottom',
+};
+
 module.exports = {
     COLORS,
     DISALLOWED_ALIASES,
     SOCIAL_MEDIAS,
     TENANT_STATUS,
+    HEADER_POSITIONS,
 };

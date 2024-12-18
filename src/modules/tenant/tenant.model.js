@@ -1,7 +1,7 @@
 const { mongoose } = require('@lumodine/mongodb');
 const baseModel = require('../common/mongodb.base.model');
 const { USER_ROLES } = require('../user/user.constant');
-const { COLORS, SOCIAL_MEDIAS, TENANT_STATUS } = require('./tenant.constant');
+const { COLORS, SOCIAL_MEDIAS, TENANT_STATUS, HEADER_POSITIONS } = require('./tenant.constant');
 
 const schema = new mongoose.Schema({
     users: [
@@ -39,6 +39,11 @@ const schema = new mongoose.Schema({
             type: String,
             enum: Object.values(COLORS),
             default: COLORS.ZINC,
+        },
+        headerPosition: {
+            type: String,
+            enum: Object.values(HEADER_POSITIONS),
+            default: HEADER_POSITIONS.BOTTOM,
         },
     },
     qrCode: {
