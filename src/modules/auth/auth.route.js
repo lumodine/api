@@ -1,25 +1,31 @@
-const authController = require('./auth.controller');
-const { PERMISSIONS } = require('../user/user.constant');
+const login = require('./login');
+const register = require('./register');
+const forgotPassword = require('./forgotPassword');
+const resetPassword = require('./resetPassword');
+const getProfile = require('./getProfile');
+const updateInfo = require('./updateInfo');
+const updateEmail = require('./updateEmail');
+const updatePassword = require('./updatePassword');
 
 module.exports = (fastify, opts, done) => {
     fastify.post(
         '/login',
-        authController.login
+        login,
     );
 
     fastify.post(
         '/register',
-        authController.register
+        register,
     );
 
     fastify.post(
         '/forgot-password',
-        authController.forgotPassword
+        forgotPassword,
     );
 
     fastify.post(
         '/reset-password',
-        authController.resetPassword
+        resetPassword,
     );
 
     fastify.get(
@@ -29,7 +35,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.authenticate,
             ],
         },
-        authController.getMe,
+        getProfile,
     );
 
     fastify.put(
@@ -39,7 +45,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.authenticate,
             ],
         },
-        authController.updateMeInfo,
+        updateInfo,
     );
 
     fastify.put(
@@ -49,7 +55,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.authenticate,
             ],
         },
-        authController.updateMeEmail,
+        updateEmail,
     );
 
     fastify.put(
@@ -59,7 +65,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.authenticate,
             ],
         },
-        authController.updateMePassword,
+        updatePassword,
     );
 
     done();
