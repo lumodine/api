@@ -1,5 +1,9 @@
-const languageController = require('./language.controller');
 const { PERMISSIONS } = require('../user/user.constant');
+const createLanguage = require('./createLanguage');
+const updateLanguage = require('./updateLanguage');
+const removeLanguage = require('./removeLanguage');
+const getLanguageById = require('./getLanguageById');
+const getAllLanguages = require('./getAllLanguages');
 
 module.exports = (fastify, opts, done) => {
     fastify.post(
@@ -10,12 +14,12 @@ module.exports = (fastify, opts, done) => {
                 fastify.authorize(PERMISSIONS.CREATE_LANGUAGE),
             ],
         },
-        languageController.create
+        createLanguage
     );
 
     fastify.get(
         '/',
-        languageController.getAll
+        getAllLanguages
     );
 
     fastify.put(
@@ -26,7 +30,7 @@ module.exports = (fastify, opts, done) => {
                 fastify.authorize(PERMISSIONS.UPDATE_LANGUAGE),
             ],
         },
-        languageController.update
+        updateLanguage
     );
 
     fastify.delete(
@@ -37,12 +41,12 @@ module.exports = (fastify, opts, done) => {
                 fastify.authorize(PERMISSIONS.DELETE_LANGUAGE),
             ],
         },
-        languageController.remove
+        removeLanguage
     );
 
     fastify.get(
         '/:languageId',
-        languageController.getById
+        getLanguageById
     );
 
     done();
