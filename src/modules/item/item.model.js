@@ -23,6 +23,10 @@ const schema = new mongoose.Schema({
             },
         },
     ],
+    isShowInMenu: {
+        type: Boolean,
+        default: true,
+    },
     parentItem: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'item',

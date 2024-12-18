@@ -5,6 +5,7 @@ module.exports = async (request, reply) => {
 
     const {
         translations,
+        isShowInMenu,
     } = request.body;
 
     //TODO: check translations.language
@@ -12,6 +13,7 @@ module.exports = async (request, reply) => {
     const payload = {
         tenant: tenantId,
         translations,
+        isShowInMenu,
     };
 
     const createdTag = await (new Tag(payload)).save();

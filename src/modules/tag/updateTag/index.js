@@ -8,6 +8,7 @@ module.exports = async (request, reply) => {
 
     const {
         translations,
+        isShowInMenu,
     } = request.body;
 
     const tag = await Tag
@@ -28,6 +29,7 @@ module.exports = async (request, reply) => {
     const payload = {
         tenant: tenantId,
         translations,
+        isShowInMenu,
     };
 
     const updatedTag = await Tag.findByIdAndUpdate(
