@@ -24,7 +24,7 @@ fastify.setValidatorCompiler(({ schema, method, url, httpPart }) => {
 fastify.register(cors);
 fastify.register(require('@fastify/multipart'));
 fastify.register(require('@fastify/rate-limit'), {
-  max: 100,
+  max: 500,
   timeWindow: '1 minute'
 });
 
