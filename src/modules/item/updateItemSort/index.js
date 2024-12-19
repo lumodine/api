@@ -1,14 +1,12 @@
-const Category = require('../category.model');
+const Item = require('../item.model');
 
 module.exports = async (request, reply) => {
     const { items } = request.body;
 
-    //TODO: check items.categoryId
-
     const bulkOperations = items.map(item => ({
         updateOne: {
             filter: {
-                _id: item.categoryId,
+                _id: item.itemId,
             },
             update: {
                 $set: {
@@ -18,17 +16,17 @@ module.exports = async (request, reply) => {
         },
     }));
 
-    const result = await Category.bulkWrite(bulkOperations);
+    const result = await Item.bulkWrite(bulkOperations);
 
     if (!result) {
         return reply.send({
             success: false,
-            message: 'category_sort_error',
+            message: 'item_sort_error',
         });
     }
 
     return reply.send({
         success: true,
-        message: 'category_sort_success',
+        message: 'item_sort_success',
     });
 };

@@ -42,6 +42,10 @@ const schema = new mongoose.Schema({
         enum: Object.values(ITEM_STATUS),
         default: ITEM_STATUS.PUBLISHED,
     },
+    type: {
+        type: String,
+        required: true,
+    },
     ...baseModel.fields,
 }, {
     ...baseModel.options,

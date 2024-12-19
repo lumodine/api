@@ -4,9 +4,6 @@ const updateProduct = require('./updateProduct');
 const removeProduct = require('./removeProduct');
 const getProductById = require('./getProductById');
 const getAllProducts = require('./getAllProducts');
-const updateProductSort = require('./updateProductSort');
-const updateProductStatus = require('./updateProductStatus');
-const updateProductType = require('./updateProductType');
 const uploadProductImage = require('./uploadProductImage');
 const removeProductImage = require('./removeProductImage');
 
@@ -69,42 +66,6 @@ module.exports = (fastify, opts, done) => {
             ],
         },
         getProductById
-    );
-
-    fastify.put(
-        '/sort',
-        {
-            preHandler: [
-                fastify.authenticate,
-                fastify.authorize(PERMISSIONS.UPDATE_PRODUCT),
-                fastify.checkTenantByParams,
-            ],
-        },
-        updateProductSort,
-    );
-
-    fastify.put(
-        '/:productId/status',
-        {
-            preHandler: [
-                fastify.authenticate,
-                fastify.authorize(PERMISSIONS.UPDATE_PRODUCT),
-                fastify.checkTenantByParams,
-            ],
-        },
-        updateProductStatus,
-    );
-
-    fastify.put(
-        '/:productId/type',
-        {
-            preHandler: [
-                fastify.authenticate,
-                fastify.authorize(PERMISSIONS.UPDATE_PRODUCT),
-                fastify.checkTenantByParams,
-            ],
-        },
-        updateProductType,
     );
 
     fastify.post(

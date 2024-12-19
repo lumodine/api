@@ -4,9 +4,6 @@ const getAllCategories = require('./getAllCategories');
 const updateCategory = require('./updateCategory');
 const removeCategory = require('./removeCategory');
 const getCategoryById = require('./getCategoryById');
-const updateCategorySort = require('./updateCategorySort');
-const updateCategoryStatus = require('./updateCategoryStatus');
-const updateCategoryType = require('./updateCategoryType');
 const uploadCategoryImage = require('./uploadCategoryImage');
 const removeCategoryImage = require('./removeCategoryImage');
 
@@ -69,42 +66,6 @@ module.exports = (fastify, opts, done) => {
             ],
         },
         getCategoryById,
-    );
-
-    fastify.put(
-        '/sort',
-        {
-            preHandler: [
-                fastify.authenticate,
-                fastify.authorize(PERMISSIONS.UPDATE_CATEGORY),
-                fastify.checkTenantByParams,
-            ],
-        },
-        updateCategorySort,
-    );
-
-    fastify.put(
-        '/:categoryId/status',
-        {
-            preHandler: [
-                fastify.authenticate,
-                fastify.authorize(PERMISSIONS.UPDATE_CATEGORY),
-                fastify.checkTenantByParams,
-            ],
-        },
-        updateCategoryStatus,
-    );
-
-    fastify.put(
-        '/:categoryId/type',
-        {
-            preHandler: [
-                fastify.authenticate,
-                fastify.authorize(PERMISSIONS.UPDATE_CATEGORY),
-                fastify.checkTenantByParams,
-            ],
-        },
-        updateCategoryType,
     );
 
     fastify.post(

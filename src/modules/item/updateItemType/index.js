@@ -1,44 +1,47 @@
-const Product = require('../product.model');
+const Item = require('../item.model');
 
 module.exports = async (request, reply) => {
     const {
         tenantId,
-        productId
+        itemId
     } = request.params;
-    const { status } = request.body;
+    const { type } = request.body;
 
-    const product = await Product
+    const item = await Item
         .findOne({
             tenant: tenantId,
-            _id: productId,
+            _id: itemId,
         });
 
-    if (!product) {
+    if (!item) {
         return reply.send({
             success: false,
-            message: 'product_not_found',
+            message: 'item_not_found',
         });
     }
 
-    const updatedProduct = await Product.findByIdAndUpdate(
-        productId,
+    const updatedItem = await Item.findByIdAndUpdate(
+        itemId,
         {
-            status,
+            type,
         },
         {
             new: true,
         }
     );
 
-    if (!updatedProduct) {
+    console.log(tenantId, itemId, type);
+    
+
+    if (!updatedItem) {
         return reply.send({
             success: false,
-            message: 'product_status_error',
+            message: 'item_type_error',
         });
     }
 
     return reply.send({
         success: true,
-        message: 'product_status_success',
+        message: 'item_type_success',
     });
 };
