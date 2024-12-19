@@ -17,7 +17,8 @@ module.exports = async (request, reply) => {
         .sort({
             sort: 1,
         })
-        .populate('translations.language');
+        .populate('translations.language')
+        .populate('prices.currency');
 
     if (items.length === 0) {
         return reply.send({
