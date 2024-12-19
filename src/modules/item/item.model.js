@@ -1,6 +1,7 @@
 const { mongoose } = require('@lumodine/mongodb');
 const baseModel = require('../common/mongodb.base.model');
 const { ITEM_STATUS } = require('./item.constant');
+const { THEME_TYPES } = require('../theme/theme.constant');
 
 const schema = new mongoose.Schema({
     tenant: {
@@ -45,6 +46,8 @@ const schema = new mongoose.Schema({
     type: {
         type: String,
         required: true,
+        enum: Object.values(THEME_TYPES),
+        default: THEME_TYPES.DEFAULT,
     },
     ...baseModel.fields,
 }, {

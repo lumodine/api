@@ -22,7 +22,7 @@ const schema = new mongoose.Schema({
         type: String,
         required: true,
         enum: Object.values(PRODUCT_TYPES),
-        default: PRODUCT_TYPES.ROW,
+        default: PRODUCT_TYPES.DEFAULT,
     },
     ...baseModel.fields,
 }, { ...baseModel.options });

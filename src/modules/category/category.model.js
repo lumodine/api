@@ -1,6 +1,6 @@
 const { mongoose } = require('@lumodine/mongodb');
 const baseModel = require('../common/mongodb.base.model');
-const { CATEGORY_TYPES } = require('./category.constant');
+const { THEME_TYPES } = require('../theme/theme.constant');
 const Item = require('../item/item.model');
 
 const schema = new mongoose.Schema({
@@ -10,8 +10,8 @@ const schema = new mongoose.Schema({
     type: {
         type: String,
         required: true,
-        enum: Object.values(CATEGORY_TYPES),
-        default: CATEGORY_TYPES.ROW_1_COL_2,
+        enum: Object.values(THEME_TYPES),
+        default: THEME_TYPES.DEFAULT,
     },
     ...baseModel.fields,
 }, { ...baseModel.options });
