@@ -36,6 +36,7 @@ fastify.register(require('./modules/language'));
 fastify.register(require('./modules/currency'));
 fastify.register(require('./modules/tenant'));
 fastify.register(require('./modules/qrMenu'));
+fastify.register(require('./modules/theme'));
 
 const port = process.env.PORT || 3000;
 fastify.listen({ port, host: '0.0.0.0' }, async (err, address) => {

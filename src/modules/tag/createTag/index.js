@@ -6,6 +6,7 @@ module.exports = async (request, reply) => {
     const {
         translations,
         isShowInMenu,
+        color,
     } = request.body;
 
     //TODO: check translations.language
@@ -14,6 +15,9 @@ module.exports = async (request, reply) => {
         tenant: tenantId,
         translations,
         isShowInMenu,
+        theme: {
+            color,
+        },
     };
 
     const createdTag = await (new Tag(payload)).save();

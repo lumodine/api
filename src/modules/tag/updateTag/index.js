@@ -9,6 +9,7 @@ module.exports = async (request, reply) => {
     const {
         translations,
         isShowInMenu,
+        color,
     } = request.body;
 
     const tag = await Tag
@@ -30,6 +31,9 @@ module.exports = async (request, reply) => {
         tenant: tenantId,
         translations,
         isShowInMenu,
+        theme: {
+            color,
+        },
     };
 
     const updatedTag = await Tag.findByIdAndUpdate(

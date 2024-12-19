@@ -8,7 +8,6 @@ const updateTenantThemeColor = require('./updateTenantThemeColor');
 const removeTenant = require('./removeTenant');
 const getTenantById = require('./getTenantById');
 const getTenantByAlias = require('./getTenantByAlias');
-const getAllTenantColors = require('./getAllTenantColors');
 const uploadTenantLogo = require('./uploadTenantLogo');
 const uploadTenantBackground = require('./uploadTenantBackground');
 const removeTenantLogo = require('./removeTenantLogo');
@@ -118,17 +117,6 @@ module.exports = (fastify, opts, done) => {
             ],
         },
         getTenantByAlias
-    );
-
-    fastify.get(
-        '/theme/colors',
-        {
-            preHandler: [
-                fastify.authenticate,
-                fastify.authorize(PERMISSIONS.GET_ALL_TENANTS),
-            ],
-        },
-        getAllTenantColors
     );
 
     fastify.post(

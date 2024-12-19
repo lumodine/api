@@ -1,7 +1,8 @@
 const { mongoose } = require('@lumodine/mongodb');
 const baseModel = require('../common/mongodb.base.model');
 const { USER_ROLES } = require('../user/user.constant');
-const { COLORS, SOCIAL_MEDIAS, TENANT_STATUS, HEADER_POSITIONS } = require('./tenant.constant');
+const { SOCIAL_MEDIAS, TENANT_STATUS } = require('./tenant.constant');
+const { COLORS, HEADER_POSITIONS } = require('../theme/theme.constant');
 
 const schema = new mongoose.Schema({
     users: [

@@ -1,4 +1,4 @@
-const { COLORS } = require('../tenant.constant');
+const { COLORS } = require('../../theme/theme.constant');
 
 module.exports = async (request, reply) => {
     const colors = Object.values(COLORS);
