@@ -1,6 +1,6 @@
 const { mongoose } = require('@lumodine/mongodb');
 const baseModel = require('../common/mongodb.base.model');
-const { PRODUCT_STATUS, PRODUCT_TYPES } = require('./product.constant');
+const { PRODUCT_TYPES } = require('./product.constant');
 const Item = require('../item/item.model');
 
 const schema = new mongoose.Schema({
@@ -23,12 +23,6 @@ const schema = new mongoose.Schema({
         required: true,
         enum: Object.values(PRODUCT_TYPES),
         default: PRODUCT_TYPES.ROW,
-    },
-    status: {
-        type: String,
-        required: true,
-        enum: Object.values(PRODUCT_STATUS),
-        default: PRODUCT_STATUS.PUBLISHED,
     },
     ...baseModel.fields,
 }, { ...baseModel.options });

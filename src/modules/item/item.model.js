@@ -1,5 +1,6 @@
 const { mongoose } = require('@lumodine/mongodb');
 const baseModel = require('../common/mongodb.base.model');
+const { ITEM_STATUS } = require('./item.constant');
 
 const schema = new mongoose.Schema({
     tenant: {
@@ -34,6 +35,12 @@ const schema = new mongoose.Schema({
     sort: {
         type: Number,
         default: 1,
+    },
+    status: {
+        type: String,
+        required: true,
+        enum: Object.values(ITEM_STATUS),
+        default: ITEM_STATUS.PUBLISHED,
     },
     ...baseModel.fields,
 }, {

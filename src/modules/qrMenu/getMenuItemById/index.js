@@ -1,3 +1,4 @@
+const { ITEM_STATUS } = require('../../item/item.constant');
 const Item = require('../../item/item.model');
 
 module.exports = async (request, reply) => {
@@ -9,6 +10,9 @@ module.exports = async (request, reply) => {
             _id: itemId,
             tenant: tenantId,
             isShowInMenu: true,
+            status: {
+                $ne: ITEM_STATUS.HIDDEN,
+            },
         })
         .populate('translations.language');
 

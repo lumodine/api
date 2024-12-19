@@ -1,8 +1,3 @@
-const CATEGORY_STATUS = {
-    PUBLISHED: 'published',
-    NOT_AVAILABLE: 'not_available',
-};
-
 const CATEGORY_TYPES = {
     ROW_1_COL_1: 'row-1-col-1',
     ROW_1_COL_2: 'row-1-col-2',
@@ -15,6 +10,5 @@ const CATEGORY_TYPES = {
 };
 
 module.exports = {
-    CATEGORY_STATUS,
     CATEGORY_TYPES,
 };
