@@ -1,7 +1,6 @@
 const getMenu = require('./getMenu');
-const getAllMenuCategories = require('./getAllMenuCategories');
-const getMenuCategoryById = require('./getMenuCategoryById');
-const getAllProductsByCategoryId = require('./getAllProductsByCategoryId');
+const getAllMenuItems = require('./getAllMenuItems');
+const getMenuItemById = require('./getMenuItemById');
 
 module.exports = (fastify, opts, done) => {
     fastify.get(
@@ -15,33 +14,23 @@ module.exports = (fastify, opts, done) => {
     );
 
     fastify.get(
-        '/:tenantAlias/categories',
+        '/:tenantAlias/items',
         {
             preHandler: [
                 fastify.checkTenantByParams,
             ],
         },
-        getAllMenuCategories
+        getAllMenuItems
     );
 
     fastify.get(
-        '/:tenantAlias/categories/:categoryId',
+        '/:tenantAlias/items/:itemId',
         {
             preHandler: [
                 fastify.checkTenantByParams,
             ],
         },
-        getMenuCategoryById
-    );
-
-    fastify.get(
-        '/:tenantAlias/categories/:categoryId/products',
-        {
-            preHandler: [
-                fastify.checkTenantByParams,
-            ],
-        },
-        getAllProductsByCategoryId
+        getMenuItemById
     );
 
     done();
