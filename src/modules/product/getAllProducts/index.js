@@ -17,7 +17,12 @@ module.exports = async (request, reply) => {
         })
         .populate('translations.language')
         .populate('prices.currency')
-        .populate('parentItems.item');
+        .populate({
+            path: 'parentItems.item',
+            populate: {
+                path: 'translations.language',
+            },
+        });
 
     if (products.length === 0) {
         return reply.send({
