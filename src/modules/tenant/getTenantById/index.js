@@ -9,9 +9,7 @@ module.exports = async (request, reply) => {
             {
                 _id: tenantId,
                 'users.user': {
-                    $in: [
-                        sub,
-                    ],
+                    $in: sub,
                 },
             }
         )

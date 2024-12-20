@@ -4,12 +4,19 @@ module.exports = async (request, reply) => {
     const tenantId = request.tenant._id;
     const { itemId } = request.query;
 
+    const query = {
+        tenant: tenantId,
+        isShowInMenu: true,
+    };
+
+    if (itemId) {
+        query['parentItems.item'] = {
+            $in: itemId,
+        };
+    }
+
     const items = await Item
-        .find({
-            tenant: tenantId,
-            parentItem: itemId || null,
-            isShowInMenu: true,
-        })
+        .find(query)
         .sort({
             sort: 1,
         })

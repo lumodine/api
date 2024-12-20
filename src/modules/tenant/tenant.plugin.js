@@ -16,9 +16,7 @@ async function tenantPlugin(fastify, options) {
             query = {
                 ...query,
                 'users.user': {
-                    $in: [
-                        sub,
-                    ],
+                    $in: sub,
                 },
             };
         }

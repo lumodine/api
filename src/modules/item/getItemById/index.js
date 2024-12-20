@@ -1,16 +1,12 @@
-const { ITEM_STATUS } = require('../../item/item.constant');
-const Item = require('../../item/item.model');
+const Item = require('../item.model');
 
 module.exports = async (request, reply) => {
     const tenantId = request.tenant._id;
-    const { itemId } = request.query;
+    const { itemId } = request.params;
 
     const query = {
         tenant: tenantId,
         isShowInMenu: true,
-        status: {
-            $ne: ITEM_STATUS.HIDDEN,
-        },
     };
 
     if (itemId) {
@@ -19,23 +15,23 @@ module.exports = async (request, reply) => {
         };
     }
 
-    const items = await Item
-        .find(query)
+    const item = await Item
+        .findOne(query)
         .sort({
             sort: 1,
         })
         .populate('translations.language')
         .populate('prices.currency');
 
-    if (items.length === 0) {
+    if (!item) {
         return reply.send({
             success: false,
-            message: 'items_not_found',
+            message: 'item_not_found',
         });
     }
 
     return reply.send({
         success: true,
-        data: items,
+        data: item,
     });
 };

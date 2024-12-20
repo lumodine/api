@@ -5,10 +5,13 @@ module.exports = async (request, reply) => {
         tenantId,
         categoryId,
     } = request.params;
+    
     const products = await Product
         .find({
             tenant: tenantId,
-            parentItem: categoryId,
+            'parentItems.item': {
+                $in: categoryId,
+            },
         }).sort({
             sort: 1
         })

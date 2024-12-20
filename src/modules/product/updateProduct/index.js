@@ -17,7 +17,9 @@ module.exports = async (request, reply) => {
     const product = await Product
         .findOne({
             tenant: tenantId,
-            parentItem: categoryId,
+            'parentItems.item': {
+                $in: categoryId,
+            },
             _id: productId,
         });
 
@@ -36,7 +38,11 @@ module.exports = async (request, reply) => {
         tenant: tenantId,
         translations,
         image,
-        parentItem: category,
+        parentItems: [
+            {
+                item: category,
+            },
+        ],
         prices,
     };
 

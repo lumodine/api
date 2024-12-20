@@ -7,9 +7,7 @@ module.exports = async (request, reply) => {
         .find(
             {
                 'users.user': {
-                    $in: [
-                        sub,
-                    ],
+                    $in: sub,
                 },
             }
         )

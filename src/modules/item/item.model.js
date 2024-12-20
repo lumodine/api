@@ -29,10 +29,19 @@ const schema = new mongoose.Schema({
         type: Boolean,
         default: true,
     },
-    parentItem: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'item',
-    },
+    parentItems: [
+        {
+            item: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'item',
+                required: true,
+            },
+            sort: {
+                type: Number,
+                default: 1,
+            },
+        },
+    ],
     sort: {
         type: Number,
         default: 1,

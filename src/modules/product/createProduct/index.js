@@ -20,7 +20,11 @@ module.exports = async (request, reply) => {
         tenant: tenantId,
         translations,
         image,
-        parentItem: categoryId,
+        parentItems: [
+            {
+                item: categoryId,
+            },
+        ],
         prices,
     };
 

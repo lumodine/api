@@ -26,7 +26,9 @@ module.exports = async (request, reply) => {
     ] = await Promise.all([
         Category.findByIdAndDelete(categoryId),
         Product.deleteMany({
-            parentItem: categoryId,
+            'parentItems.item': {
+                $in: categoryId,
+            },
         }),
     ]);
 

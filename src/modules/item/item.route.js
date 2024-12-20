@@ -2,6 +2,7 @@ const getAllItems = require('./getAllItems');
 const updateItemSort = require('./updateItemSort');
 const updateItemStatus = require('./updateItemStatus');
 const updateItemType = require('./updateItemType');
+const getItemById = require('./getItemById');
 
 module.exports = (fastify, opts, done) => {
     fastify.get(
@@ -13,6 +14,17 @@ module.exports = (fastify, opts, done) => {
             ],
         },
         getAllItems
+    );
+
+    fastify.get(
+        '/:itemId',
+        {
+            preHandler: [
+                fastify.authenticate,
+                fastify.checkTenantByParams,
+            ],
+        },
+        getItemById
     );
 
     fastify.put(

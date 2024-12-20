@@ -10,7 +10,9 @@ module.exports = async (request, reply) => {
     const product = await Product
         .findOne({
             tenant: tenantId,
-            parentItem: categoryId,
+            'parentItems.item': {
+                $in: categoryId,
+            },
             _id: productId,
         });
 
