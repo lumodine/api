@@ -1,4 +1,5 @@
 const Tag = require('../tag.model');
+const Product = require('../../product/product.model');
 
 module.exports = async (request, reply) => {
     const {
@@ -19,7 +20,26 @@ module.exports = async (request, reply) => {
         });
     }
 
-    const isRemovedTag = await Tag.findByIdAndDelete(tagId);
+    const [
+        isRemovedTag,
+        isRemovedProduct,
+    ] = await Promise.all([
+        await Tag.findByIdAndDelete(tagId),
+        Product.updateMany(
+            {
+                'parentItems.item': {
+                    $in: tagId,
+                },
+            },
+            {
+                $pull: {
+                    parentItems: {
+                        item: tagId,
+                    },
+                },
+            }
+        ),
+    ]);
 
     if (!isRemovedTag) {
         return reply.send({

@@ -1,3 +1,4 @@
+const { ITEM_KINDS } = require('../../item/item.constant');
 const Product = require('../product.model');
 
 module.exports = async (request, reply) => {
@@ -38,6 +39,7 @@ module.exports = async (request, reply) => {
     const parentItems = [
         {
             item: category,
+            kind: ITEM_KINDS.CATEGORY,
         },
     ];
 
@@ -45,6 +47,7 @@ module.exports = async (request, reply) => {
         tags.forEach((tag) => {
             parentItems.push({
                 item: tag,
+                kind: ITEM_KINDS.TAG,
             });
         });
     }

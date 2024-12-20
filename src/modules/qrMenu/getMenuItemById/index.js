@@ -9,7 +9,6 @@ module.exports = async (request, reply) => {
         .findOne({
             _id: itemId,
             tenant: tenantId,
-            isShowInMenu: true,
             status: {
                 $ne: ITEM_STATUS.HIDDEN,
             },

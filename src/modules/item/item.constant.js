@@ -4,6 +4,13 @@ const ITEM_STATUS = {
     NOT_AVAILABLE: 'not_available',
 };
 
+const ITEM_KINDS = {
+    CATEGORY: 'category',
+    TAG: 'tag',
+    PRODUCT: 'product',
+};
+
 module.exports = {
     ITEM_STATUS,
+    ITEM_KINDS,
 };

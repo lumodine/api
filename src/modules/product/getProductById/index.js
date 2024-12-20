@@ -16,7 +16,8 @@ module.exports = async (request, reply) => {
             _id: productId,
         })
         .populate('translations.language')
-        .populate('prices.currency');
+        .populate('prices.currency')
+        .populate('parentItems.item');
 
     if (!product) {
         return reply.send({
