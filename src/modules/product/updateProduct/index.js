@@ -12,6 +12,7 @@ module.exports = async (request, reply) => {
         image,
         category,
         prices,
+        tags,
     } = request.body;
 
     const product = await Product
@@ -34,15 +35,25 @@ module.exports = async (request, reply) => {
     //TODO: check category
     //TODO: check prices.currency
 
+    const parentItems = [
+        {
+            item: category,
+        },
+    ];
+
+    if (tags) {
+        tags.forEach((tag) => {
+            parentItems.push({
+                item: tag,
+            });
+        });
+    }
+
     const payload = {
         tenant: tenantId,
         translations,
         image,
-        parentItems: [
-            {
-                item: category,
-            },
-        ],
+        parentItems,
         prices,
     };
 
