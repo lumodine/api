@@ -1,6 +1,7 @@
 const getMenu = require('./getMenu');
 const getAllMenuItems = require('./getAllMenuItems');
 const getMenuItemById = require('./getMenuItemById');
+const getAllAnnouncements = require('./getAllAnnouncements');
 
 module.exports = (fastify, opts, done) => {
     fastify.get(
@@ -31,6 +32,16 @@ module.exports = (fastify, opts, done) => {
             ],
         },
         getMenuItemById
+    );
+
+    fastify.get(
+        '/:tenantAlias/announcements',
+        {
+            preHandler: [
+                fastify.checkTenantByParams,
+            ],
+        },
+        getAllAnnouncements
     );
 
     done();

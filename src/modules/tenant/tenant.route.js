@@ -207,5 +207,12 @@ module.exports = (fastify, opts, done) => {
         },
     );
 
+    fastify.register(
+        require('../announcement'),
+        {
+            prefix: '/:tenantId',
+        },
+    );
+
     done();
 };
