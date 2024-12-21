@@ -4,6 +4,8 @@ const updateAnnouncement = require('./updateAnnouncement');
 const removeAnnouncement = require('./removeAnnouncement');
 const getAnnouncementById = require('./getAnnouncementById');
 const getAllAnnouncements = require('./getAllAnnouncements');
+const updateAnnouncementSort = require('./updateAnnouncementSort');
+const updateAnnouncementStatus = require('./updateAnnouncementStatus');
 
 module.exports = (fastify, opts, done) => {
     fastify.post(
@@ -40,6 +42,28 @@ module.exports = (fastify, opts, done) => {
             ],
         },
         updateAnnouncement
+    );
+
+    fastify.put(
+        '/sort',
+        {
+            preHandler: [
+                fastify.authenticate,
+                fastify.checkTenantByParams,
+            ],
+        },
+        updateAnnouncementSort,
+    );
+
+    fastify.put(
+        '/:announcementId/status',
+        {
+            preHandler: [
+                fastify.authenticate,
+                fastify.checkTenantByParams,
+            ],
+        },
+        updateAnnouncementStatus,
     );
 
     fastify.delete(
