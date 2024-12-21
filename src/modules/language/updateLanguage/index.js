@@ -14,7 +14,7 @@ module.exports = async (request, reply) => {
     if (!language) {
         return reply.send({
             success: false,
-            message: 'language_not_found',
+            message: request.i18n.language_not_found,
         });
     }
 
@@ -35,7 +35,7 @@ module.exports = async (request, reply) => {
     if (hasLanguage) {
         return reply.send({
             success: false,
-            message: 'language_already_exists',
+            message: request.i18n.language_already_exists,
         });
     }
 
@@ -57,12 +57,13 @@ module.exports = async (request, reply) => {
     if (!updatedLanguage) {
         return reply.send({
             success: false,
-            message: 'language_update_error',
+            message: request.i18n.language_update_error,
         });
     }
 
     return reply.send({
         success: true,
+        message: request.i18n.language_update_success,
         data: updatedLanguage,
     });
 };

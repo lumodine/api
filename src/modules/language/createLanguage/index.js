@@ -22,7 +22,7 @@ module.exports = async (request, reply) => {
     if (language) {
         return reply.send({
             success: false,
-            message: 'language_already_exists',
+            message: request.i18n.language_already_exists,
         });
     }
 
@@ -37,12 +37,12 @@ module.exports = async (request, reply) => {
     if (!createdLanguage) {
         return reply.send({
             success: false,
-            message: 'language_create_error',
+            message: request.i18n.language_create_error,
         });
     }
 
     return reply.send({
         success: true,
-        message: 'language_create_success',
+        message: request.i18n.language_create_success,
     });
 };

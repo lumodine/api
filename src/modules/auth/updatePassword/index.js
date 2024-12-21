@@ -12,7 +12,7 @@ module.exports = async (request, reply) => {
     if (newPassword != confirmNewPassword) {
         return reply.send({
             success: false,
-            message: 'passwords_does_not_match',
+            message: request.i18n.passwords_does_not_match,
         });
     }
 
@@ -25,7 +25,7 @@ module.exports = async (request, reply) => {
     if (!user) {
         return reply.send({
             success: false,
-            message: 'user_not_found',
+            message: request.i18n.user_not_found,
         });
     }
 
@@ -33,7 +33,7 @@ module.exports = async (request, reply) => {
     if (!isCompoarePassword) {
         return reply.send({
             success: false,
-            message: 'incorrect_password',
+            message: request.i18n.incorrect_password,
         });
     }
 
@@ -52,12 +52,12 @@ module.exports = async (request, reply) => {
     if (!updatedUser) {
         return reply.send({
             success: false,
-            message: 'password_update_error',
+            message: request.i18n.user_password_update_error,
         });
     }
 
     return reply.send({
         success: true,
-        message: 'password_update_success',
+        message: request.i18n.user_password_update_success,
     });
 };

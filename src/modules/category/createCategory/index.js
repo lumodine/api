@@ -21,12 +21,12 @@ module.exports = async (request, reply) => {
     if (!createdCategory) {
         return reply.send({
             success: false,
-            message: 'category_create_error',
+            message: request.i18n.category_create_error,
         });
     }
 
     return reply.send({
         success: true,
-        message: 'category_create_success',
+        message: request.i18n.category_create_success,
     });
 };

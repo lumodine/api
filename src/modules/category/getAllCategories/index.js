@@ -14,7 +14,7 @@ module.exports = async (request, reply) => {
     if (categories.length === 0) {
         return reply.send({
             success: false,
-            message: 'categories_not_found',
+            message: request.i18n.categories_not_found,
         });
     }
 

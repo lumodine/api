@@ -21,12 +21,12 @@ module.exports = async (request, reply) => {
     if (!result) {
         return reply.send({
             success: false,
-            message: 'item_sort_error',
+            message: request.i18n.item_sort_update_error,
         });
     }
 
     return reply.send({
         success: true,
-        message: 'item_sort_success',
+        message: request.i18n.item_sort_update_success,
     });
 };

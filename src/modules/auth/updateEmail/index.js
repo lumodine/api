@@ -12,7 +12,7 @@ module.exports = async (request, reply) => {
     if (!user) {
         return reply.send({
             success: false,
-            message: 'user_not_found',
+            message: request.i18n.user_not_found,
         });
     }
 
@@ -26,7 +26,7 @@ module.exports = async (request, reply) => {
     if (hasUserEmail) {
         return reply.send({
             success: false,
-            message: 'user_already_exists',
+            message: request.i18n.user_already_exists,
         });
     }
 
@@ -45,12 +45,12 @@ module.exports = async (request, reply) => {
     if (!updatedUser) {
         return reply.send({
             success: false,
-            message: 'user_update_error',
+            message: request.i18n.user_email_update_error,
         });
     }
 
     return reply.send({
         success: true,
-        message: 'user_update_success',
+        message: request.i18n.user_email_update_success,
     });
 };

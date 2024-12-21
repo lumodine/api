@@ -16,7 +16,7 @@ module.exports = async (request, reply) => {
     if (!item) {
         return reply.send({
             success: false,
-            message: 'item_not_found',
+            message: request.i18n.item_not_found,
         });
     }
 
@@ -36,12 +36,12 @@ module.exports = async (request, reply) => {
     if (!updatedItem) {
         return reply.send({
             success: false,
-            message: 'item_type_error',
+            message: request.i18n.item_type_update_error,
         });
     }
 
     return reply.send({
         success: true,
-        message: 'item_type_success',
+        message: request.i18n.item_type_update_success,
     });
 };

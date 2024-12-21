@@ -27,7 +27,7 @@ module.exports = async (request, reply) => {
     if (!product) {
         return reply.send({
             success: false,
-            message: 'product_not_found',
+            message: request.i18n.product_not_found,
         });
     }
 

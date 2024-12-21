@@ -8,7 +8,7 @@ module.exports = async (request, reply) => {
     if (!currency) {
         return reply.send({
             success: false,
-            message: 'currency_not_found',
+            message: request.i18n.currency_not_found,
         });
     }
 
@@ -16,12 +16,12 @@ module.exports = async (request, reply) => {
     if (!isRemoved) {
         return reply.send({
             success: false,
-            message: 'currency_remove_error',
+            message: request.i18n.currency_remove_error,
         });
     }
 
     return reply.send({
         success: true,
-        message: 'currency_remove_success',
+        message: request.i18n.currency_remove_success,
     });
 };

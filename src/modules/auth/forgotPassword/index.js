@@ -35,6 +35,6 @@ module.exports = async (request, reply) => {
 
     return reply.send({
         success: true,
-        message: 'reset_email_successfully_send',
+        message: request.i18n.reset_email_successfully_send,
     });
 };

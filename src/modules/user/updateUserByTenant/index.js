@@ -24,12 +24,12 @@ module.exports = async (request, reply) => {
     if (!updatedTenant) {
         return reply.send({
             success: false,
-            message: 'user_update_error',
+            message: request.i18n.user_update_this_tenant_error,
         });
     }
 
     return reply.send({
         success: true,
-        message: 'user_update_success',
+        message: request.i18n.user_update_this_tenant_success,
     });
 };

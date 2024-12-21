@@ -18,7 +18,7 @@ module.exports = async (request, reply) => {
     if (!user) {
         return reply.send({
             success: false,
-            message: 'user_not_found',
+            message: request.i18n.user_not_found,
         });
     }
 
@@ -32,7 +32,7 @@ module.exports = async (request, reply) => {
     if (hasUserInTenant) {
         return reply.send({
             success: false,
-            message: 'user_already_exists_this_tenant',
+            message: request.i18n.user_already_exists_this_tenant,
         });
     }
 
@@ -48,12 +48,12 @@ module.exports = async (request, reply) => {
     if (!updatedTenant) {
         return reply.send({
             success: false,
-            message: 'user_create_error',
+            message: request.i18n.user_add_to_tenant_error,
         });
     }
 
     return reply.send({
         success: true,
-        message: 'user_create_success',
+        message: request.i18n.user_add_to_tenant_success,
     });
 };

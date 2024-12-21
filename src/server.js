@@ -28,6 +28,7 @@ fastify.register(require('@fastify/rate-limit'), {
   timeWindow: '1 minute'
 });
 
+fastify.register(require('./modules/i18n/i18n.plugin'));
 fastify.register(require('./modules/auth/auth.plugin'));
 fastify.register(require('./modules/tenant/tenant.plugin'));
 

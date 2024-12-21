@@ -16,7 +16,7 @@ module.exports = async (request, reply) => {
     if (!tag) {
         return reply.send({
             success: false,
-            message: 'tag_not_found',
+            message: request.i18n.tag_not_found,
         });
     }
 
@@ -44,12 +44,12 @@ module.exports = async (request, reply) => {
     if (!isRemovedTag) {
         return reply.send({
             success: false,
-            message: 'tag_remove_error',
+            message: request.i18n.tag_remove_error,
         });
     }
 
     return reply.send({
         success: true,
-        message: 'tag_remove_success',
+        message: request.i18n.tag_remove_success,
     });
 };

@@ -8,7 +8,7 @@ module.exports = async (request, reply) => {
     if (!language) {
         return reply.send({
             success: false,
-            message: 'language_not_found',
+            message: request.i18n.language_not_found,
         });
     }
 
@@ -16,12 +16,12 @@ module.exports = async (request, reply) => {
     if (!isRemoved) {
         return reply.send({
             success: false,
-            message: 'language_remove_error',
+            message: request.i18n.language_remove_error,
         });
     }
 
     return reply.send({
         success: true,
-        message: 'language_remove_success',
+        message: request.i18n.language_remove_success,
     });
 };

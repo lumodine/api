@@ -16,7 +16,7 @@ module.exports = async (request, reply) => {
     if (!announcement) {
         return reply.send({
             success: false,
-            message: 'announcement_not_found',
+            message: request.i18n.announcement_not_found,
         });
     }
 

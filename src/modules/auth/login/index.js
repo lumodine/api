@@ -15,7 +15,7 @@ module.exports = async (request, reply) => {
     if (!user) {
         return reply.send({
             success: false,
-            message: 'user_not_found',
+            message: request.i18n.incorrect_password,
         });
     }
 
@@ -23,7 +23,7 @@ module.exports = async (request, reply) => {
     if (!isCompoarePassword) {
         return reply.send({
             success: false,
-            message: 'incorrect_password',
+            message: request.i18n.incorrect_password,
         });
     }
 

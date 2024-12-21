@@ -12,7 +12,7 @@ module.exports = async (request, reply) => {
     if (password != confirmPassword) {
         return reply.send({
             success: false,
-            message: 'passwords_does_not_match',
+            message: request.i18n.passwords_does_not_match,
         });
     }
 
@@ -23,7 +23,7 @@ module.exports = async (request, reply) => {
     if (user) {
         return reply.send({
             success: false,
-            message: 'user_already_exists',
+            message: request.i18n.user_already_exists,
         });
     }
 
@@ -39,7 +39,7 @@ module.exports = async (request, reply) => {
     if (!createdUser) {
         return reply.send({
             success: false,
-            message: 'user_create_error',
+            message: request.i18n.user_create_error,
         });
     }
 

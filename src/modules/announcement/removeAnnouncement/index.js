@@ -15,7 +15,7 @@ module.exports = async (request, reply) => {
     if (!announcement) {
         return reply.send({
             success: false,
-            message: 'announcement_not_found',
+            message: request.i18n.announcement_not_found,
         });
     }
 
@@ -24,12 +24,12 @@ module.exports = async (request, reply) => {
     if (!isRemovedAnnouncement) {
         return reply.send({
             success: false,
-            message: 'announcement_remove_error',
+            message: request.i18n.announcement_remove_error,
         });
     }
 
     return reply.send({
         success: true,
-        message: 'announcement_remove_success',
+        message: request.i18n.announcement_remove_success,
     });
 };

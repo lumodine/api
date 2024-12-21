@@ -14,7 +14,7 @@ module.exports = async (request, reply) => {
     if (tags.length === 0) {
         return reply.send({
             success: false,
-            message: 'tags_not_found',
+            message: request.i18n.tags_not_found,
         });
     }
 

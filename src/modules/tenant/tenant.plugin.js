@@ -38,7 +38,7 @@ async function tenantPlugin(fastify, options) {
         if (!tenant) {
             return reply.send({
                 success: false,
-                message: 'tenant_not_found',
+                message: request.i18n.tenant_not_found,
             });
         }
 

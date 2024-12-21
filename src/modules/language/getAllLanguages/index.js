@@ -6,7 +6,7 @@ module.exports = async (request, reply) => {
     if (languages.length === 0) {
         return reply.send({
             success: false,
-            message: 'languages_not_found',
+            message: request.i18n.languages_not_found,
         });
     }
 

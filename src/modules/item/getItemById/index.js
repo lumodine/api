@@ -32,7 +32,7 @@ module.exports = async (request, reply) => {
     if (!item) {
         return reply.send({
             success: false,
-            message: 'item_not_found',
+            message: request.i18n.item_not_found,
         });
     }
 

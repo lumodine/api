@@ -8,7 +8,7 @@ module.exports = async (request, reply) => {
     if (!currency) {
         return reply.send({
             success: false,
-            message: 'currency_not_found',
+            message: request.i18n.currency_not_found,
         });
     }
 

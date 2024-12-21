@@ -18,12 +18,12 @@ module.exports = async (request, reply) => {
     if (!updatedProduct) {
         return reply.send({
             success: false,
-            message: 'product_update_error',
+            message: request.i18n.product_remove_image_error,
         });
     }
 
     return reply.send({
         success: true,
-        message: 'product_update_success',
+        message: request.i18n.product_remove_image_success,
     });
 };

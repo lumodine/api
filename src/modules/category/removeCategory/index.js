@@ -16,7 +16,7 @@ module.exports = async (request, reply) => {
     if (!category) {
         return reply.send({
             success: false,
-            message: 'category_not_found',
+            message: request.i18n.category_not_found,
         });
     }
 
@@ -35,12 +35,12 @@ module.exports = async (request, reply) => {
     if (!isRemovedCategory) {
         return reply.send({
             success: false,
-            message: 'category_remove_error',
+            message: request.i18n.category_remove_error,
         });
     }
 
     return reply.send({
         success: true,
-        message: 'category_remove_success',
+        message: request.i18n.category_remove_success,
     });
 };

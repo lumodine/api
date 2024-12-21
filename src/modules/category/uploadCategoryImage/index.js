@@ -31,12 +31,12 @@ module.exports = async (request, reply) => {
     if (!updatedCategory) {
         return reply.send({
             success: false,
-            message: 'category_update_error',
+            message: request.i18n.category_image_upload_error,
         });
     }
 
     return reply.send({
         success: true,
-        message: 'category_update_success',
+        message: request.i18n.category_image_upload_success,
     });
 };

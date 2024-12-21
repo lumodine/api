@@ -23,13 +23,13 @@ module.exports = async (request, reply) => {
     if (!updatedTenant) {
         return reply.send({
             success: false,
-            message: 'tenant_update_error',
+            message: request.i18n.tenant_currency_update_error,
         });
     }
 
     return reply.send({
         success: true,
-        message: 'tenant_update_success',
+        message: request.i18n.tenant_currency_update_success,
         data: updatedTenant,
     });
 };

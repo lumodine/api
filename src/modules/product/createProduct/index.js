@@ -47,12 +47,12 @@ module.exports = async (request, reply) => {
     if (!createdProduct) {
         return reply.send({
             success: false,
-            message: 'product_create_error',
+            message: request.i18n.product_create_error,
         });
     }
 
     return reply.send({
         success: true,
-        message: 'product_create_success',
+        message: request.i18n.product_create_success,
     });
 };

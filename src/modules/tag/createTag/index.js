@@ -25,12 +25,12 @@ module.exports = async (request, reply) => {
     if (!createdTag) {
         return reply.send({
             success: false,
-            message: 'tag_create_error',
+            message: request.i18n.tag_create_error,
         });
     }
 
     return reply.send({
         success: true,
-        message: 'tag_create_success',
+        message: request.i18n.tag_create_success,
     });
 };

@@ -13,7 +13,7 @@ module.exports = async (request, reply) => {
     if (!user) {
         return reply.send({
             success: false,
-            message: 'user_not_found',
+            message: request.i18n.user_not_found,
         });
     }
 
@@ -33,12 +33,12 @@ module.exports = async (request, reply) => {
     if (!updatedUser) {
         return reply.send({
             success: false,
-            message: 'user_update_error',
+            message: request.i18n.user_info_update_error,
         });
     }
 
     return reply.send({
         success: true,
-        message: 'user_update_success',
+        message: request.i18n.user_info_update_success,
     });
 };

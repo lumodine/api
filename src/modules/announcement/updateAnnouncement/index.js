@@ -19,7 +19,7 @@ module.exports = async (request, reply) => {
     if (!announcement) {
         return reply.send({
             success: false,
-            message: 'announcement_not_found',
+            message: request.i18n.announcement_not_found,
         });
     }
 
@@ -41,13 +41,13 @@ module.exports = async (request, reply) => {
     if (!updatedAnnouncement) {
         return reply.send({
             success: false,
-            message: 'announcement_update_error',
+            message: request.i18n.announcement_update_error,
         });
     }
 
     return reply.send({
         success: true,
         data: updatedAnnouncement,
-        message: 'announcement_update_success',
+        message: request.i18n.announcement_update_success,
     });
 };

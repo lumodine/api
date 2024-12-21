@@ -17,7 +17,7 @@ module.exports = async (request, reply) => {
     if (tenants.length === 0) {
         return reply.send({
             success: false,
-            message: 'tenants_not_found',
+            message: request.i18n.tenants_not_found,
         });
     }
 

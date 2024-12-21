@@ -13,7 +13,7 @@ module.exports = async (request, reply) => {
     if (!currency) {
         return reply.send({
             success: false,
-            message: 'currency_not_found',
+            message: request.i18n.currency_not_found,
         });
     }
 
@@ -27,7 +27,7 @@ module.exports = async (request, reply) => {
     if (hasCurrency) {
         return reply.send({
             success: false,
-            message: 'currency_already_exists',
+            message: request.i18n.currency_already_exists,
         });
     }
 
@@ -48,12 +48,13 @@ module.exports = async (request, reply) => {
     if (!updatedCurrency) {
         return reply.send({
             success: false,
-            message: 'currency_update_error',
+            message: request.i18n.currency_update_error,
         });
     }
 
     return reply.send({
         success: true,
+        message: request.i18n.currency_update_success,
         data: updatedCurrency,
     });
 };

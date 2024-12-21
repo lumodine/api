@@ -13,7 +13,7 @@ async function authPlugin(fastify, options) {
     } catch (err) {
       return reply.code(401).send({
         success: false,
-        message: 'unauthorized'
+        message: request.i18n.auth_unauthorized
       });
     }
   });
@@ -26,7 +26,7 @@ async function authPlugin(fastify, options) {
     if (!user) {
       return reply.code(403).send({
         success: false,
-        message: 'forbidden'
+        message: request.i18n.auth_forbidden
       });
     }
 
@@ -38,7 +38,7 @@ async function authPlugin(fastify, options) {
     if (!hasPermission) {
       return reply.code(403).send({
         success: false,
-        message: 'forbidden'
+        message: request.i18n.auth_forbidden
       });
     }*/
   });

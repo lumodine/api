@@ -19,7 +19,7 @@ module.exports = async (request, reply) => {
     if (isDisallowedAlias) {
         return reply.send({
             success: false,
-            message: 'tenant_already_exists',
+            message: request.i18n.tenant_already_exists,
         });
     }
 
@@ -30,7 +30,7 @@ module.exports = async (request, reply) => {
     if (tenant) {
         return reply.send({
             success: false,
-            message: 'tenant_already_exists',
+            message: request.i18n.tenant_already_exists,
         });
     }
 
@@ -65,13 +65,13 @@ module.exports = async (request, reply) => {
     if (!createdTenant) {
         return reply.send({
             success: false,
-            message: 'tenant_create_error',
+            message: request.i18n.tenant_create_error,
         });
     }
 
     return reply.send({
         success: true,
-        message: 'tenant_create_success',
+        message: request.i18n.tenant_create_success,
         data: createdTenant,
     });
 };

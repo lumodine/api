@@ -17,12 +17,12 @@ module.exports = async (request, reply) => {
     if (!updatedTenant) {
         return reply.send({
             success: false,
-            message: 'user_remove_error',
+            message: request.i18n.user_remove_this_tenant_error,
         });
     }
 
     return reply.send({
         success: true,
-        message: 'user_remove_success',
+        message: request.i18n.user_remove_this_tenant_success,
     });
 };

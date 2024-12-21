@@ -34,12 +34,12 @@ module.exports = async (request, reply) => {
     if (!isRemovedTenant) {
         return reply.send({
             success: false,
-            message: 'tenant_remove_error',
+            message: request.i18n.tenant_remove_error,
         });
     }
 
     return reply.send({
         success: true,
-        message: 'tenant_remove_success',
+        message: request.i18n.tenant_remove_success,
     });
 };

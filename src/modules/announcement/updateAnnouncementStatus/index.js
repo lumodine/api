@@ -17,7 +17,7 @@ module.exports = async (request, reply) => {
     if (!announcement) {
         return reply.send({
             success: false,
-            message: 'announcement_not_found',
+            message: request.i18n.announcement_not_found,
         });
     }
 
@@ -34,12 +34,12 @@ module.exports = async (request, reply) => {
     if (!updatedAnnouncement) {
         return reply.send({
             success: false,
-            message: 'announcement_status_error',
+            message: request.i18n.announcement_status_update_error,
         });
     }
 
     return reply.send({
         success: true,
-        message: 'announcement_status_success',
+        message: request.i18n.announcement_status_update_success,
     });
 };

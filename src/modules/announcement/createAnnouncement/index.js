@@ -19,12 +19,12 @@ module.exports = async (request, reply) => {
     if (!createdAnnouncement) {
         return reply.send({
             success: false,
-            message: 'announcement_create_error',
+            message: request.i18n.announcement_create_error,
         });
     }
 
     return reply.send({
         success: true,
-        message: 'announcement_create_success',
+        message: request.i18n.announcement_create_success,
     });
 };

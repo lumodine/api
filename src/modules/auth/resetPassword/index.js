@@ -18,14 +18,14 @@ module.exports = async (request, reply) => {
     if (!token) {
         return reply.send({
             success: false,
-            message: 'token_not_found_or_expire',
+            message: request.i18n.token_not_found_or_expire,
         });
     }
 
     if (password != confirmPassword) {
         return reply.send({
             success: false,
-            message: 'passwords_does_not_match',
+            message: request.i18n.passwords_does_not_match,
         });
     }
 
@@ -38,7 +38,7 @@ module.exports = async (request, reply) => {
     if (!updatedUser) {
         return reply.send({
             success: false,
-            message: 'password_update_error',
+            message: request.i18n.user_password_update_error,
         });
     }
 
@@ -55,6 +55,6 @@ module.exports = async (request, reply) => {
 
     return reply.send({
         success: true,
-        message: 'password_update_success',
+        message: request.i18n.user_password_update_success,
     });
 };

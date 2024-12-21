@@ -21,7 +21,7 @@ module.exports = async (request, reply) => {
     if (!tag) {
         return reply.send({
             success: false,
-            message: 'tag_not_found',
+            message: request.i18n.tag_not_found,
         });
     }
 
@@ -47,13 +47,13 @@ module.exports = async (request, reply) => {
     if (!updatedTag) {
         return reply.send({
             success: false,
-            message: 'tag_update_error',
+            message: request.i18n.tag_update_error,
         });
     }
 
     return reply.send({
         success: true,
         data: updatedTag,
-        message: 'tag_update_success',
+        message: request.i18n.tag_update_success,
     });
 };

@@ -18,12 +18,12 @@ module.exports = async (request, reply) => {
     if (!updatedCategory) {
         return reply.send({
             success: false,
-            message: 'category_update_error',
+            message: request.i18n.category_remove_image_error,
         });
     }
 
     return reply.send({
         success: true,
-        message: 'category_update_success',
+        message: request.i18n.category_remove_image_success,
     });
 };

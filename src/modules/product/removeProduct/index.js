@@ -19,7 +19,7 @@ module.exports = async (request, reply) => {
     if (!product) {
         return reply.send({
             success: false,
-            message: 'product_not_found',
+            message: request.i18n.product_not_found,
         });
     }
 
@@ -27,12 +27,12 @@ module.exports = async (request, reply) => {
     if (!isRemoved) {
         return reply.send({
             success: false,
-            message: 'product_remove_error',
+            message: request.i18n.product_remove_error,
         });
     }
 
     return reply.send({
         success: true,
-        message: 'product_remove_success',
+        message: request.i18n.product_remove_success,
     });
 };
