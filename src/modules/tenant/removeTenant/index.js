@@ -9,8 +9,7 @@ module.exports = async (request, reply) => {
 
     const [
         isRemovedTenant,
-        isRemovedCategory,
-        isRemovedProduct,
+        isRemovedItem,
         isRemovedTag,
         isRemovedAnnouncement,
         isRemovedS3Folder,
