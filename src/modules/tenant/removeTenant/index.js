@@ -1,6 +1,6 @@
 const Tenant = require('../tenant.model');
-const Category = require('../../category/category.model');
-const Product = require('../../product/product.model');
+const Item = require('../../item/item.model');
+const Tag = require('../../tag/tag.model');
 const Announcement = require('../../announcement/announcement.model');
 const { s3 } = require('@lumodine/aws');
 
@@ -16,10 +16,7 @@ module.exports = async (request, reply) => {
         isRemovedS3Folder,
     ] = await Promise.all([
         Tenant.findByIdAndDelete(tenantId),
-        Category.deleteMany({
-            tenant: tenantId,
-        }),
-        Product.deleteMany({
+        Item.deleteMany({
             tenant: tenantId,
         }),
         Tag.deleteMany({
