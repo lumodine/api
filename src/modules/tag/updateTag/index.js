@@ -53,7 +53,6 @@ module.exports = async (request, reply) => {
 
     return reply.send({
         success: true,
-        data: updatedTag,
         message: request.i18n.tag_update_success,
     });
 };

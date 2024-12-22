@@ -78,6 +78,5 @@ module.exports = async (request, reply) => {
     return reply.send({
         success: true,
         message: request.i18n.product_update_success,
-        data: updatedProduct,
     });
 };

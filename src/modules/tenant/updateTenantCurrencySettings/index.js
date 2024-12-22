@@ -30,6 +30,5 @@ module.exports = async (request, reply) => {
     return reply.send({
         success: true,
         message: request.i18n.tenant_currency_update_success,
-        data: updatedTenant,
     });
 };

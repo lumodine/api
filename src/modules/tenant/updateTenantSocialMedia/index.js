@@ -30,6 +30,5 @@ module.exports = async (request, reply) => {
     return reply.send({
         success: true,
         message: request.i18n.tenant_social_media_update_succes,
-        data: updatedTenant,
     });
 };

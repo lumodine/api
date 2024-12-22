@@ -49,7 +49,6 @@ module.exports = async (request, reply) => {
 
     return reply.send({
         success: true,
-        data: updatedCategory,
         message: request.i18n.category_update_success,
     });
 };

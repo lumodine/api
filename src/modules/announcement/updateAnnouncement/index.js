@@ -47,7 +47,6 @@ module.exports = async (request, reply) => {
 
     return reply.send({
         success: true,
-        data: updatedAnnouncement,
         message: request.i18n.announcement_update_success,
     });
 };
