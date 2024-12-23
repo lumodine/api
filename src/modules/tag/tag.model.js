@@ -4,7 +4,6 @@ const Item = require('../item/item.model');
 const { COLORS } = require('../theme/theme.constant');
 
 const schema = new mongoose.Schema({
-    ...baseModel.fields,
     theme: {
         color: {
             type: String,
@@ -12,6 +11,7 @@ const schema = new mongoose.Schema({
             default: COLORS.ZINC,
         },
     },
+    ...baseModel.fields,
 }, { ...baseModel.options });
 
 module.exports = Item.discriminator('tag', schema);

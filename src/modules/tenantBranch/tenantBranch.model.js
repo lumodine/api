@@ -1,4 +1,5 @@
 const { mongoose } = require('@lumodine/mongodb');
+const baseModel = require('../common/mongodb.base.model');
 
 const schema = new mongoose.Schema({
     tenant: {
@@ -36,6 +37,7 @@ const schema = new mongoose.Schema({
             required: true,
         },
     },
-}, { versionKey: false });
+    ...baseModel.fields,
+}, { ...baseModel.options });
 
 module.exports = mongoose.model('tenantBranch', schema);
