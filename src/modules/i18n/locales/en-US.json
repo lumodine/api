@@ -130,5 +130,10 @@
     "user_update_this_tenant_error": "Error updating user in this tenant. Please try again.",
     "user_update_this_tenant_success": "User successfully updated in this tenant.",
     "user_remove_this_tenant_error": "Error removing user from this tenant. Please try again.",
-    "user_remove_this_tenant_success": "User successfully removed from this tenant."
+    "user_remove_this_tenant_success": "User successfully removed from this tenant.",
+
+    "event_not_found": "Event not found.",
+    "events_not_found": "Events not found.",
+    "event_create_error": "Error creating event. Please try again.",
+    "event_create_success": "Event successfully created."
 }

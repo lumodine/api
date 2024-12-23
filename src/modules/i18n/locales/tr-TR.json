@@ -130,5 +130,10 @@
     "user_update_this_tenant_error": "Kullanıcı bu işletmede güncellenirken hata oluştu. Lütfen tekrar deneyin.",
     "user_update_this_tenant_success": "Kullanıcı bu işletmede başarıyla güncellendi.",
     "user_remove_this_tenant_error": "Kullanıcı bu işletmeden silinirken hata oluştu. Lütfen tekrar deneyin.",
-    "user_remove_this_tenant_success": "Kullanıcı bu işletmeden başarıyla silindi."
+    "user_remove_this_tenant_success": "Kullanıcı bu işletmeden başarıyla silindi.",
+
+    "event_not_found": "Etkinlik bulunamadı.",
+    "events_not_found": "Etkinlikler bulunamadı.",
+    "event_create_error": "Etkinlik oluşturulurken hata oluştu. Lütfen tekrar deneyin.",
+    "event_create_success": "Etkinlik başarıyla oluşturuldu."
 }
