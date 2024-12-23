@@ -17,6 +17,11 @@ module.exports = async (request, reply) => {
         query['parentItems.item'] = {
             $in: itemId,
         };
+    } else {
+        query['parentItems'] = {
+            $exists: true,
+            $eq: [],
+        };
     }
 
     const items = await Item
