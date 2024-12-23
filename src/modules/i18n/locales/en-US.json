@@ -100,6 +100,8 @@
     "tenant_upload_background_success": "Tenant background successfully uploaded.",
     "tenant_theme_color_update_error": "Error updating tenant theme color. Please try again.",
     "tenant_theme_color_update_success": "Tenant theme color successfully updated.",
+    "tenant_theme_font_update_error": "Error updating tenant theme font. Please try again.",
+    "tenant_theme_font_update_success": "Tenant theme font successfully updated.",
     "tenant_social_media_update_error": "Error updating tenant social media. Please try again.",
     "tenant_social_media_update_succes": "Tenant social media successfully updated.",
     "tenant_already_exists": "Tenant already exists.",

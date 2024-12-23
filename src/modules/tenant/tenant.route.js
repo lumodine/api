@@ -5,6 +5,7 @@ const updateTenantSettings = require('./updateTenantSettings');
 const updateTenantLanguageSettings = require('./updateTenantLanguageSettings');
 const updateTenantCurrencySettings = require('./updateTenantCurrencySettings');
 const updateTenantThemeColor = require('./updateTenantThemeColor');
+const updateTenantThemeFont = require('./updateTenantThemeFont');
 const removeTenant = require('./removeTenant');
 const getTenantById = require('./getTenantById');
 const getTenantByAlias = require('./getTenantByAlias');
@@ -83,6 +84,18 @@ module.exports = (fastify, opts, done) => {
             ],
         },
         updateTenantThemeColor
+    );
+
+    fastify.put(
+        '/:tenantId/theme/font',
+        {
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.TENANT_UPDATE_THEME_FONT),
+                fastify.checkTenantByParams,
+            ],
+        },
+        updateTenantThemeFont
     );
 
     fastify.delete(

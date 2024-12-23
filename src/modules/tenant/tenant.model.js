@@ -2,7 +2,7 @@ const { mongoose } = require('@lumodine/mongodb');
 const baseModel = require('../common/mongodb.base.model');
 const { USER_ROLES } = require('../user/user.constant');
 const { SOCIAL_MEDIAS, TENANT_STATUS } = require('./tenant.constant');
-const { COLORS, HEADER_POSITIONS } = require('../theme/theme.constant');
+const { COLORS, HEADER_POSITIONS, FONTS } = require('../theme/theme.constant');
 
 const schema = new mongoose.Schema({
     users: [
@@ -45,6 +45,11 @@ const schema = new mongoose.Schema({
             type: String,
             enum: Object.values(HEADER_POSITIONS),
             default: HEADER_POSITIONS.BOTTOM,
+        },
+        font: {
+            type: String,
+            enum: Object.values(FONTS),
+            default: FONTS.NUNITO,
         },
     },
     qrCode: {

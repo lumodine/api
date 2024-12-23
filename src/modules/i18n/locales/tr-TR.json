@@ -100,6 +100,8 @@
     "tenant_upload_background_success": "İşletme arka planı başarıyla yüklendi.",
     "tenant_theme_color_update_error": "İşletme tema rengi güncellenirken hata oluştu. Lütfen tekrar deneyin.",
     "tenant_theme_color_update_success": "İşletme tema rengi başarıyla güncellendi.",
+    "tenant_theme_font_update_error": "İşletme tema yazı tipi güncellenirken hata oluştu. Lütfen tekrar deneyin.",
+    "tenant_theme_font_update_success": "İşletme tema yazı tipi başarıyla güncellendi.",
     "tenant_social_media_update_error": "İşletme sosyal medya güncellenirken hata oluştu. Lütfen tekrar deneyin.",
     "tenant_social_media_update_succes": "İşletme sosyal medya başarıyla güncellendi.",
     "tenant_already_exists": "İşletme zaten mevcut.",

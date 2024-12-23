@@ -4,13 +4,13 @@ module.exports = async (request, reply) => {
     const {
         tenantId,
     } = request.params;
-    
+
     const {
-        color,
+        font,
     } = request.body;
 
     const payload = {
-        'theme.color': color,
+        'theme.font': font,
     };
 
     const updatedTenant = await Tenant.findByIdAndUpdate(
@@ -24,12 +24,12 @@ module.exports = async (request, reply) => {
     if (!updatedTenant) {
         return reply.send({
             success: false,
-            message: request.i18n.tenant_theme_color_update_error,
+            message: request.i18n.tenant_theme_font_update_error,
         });
     }
 
     return reply.send({
         success: true,
-        message: request.i18n.tenant_theme_color_update_success,
+        message: request.i18n.tenant_theme_font_update_success,
     });
 };
