@@ -19,12 +19,6 @@ module.exports = (fastify, opts, done) => {
 
     fastify.get(
         '/',
-        {
-            preHandler: [
-                fastify.authenticate,
-                fastify.authorize(PERMISSIONS.CURRENCY_GET_ALL),
-            ],
-        },
         getAllCurrencies
     );
 

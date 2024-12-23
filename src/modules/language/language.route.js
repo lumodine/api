@@ -19,12 +19,6 @@ module.exports = (fastify, opts, done) => {
 
     fastify.get(
         '/',
-        {
-            preHandler: [
-                fastify.authenticate,
-                fastify.authorize(PERMISSIONS.LANGUAGE_GET_ALL),
-            ],
-        },
         getAllLanguages
     );
 
