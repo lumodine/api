@@ -135,5 +135,14 @@
     "event_not_found": "Event not found.",
     "events_not_found": "Events not found.",
     "event_create_error": "Error creating event. Please try again.",
-    "event_create_success": "Event successfully created."
+    "event_create_success": "Event successfully created.",
+
+    "tenant_branch_not_found": "Tenant branch not found.",
+    "tenant_branches_not_found": "Tenant branches not found.",
+    "tenant_branch_update_error": "Error updating tenant branch. Please try again.",
+    "tenant_branch_update_success": "Tenant branch successfully updated.",
+    "tenant_branch_remove_error": "Error removing tenant branch. Please try again.",
+    "tenant_branch_remove_success": "Tenant branch successfully removed.",
+    "tenant_branch_create_error": "Error creating tenant branch. Please try again.",
+    "tenant_branch_create_success": "Tenant branch successfully created."
 }

@@ -135,5 +135,14 @@
     "event_not_found": "Etkinlik bulunamadı.",
     "events_not_found": "Etkinlikler bulunamadı.",
     "event_create_error": "Etkinlik oluşturulurken hata oluştu. Lütfen tekrar deneyin.",
-    "event_create_success": "Etkinlik başarıyla oluşturuldu."
+    "event_create_success": "Etkinlik başarıyla oluşturuldu.",
+
+    "tenant_branch_not_found": "İşletme şubesi bulunamadı.",
+    "tenant_branches_not_found": "İşletme şubeleri bulunamadı.",
+    "tenant_branch_update_error": "İşletme şubesi güncellenirken hata oluştu. Lütfen tekrar deneyin.",
+    "tenant_branch_update_success": "İşletme şubesi başarıyla güncellendi.",
+    "tenant_branch_remove_error": "İşletme şubesi silinirken hata oluştu. Lütfen tekrar deneyin.",
+    "tenant_branch_remove_success": "İşletme şubesi başarıyla silindi.",
+    "tenant_branch_create_error": "İşletme şubesi oluşturulurken hata oluştu. Lütfen tekrar deneyin.",
+    "tenant_branch_create_success": "İşletme şubesi başarıyla oluşturuldu."
 }
