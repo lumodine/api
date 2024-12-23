@@ -19,7 +19,7 @@ async function authPlugin(fastify, options) {
   });
 
   fastify.decorate('authorize', (requiredPermission) => async (request, reply) => {
-    /*const { sub } = request.user;
+    const { sub } = request.user;
 
     const user = await User.findById(sub);
 
@@ -30,17 +30,16 @@ async function authPlugin(fastify, options) {
       });
     }
 
-    //TODO: check tenant role
     const userRole = user.role;
 
-    const hasPermission = USER_PERMISSIONS[userRole].includes(requiredPermission);
+    const hasPermission = USER_PERMISSIONS[userRole]?.includes(requiredPermission);
 
     if (!hasPermission) {
       return reply.code(403).send({
         success: false,
         message: request.i18n.auth_forbidden
       });
-    }*/
+    }
   });
 }
 

@@ -13,7 +13,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.CREATE_CATEGORY),
+                fastify.authorize(PERMISSIONS.CATEGORY_CREATE),
                 fastify.checkTenantByParams,
             ],
         },
@@ -25,7 +25,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.GET_ALL_CATEGORIES),
+                fastify.authorize(PERMISSIONS.CATEGORY_GET_ALL),
                 fastify.checkTenantByParams,
             ],
         },
@@ -37,7 +37,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.UPDATE_CATEGORY),
+                fastify.authorize(PERMISSIONS.CATEGORY_UPDATE),
                 fastify.checkTenantByParams,
             ],
         },
@@ -49,7 +49,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.DELETE_CATEGORY),
+                fastify.authorize(PERMISSIONS.CATEGORY_REMOVE),
                 fastify.checkTenantByParams,
             ],
         },
@@ -61,7 +61,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.GET_CATEGORY),
+                fastify.authorize(PERMISSIONS.CATEGORY_GET_BY_ID),
                 fastify.checkTenantByParams,
             ],
         },
@@ -73,7 +73,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.UPDATE_CATEGORY),
+                fastify.authorize(PERMISSIONS.CATEGORY_UPLOAD_IMAGE),
                 fastify.checkTenantByParams,
             ],
         },
@@ -85,7 +85,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.UPDATE_CATEGORY),
+                fastify.authorize(PERMISSIONS.CATEGORY_REMOVE_IMAGE),
                 fastify.checkTenantByParams,
             ],
         },

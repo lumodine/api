@@ -1,4 +1,4 @@
-const { PERMISSIONS } = require('../user/user.constant');
+const { PERMISSIONS } = require('./user.constant');
 const addUserToTenant = require('./addUserToTenant');
 const getAllUsersByTenant = require('./getAllUsersByTenant');
 const updateUserByTenant = require('./updateUserByTenant');
@@ -10,7 +10,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.CREATE_USER),
+                fastify.authorize(PERMISSIONS.USER_ADD_TO_TENANT),
                 fastify.checkTenantByParams,
             ],
         },
@@ -22,7 +22,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.GET_ALL_USERS),
+                fastify.authorize(PERMISSIONS.USER_GET_ALL_BY_TENANT),
                 fastify.checkTenantByParams,
             ],
         },
@@ -34,7 +34,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.UPDATE_USER),
+                fastify.authorize(PERMISSIONS.USER_UPDATE_BY_TENANT),
                 fastify.checkTenantByParams,
             ],
         },
@@ -46,7 +46,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.DELETE_USER),
+                fastify.authorize(PERMISSIONS.USER_REMOVE_FROM_TENANT),
                 fastify.checkTenantByParams,
             ],
         },

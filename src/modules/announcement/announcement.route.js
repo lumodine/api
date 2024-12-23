@@ -13,7 +13,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.CREATE_ANNOUNCEMENT),
+                fastify.authorize(PERMISSIONS.ANNOUNCEMENT_CREATE),
                 fastify.checkTenantByParams,
             ],
         },
@@ -25,7 +25,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.GET_ALL_ANNOUNCEMENTS),
+                fastify.authorize(PERMISSIONS.ANNOUNCEMENT_GET_ALL),
                 fastify.checkTenantByParams,
             ],
         },
@@ -37,7 +37,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.UPDATE_ANNOUNCEMENT),
+                fastify.authorize(PERMISSIONS.ANNOUNCEMENT_UPDATE),
                 fastify.checkTenantByParams,
             ],
         },
@@ -49,6 +49,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
+                fastify.authorize(PERMISSIONS.ANNOUNCEMENT_UPDATE_SORT),
                 fastify.checkTenantByParams,
             ],
         },
@@ -60,6 +61,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
+                fastify.authorize(PERMISSIONS.ANNOUNCEMENT_UPDATE_STATUS),
                 fastify.checkTenantByParams,
             ],
         },
@@ -71,7 +73,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.DELETE_ANNOUNCEMENT),
+                fastify.authorize(PERMISSIONS.ANNOUNCEMENT_REMOVE),
                 fastify.checkTenantByParams,
             ],
         },
@@ -83,7 +85,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.GET_ANNOUNCEMENT),
+                fastify.authorize(PERMISSIONS.ANNOUNCEMENT_GET_BY_ID),
                 fastify.checkTenantByParams,
             ],
         },

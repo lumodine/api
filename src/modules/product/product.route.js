@@ -13,7 +13,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.CREATE_PRODUCT),
+                fastify.authorize(PERMISSIONS.PRODUCT_CREATE),
                 fastify.checkTenantByParams,
             ],
         },
@@ -25,7 +25,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.GET_ALL_PRODUCTS),
+                fastify.authorize(PERMISSIONS.PRODUCT_GET_ALL),
                 fastify.checkTenantByParams,
             ],
         },
@@ -37,7 +37,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.UPDATE_PRODUCT),
+                fastify.authorize(PERMISSIONS.PRODUCT_UPDATE),
                 fastify.checkTenantByParams,
             ],
         },
@@ -49,7 +49,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.DELETE_PRODUCT),
+                fastify.authorize(PERMISSIONS.PRODUCT_REMOVE),
                 fastify.checkTenantByParams,
             ],
         },
@@ -61,7 +61,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.GET_PRODUCT),
+                fastify.authorize(PERMISSIONS.PRODUCT_GET_BY_ID),
                 fastify.checkTenantByParams,
             ],
         },
@@ -73,7 +73,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.UPDATE_PRODUCT),
+                fastify.authorize(PERMISSIONS.PRODUCT_UPLOAD_IMAGE),
                 fastify.checkTenantByParams,
             ],
         },
@@ -85,7 +85,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.UPDATE_PRODUCT),
+                fastify.authorize(PERMISSIONS.PRODUCT_REMOVE_IMAGE),
                 fastify.checkTenantByParams,
             ],
         },

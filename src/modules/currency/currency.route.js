@@ -11,7 +11,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.CREATE_CURRENCY),
+                fastify.authorize(PERMISSIONS.CURRENCY_CREATE),
             ],
         },
         createCurrency
@@ -19,6 +19,12 @@ module.exports = (fastify, opts, done) => {
 
     fastify.get(
         '/',
+        {
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.CURRENCY_GET_ALL),
+            ],
+        },
         getAllCurrencies
     );
 
@@ -27,7 +33,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.UPDATE_CURRENCY),
+                fastify.authorize(PERMISSIONS.CURRENCY_UPDATE),
             ],
         },
         updateCurrency
@@ -38,7 +44,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.DELETE_CURRENCY),
+                fastify.authorize(PERMISSIONS.CURRENCY_REMOVE),
             ],
         },
         removeCurrency
@@ -46,6 +52,12 @@ module.exports = (fastify, opts, done) => {
 
     fastify.get(
         '/:currencyId',
+        {
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.CURRENCY_GET_BY_ID),
+            ],
+        },
         getCurrencyById
     );
 

@@ -1,3 +1,4 @@
+const { PERMISSIONS } = require('../user/user.constant');
 const getMenu = require('./getMenu');
 const getAllMenuItems = require('./getAllMenuItems');
 const getMenuItemById = require('./getMenuItemById');
@@ -8,6 +9,8 @@ module.exports = (fastify, opts, done) => {
         '/:tenantAlias',
         {
             preHandler: [
+                //fastify.authenticate,
+                //fastify.authorize(PERMISSIONS.QR_MENU_GET_MENU),
                 fastify.checkTenantByParams,
             ],
         },
@@ -18,6 +21,8 @@ module.exports = (fastify, opts, done) => {
         '/:tenantAlias/items',
         {
             preHandler: [
+                //fastify.authenticate,
+                //fastify.authorize(PERMISSIONS.QR_MENU_GET_ALL_MENU_ITEMS),
                 fastify.checkTenantByParams,
             ],
         },
@@ -28,6 +33,8 @@ module.exports = (fastify, opts, done) => {
         '/:tenantAlias/items/:itemId',
         {
             preHandler: [
+                //fastify.authenticate,
+                //fastify.authorize(PERMISSIONS.QR_MENU_GET_MENU_ITEM_BY_ID),
                 fastify.checkTenantByParams,
             ],
         },
@@ -38,6 +45,8 @@ module.exports = (fastify, opts, done) => {
         '/:tenantAlias/announcements',
         {
             preHandler: [
+                //fastify.authenticate,
+                //fastify.authorize(PERMISSIONS.QR_MENU_GET_ALL_ANNOUNCEMENTS),
                 fastify.checkTenantByParams,
             ],
         },

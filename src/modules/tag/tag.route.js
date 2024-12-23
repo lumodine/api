@@ -11,7 +11,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.CREATE_TAG),
+                fastify.authorize(PERMISSIONS.TAG_CREATE),
                 fastify.checkTenantByParams,
             ],
         },
@@ -23,7 +23,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.GET_ALL_TAGS),
+                fastify.authorize(PERMISSIONS.TAG_GET_ALL),
                 fastify.checkTenantByParams,
             ],
         },
@@ -35,7 +35,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.UPDATE_TAG),
+                fastify.authorize(PERMISSIONS.TAG_UPDATE),
                 fastify.checkTenantByParams,
             ],
         },
@@ -47,7 +47,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.DELETE_TAG),
+                fastify.authorize(PERMISSIONS.TAG_REMOVE),
                 fastify.checkTenantByParams,
             ],
         },
@@ -59,7 +59,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.GET_TAG),
+                fastify.authorize(PERMISSIONS.TAG_GET_BY_ID),
                 fastify.checkTenantByParams,
             ],
         },

@@ -1,3 +1,4 @@
+const { PERMISSIONS } = require('../user/user.constant');
 const login = require('./login');
 const register = require('./register');
 const forgotPassword = require('./forgotPassword');
@@ -33,6 +34,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
+                fastify.authorize(PERMISSIONS.AUTH_GET_PROFILE),
             ],
         },
         getProfile,
@@ -43,6 +45,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
+                fastify.authorize(PERMISSIONS.AUTH_UPDATE_INFO),
             ],
         },
         updateInfo,
@@ -53,6 +56,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
+                fastify.authorize(PERMISSIONS.AUTH_UPDATE_EMAIL),
             ],
         },
         updateEmail,
@@ -63,6 +67,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
+                fastify.authorize(PERMISSIONS.AUTH_UPDATE_PASSWORD),
             ],
         },
         updatePassword,

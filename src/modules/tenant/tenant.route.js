@@ -20,7 +20,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.CREATE_TENANT),
+                fastify.authorize(PERMISSIONS.TENANT_CREATE),
             ],
         },
         createTenant
@@ -31,7 +31,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.GET_ALL_TENANTS),
+                fastify.authorize(PERMISSIONS.TENANT_GET_ALL),
             ],
         },
         getAllTenants
@@ -42,7 +42,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.UPDATE_TENANT),
+                fastify.authorize(PERMISSIONS.TENANT_UPDATE_SETTINGS),
                 fastify.checkTenantByParams,
             ],
         },
@@ -54,7 +54,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.UPDATE_TENANT),
+                fastify.authorize(PERMISSIONS.TENANT_UPDATE_LANGUAGE_SETTINGS),
                 fastify.checkTenantByParams,
             ],
         },
@@ -66,7 +66,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.UPDATE_TENANT),
+                fastify.authorize(PERMISSIONS.TENANT_UPDATE_CURRENCY_SETTINGS),
                 fastify.checkTenantByParams,
             ],
         },
@@ -78,7 +78,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.UPDATE_TENANT),
+                fastify.authorize(PERMISSIONS.TENANT_UPDATE_THEME_COLOR),
                 fastify.checkTenantByParams,
             ],
         },
@@ -90,7 +90,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.DELETE_TENANT),
+                fastify.authorize(PERMISSIONS.TENANT_REMOVE),
                 fastify.checkTenantByParams,
             ],
         },
@@ -102,7 +102,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.GET_TENANT),
+                fastify.authorize(PERMISSIONS.TENANT_GET_BY_ID),
                 fastify.checkTenantByParams,
             ],
         },
@@ -113,6 +113,8 @@ module.exports = (fastify, opts, done) => {
         '/:tenantId/alias',
         {
             preHandler: [
+                //fastify.authenticate,
+                //fastify.authorize(PERMISSIONS.TENANT_GET_BY_ALIAS),
                 fastify.checkTenantByParams,
             ],
         },
@@ -124,7 +126,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.UPDATE_TENANT),
+                fastify.authorize(PERMISSIONS.TENANT_UPLOAD_LOGO),
                 fastify.checkTenantByParams,
             ],
         },
@@ -136,7 +138,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.UPDATE_TENANT),
+                fastify.authorize(PERMISSIONS.TENANT_UPLOAD_BACKGROUND),
                 fastify.checkTenantByParams,
             ],
         },
@@ -148,7 +150,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.UPDATE_TENANT),
+                fastify.authorize(PERMISSIONS.TENANT_REMOVE_LOGO),
                 fastify.checkTenantByParams,
             ],
         },
@@ -160,7 +162,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.UPDATE_TENANT),
+                fastify.authorize(PERMISSIONS.TENANT_REMOVE_BACKGROUND),
                 fastify.checkTenantByParams,
             ],
         },
@@ -172,7 +174,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.UPDATE_TENANT),
+                fastify.authorize(PERMISSIONS.TENANT_UPDATE_SOCIAL_MEDIA),
                 fastify.checkTenantByParams,
             ],
         },

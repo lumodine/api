@@ -11,7 +11,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.CREATE_LANGUAGE),
+                fastify.authorize(PERMISSIONS.LANGUAGE_CREATE),
             ],
         },
         createLanguage
@@ -19,6 +19,12 @@ module.exports = (fastify, opts, done) => {
 
     fastify.get(
         '/',
+        {
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.LANGUAGE_GET_ALL),
+            ],
+        },
         getAllLanguages
     );
 
@@ -27,7 +33,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.UPDATE_LANGUAGE),
+                fastify.authorize(PERMISSIONS.LANGUAGE_UPDATE),
             ],
         },
         updateLanguage
@@ -38,7 +44,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
-                fastify.authorize(PERMISSIONS.DELETE_LANGUAGE),
+                fastify.authorize(PERMISSIONS.LANGUAGE_REMOVE),
             ],
         },
         removeLanguage
@@ -46,6 +52,12 @@ module.exports = (fastify, opts, done) => {
 
     fastify.get(
         '/:languageId',
+        {
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.LANGUAGE_GET_BY_ID),
+            ],
+        },
         getLanguageById
     );
 

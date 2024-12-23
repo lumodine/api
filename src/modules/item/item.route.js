@@ -1,3 +1,4 @@
+const { PERMISSIONS } = require('../user/user.constant');
 const getAllItems = require('./getAllItems');
 const updateItemSort = require('./updateItemSort');
 const updateItemStatus = require('./updateItemStatus');
@@ -10,6 +11,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
+                fastify.authorize(PERMISSIONS.ITEM_GET_ALL),
                 fastify.checkTenantByParams,
             ],
         },
@@ -21,6 +23,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
+                fastify.authorize(PERMISSIONS.ITEM_GET_BY_ID),
                 fastify.checkTenantByParams,
             ],
         },
@@ -32,6 +35,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
+                fastify.authorize(PERMISSIONS.ITEM_UPDATE_SORT),
                 fastify.checkTenantByParams,
             ],
         },
@@ -43,6 +47,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
+                fastify.authorize(PERMISSIONS.ITEM_UPDATE_STATUS),
                 fastify.checkTenantByParams,
             ],
         },
@@ -54,6 +59,7 @@ module.exports = (fastify, opts, done) => {
         {
             preHandler: [
                 fastify.authenticate,
+                fastify.authorize(PERMISSIONS.ITEM_UPDATE_TYPE),
                 fastify.checkTenantByParams,
             ],
         },
