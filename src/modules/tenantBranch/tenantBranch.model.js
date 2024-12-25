@@ -40,4 +40,4 @@ const schema = new mongoose.Schema({
     ...baseModel.fields,
 }, { ...baseModel.options });
 
-module.exports = mongoose.model('tenantBranch', schema);
+module.exports = mongoose.model('tenant-branch', schema);
