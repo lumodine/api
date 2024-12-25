@@ -249,5 +249,12 @@ module.exports = (fastify, opts, done) => {
         },
     );
 
+    fastify.register(
+        require('../content'),
+        {
+            prefix: '/:tenantId',
+        },
+    );
+
     done();
 };

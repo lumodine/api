@@ -16,7 +16,7 @@ const schema = new mongoose.Schema({
                 ref: 'language',
                 required: true,
             },
-            name: {
+            title: {
                 type: String,
                 required: true,
             },
