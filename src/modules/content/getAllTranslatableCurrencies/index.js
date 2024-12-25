@@ -2,14 +2,29 @@ const Product = require('../../product/product.model');
 
 module.exports = async (request, reply) => {
     const { tenantId } = request.params;
+    const { item } = request.query;
+
+    const baseQuery = {
+        tenant: tenantId,
+    };
+
+    const query = {
+        ...baseQuery,
+    };
+
+    if (item) {
+        query['parentItems.item'] = {
+            $in: item,
+        };
+    }
 
     const [products] = await Promise.all([
-        Product.find({
-            tenant: tenantId
-        }).populate([
-            'translations.language',
-            'prices.currency',
-        ]),
+        Product
+            .find(query)
+            .populate([
+                'translations.language',
+                'prices.currency',
+            ]),
     ]);
 
     return reply.send({
