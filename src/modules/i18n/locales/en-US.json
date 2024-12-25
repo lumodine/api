@@ -144,5 +144,11 @@
     "tenant_branch_remove_error": "Error removing tenant branch. Please try again.",
     "tenant_branch_remove_success": "Tenant branch successfully removed.",
     "tenant_branch_create_error": "Error creating tenant branch. Please try again.",
-    "tenant_branch_create_success": "Tenant branch successfully created."
+    "tenant_branch_create_success": "Tenant branch successfully created.",
+
+    "content_invalid_type": "Invalid content type.",
+    "content_update_all_amounts_error": "Error updating all amounts. Please try again.",
+    "content_update_all_amounts_success": "All amounts successfully updated.",
+    "content_update_all_translations_error": "Error updating all translations. Please try again.",
+    "content_update_all_translations_success": "All translations successfully updated."
 }

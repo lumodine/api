@@ -144,5 +144,11 @@
     "tenant_branch_remove_error": "İşletme şubesi silinirken hata oluştu. Lütfen tekrar deneyin.",
     "tenant_branch_remove_success": "İşletme şubesi başarıyla silindi.",
     "tenant_branch_create_error": "İşletme şubesi oluşturulurken hata oluştu. Lütfen tekrar deneyin.",
-    "tenant_branch_create_success": "İşletme şubesi başarıyla oluşturuldu."
+    "tenant_branch_create_success": "İşletme şubesi başarıyla oluşturuldu.",
+
+    "content_invalid_type": "Geçersiz içerik türü.",
+    "content_update_all_amounts_error": "Tüm miktarlar güncellenirken hata oluştu. Lütfen tekrar deneyin.",
+    "content_update_all_amounts_success": "Tüm miktarlar başarıyla güncellendi.",
+    "content_update_all_translations_error": "Tüm çeviriler güncellenirken hata oluştu. Lütfen tekrar deneyin.",
+    "content_update_all_translations_success": "Tüm çeviriler başarıyla güncellendi."
 }
