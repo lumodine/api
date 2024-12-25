@@ -2,17 +2,16 @@ const Item = require('../item.model');
 
 module.exports = async (request, reply) => {
     const tenantId = request.tenant._id;
-    const { itemId } = request.params;
+    const { itemId, kind } = request.params;
 
     const query = {
         tenant: tenantId,
+        _id: itemId,
         isShowInMenu: true,
     };
 
-    if (itemId) {
-        query['parentItems.item'] = {
-            $in: itemId,
-        };
+    if (kind) {
+        query.kind = kind;
     }
 
     const item = await Item

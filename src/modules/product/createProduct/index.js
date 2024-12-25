@@ -4,7 +4,6 @@ const Product = require('../product.model');
 module.exports = async (request, reply) => {
     const {
         tenantId,
-        categoryId,
     } = request.params;
 
     const {
@@ -12,6 +11,7 @@ module.exports = async (request, reply) => {
         image,
         prices,
         tags,
+        category,
     } = request.body;
 
     //TODO: check translations.language
@@ -20,7 +20,7 @@ module.exports = async (request, reply) => {
 
     const parentItems = [
         {
-            item: categoryId,
+            item: category,
             kind: ITEM_KINDS.CATEGORY,
         },
     ];

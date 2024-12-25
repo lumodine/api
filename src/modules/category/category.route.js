@@ -1,9 +1,7 @@
 const { PERMISSIONS } = require('../user/user.constant');
 const createCategory = require('./createCategory');
-const getAllCategories = require('./getAllCategories');
 const updateCategory = require('./updateCategory');
 const removeCategory = require('./removeCategory');
-const getCategoryById = require('./getCategoryById');
 const uploadCategoryImage = require('./uploadCategoryImage');
 const removeCategoryImage = require('./removeCategoryImage');
 
@@ -18,18 +16,6 @@ module.exports = (fastify, opts, done) => {
             ],
         },
         createCategory,
-    );
-
-    fastify.get(
-        '/',
-        {
-            preHandler: [
-                fastify.authenticate,
-                fastify.authorize(PERMISSIONS.CATEGORY_GET_ALL),
-                fastify.checkTenantByParams,
-            ],
-        },
-        getAllCategories,
     );
 
     fastify.put(
@@ -56,18 +42,6 @@ module.exports = (fastify, opts, done) => {
         removeCategory,
     );
 
-    fastify.get(
-        '/:categoryId',
-        {
-            preHandler: [
-                fastify.authenticate,
-                fastify.authorize(PERMISSIONS.CATEGORY_GET_BY_ID),
-                fastify.checkTenantByParams,
-            ],
-        },
-        getCategoryById,
-    );
-
     fastify.post(
         '/:categoryId/upload/image',
         {
@@ -90,13 +64,6 @@ module.exports = (fastify, opts, done) => {
             ],
         },
         removeCategoryImage
-    );
-
-    fastify.register(
-        require('../product'),
-        {
-            prefix: '/:categoryId',
-        },
     );
 
     done();

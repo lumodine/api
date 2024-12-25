@@ -2,7 +2,7 @@ const Item = require('../item.model');
 
 module.exports = async (request, reply) => {
     const tenantId = request.tenant._id;
-    const { itemId } = request.query;
+    const { itemId, kind } = request.query;
 
     const query = {
         tenant: tenantId,
@@ -19,7 +19,10 @@ module.exports = async (request, reply) => {
             $eq: [],
         };
     }
-    
+
+    if (kind) {
+        query.kind = kind;
+    }
 
     const items = await Item
         .find(query)

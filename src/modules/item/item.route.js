@@ -66,5 +66,15 @@ module.exports = (fastify, opts, done) => {
         updateItemType,
     );
 
+    fastify.register(require('../category'));
+    
+    // fastify.register(require('../subCategory'));
+
+    fastify.register(require('../product'));
+
+    // fastify.register(require('../productVariant'));
+
+    fastify.register(require('../tag'));
+
     done();
 };

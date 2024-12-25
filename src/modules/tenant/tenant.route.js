@@ -208,27 +208,6 @@ module.exports = (fastify, opts, done) => {
     );
 
     fastify.register(
-        require('../category'),
-        {
-            prefix: '/:tenantId',
-        },
-    );
-
-    fastify.register(
-        require('../user'),
-        {
-            prefix: '/:tenantId',
-        },
-    );
-
-    fastify.register(
-        require('../tag'),
-        {
-            prefix: '/:tenantId',
-        },
-    );
-
-    fastify.register(
         require('../item'),
         {
             prefix: '/:tenantId',
@@ -251,6 +230,13 @@ module.exports = (fastify, opts, done) => {
 
     fastify.register(
         require('../content'),
+        {
+            prefix: '/:tenantId',
+        },
+    );
+
+    fastify.register(
+        require('../user'),
         {
             prefix: '/:tenantId',
         },

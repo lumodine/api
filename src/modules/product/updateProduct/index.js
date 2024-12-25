@@ -4,7 +4,6 @@ const Product = require('../product.model');
 module.exports = async (request, reply) => {
     const {
         tenantId,
-        categoryId,
         productId,
     } = request.params;
 
@@ -19,9 +18,6 @@ module.exports = async (request, reply) => {
     const product = await Product
         .findOne({
             tenant: tenantId,
-            'parentItems.item': {
-                $in: categoryId,
-            },
             _id: productId,
         });
 

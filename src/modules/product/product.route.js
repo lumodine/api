@@ -2,8 +2,6 @@ const { PERMISSIONS } = require('../user/user.constant');
 const createProduct = require('./createProduct');
 const updateProduct = require('./updateProduct');
 const removeProduct = require('./removeProduct');
-const getProductById = require('./getProductById');
-const getAllProducts = require('./getAllProducts');
 const uploadProductImage = require('./uploadProductImage');
 const removeProductImage = require('./removeProductImage');
 
@@ -18,18 +16,6 @@ module.exports = (fastify, opts, done) => {
             ],
         },
         createProduct
-    );
-
-    fastify.get(
-        '/',
-        {
-            preHandler: [
-                fastify.authenticate,
-                fastify.authorize(PERMISSIONS.PRODUCT_GET_ALL),
-                fastify.checkTenantByParams,
-            ],
-        },
-        getAllProducts
     );
 
     fastify.put(
@@ -54,18 +40,6 @@ module.exports = (fastify, opts, done) => {
             ],
         },
         removeProduct
-    );
-
-    fastify.get(
-        '/:productId',
-        {
-            preHandler: [
-                fastify.authenticate,
-                fastify.authorize(PERMISSIONS.PRODUCT_GET_BY_ID),
-                fastify.checkTenantByParams,
-            ],
-        },
-        getProductById
     );
 
     fastify.post(
