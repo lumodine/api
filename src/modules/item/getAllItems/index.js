@@ -10,23 +10,23 @@ module.exports = async (request, reply) => {
         isShowInMenu: true,
     };
 
-    const allRelations = await ItemRelation.find({}).lean();
-    const allRelatedItemIds = new Set([
-        ...allRelations.map(r => r.sourceItem.toString()),
-        ...allRelations.map(r => r.targetItem.toString())
-    ]);
-
     if (itemId) {
-        const targetItemIds = allRelations
-            .filter(r => itemId.includes(r.sourceItem.toString()))
-            .map(r => r.targetItem);
+        const relations = await ItemRelation.find({ 
+            sourceItem: { 
+                $in: itemId 
+            } 
+        });
+        const relatedItemIds = relations.map(relation => relation.targetItem);
         
         query._id = {
-            $in: targetItemIds
+            $in: relatedItemIds
         };
     } else {
+        const relations = await ItemRelation.find({});
+        const relatedItemIds = relations.map(relation => relation.targetItem);
+        
         query._id = {
-            $nin: Array.from(allRelatedItemIds)
+            $nin: relatedItemIds
         };
     }
 
@@ -36,71 +36,62 @@ module.exports = async (request, reply) => {
 
     const items = await Item
         .find(query)
-        .sort({ sort: 1 })
+        .sort({
+            sort: 1,
+        })
         .populate([
+            {
+                path: 'translations.language',
+            },
+            {
+                path: 'prices.currency',
+            }
+        ]);
+
+    const itemIds = items.map(item => item._id);
+    
+    const sourceRelations = await ItemRelation.find({
+        targetItem: { $in: itemIds }
+    }).populate({
+        path: 'sourceItem',
+        populate: [
             { path: 'translations.language' },
             { path: 'prices.currency' }
-        ])
-        .lean();
+        ]
+    });
 
-    if (items.length === 0) {
+    const targetRelations = await ItemRelation.find({
+        sourceItem: { $in: itemIds }
+    }).populate({
+        path: 'targetItem',
+        populate: [
+            { path: 'translations.language' },
+            { path: 'prices.currency' }
+        ]
+    });
+
+    const itemsWithRelations = items.map(item => {
+        const sourceItems = sourceRelations
+            .filter(relation => relation.targetItem.equals(item._id))
+            .map(relation => relation.sourceItem);
+        
+        const targetItems = targetRelations
+            .filter(relation => relation.sourceItem.equals(item._id))
+            .map(relation => relation.targetItem);
+
+        return {
+            ...item.toObject(),
+            parentItems: sourceItems,
+            childItems: targetItems,
+        };
+    });
+
+    if (itemsWithRelations.length === 0) {
         return reply.send({
             success: false,
             message: request.i18n.items_not_found,
         });
     }
-
-    const itemIds = items.map(item => item._id.toString());
-
-    const [sourceItems, targetItems] = await Promise.all([
-        Item.find({
-            _id: {
-                $in: allRelations
-                    .filter(r => itemIds.includes(r.targetItem.toString()))
-                    .map(r => r.sourceItem)
-            }
-        })
-        .populate([
-            { path: 'translations.language' },
-            { path: 'prices.currency' }
-        ])
-        .lean(),
-        Item.find({
-            _id: {
-                $in: allRelations
-                    .filter(r => itemIds.includes(r.sourceItem.toString()))
-                    .map(r => r.targetItem)
-            }
-        })
-        .populate([
-            { path: 'translations.language' },
-            { path: 'prices.currency' }
-        ])
-        .lean()
-    ]);
-
-    const sourceItemMap = new Map(sourceItems.map(item => [item._id.toString(), item]));
-    const targetItemMap = new Map(targetItems.map(item => [item._id.toString(), item]));
-
-    const itemsWithRelations = items.map(item => {
-        const itemId = item._id.toString();
-        
-        const parentItems = allRelations
-            .filter(r => r.targetItem.toString() === itemId)
-            .map(r => sourceItemMap.get(r.sourceItem.toString()))
-            .filter(Boolean);
-        
-        const childItems = allRelations
-            .filter(r => r.sourceItem.toString() === itemId)
-            .map(r => targetItemMap.get(r.targetItem.toString()))
-            .filter(Boolean);
-
-        return {
-            ...item,
-            parentItems,
-            childItems,
-        };
-    });
 
     return reply.send({
         success: true,
