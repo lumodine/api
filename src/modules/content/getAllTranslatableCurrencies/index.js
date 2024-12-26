@@ -22,8 +22,12 @@ module.exports = async (request, reply) => {
         Product
             .find(query)
             .populate([
-                'translations.language',
-                'prices.currency',
+                {
+                    path: 'translations.language',
+                },
+                {
+                    path: 'prices.currency',
+                },
             ]),
     ]);
 

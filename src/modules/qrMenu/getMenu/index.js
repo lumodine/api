@@ -9,13 +9,23 @@ module.exports = async (request, reply) => {
             .findOne({
                 _id: tenantId,
             }, '-qrCode -users')
-            .populate('languages.language')
-            .populate('currencies.currency'),
+            .populate([
+                {
+                    path: 'languages.language',
+                },
+                {
+                    path: 'currencies.currency',
+                },
+            ]),
         await TenantBranch
             .find({
                 tenant: tenantId,
             })
-            .populate('translations.language')
+            .populate([
+                {
+                    path: 'translations.language',
+                },
+            ]),
     ]);
 
     if (tenant) {

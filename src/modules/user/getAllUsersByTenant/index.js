@@ -9,7 +9,11 @@ module.exports = async (request, reply) => {
 
     const tenant = await Tenant
         .findById(tenantId)
-        .populate('users.user');
+        .populate([
+            {
+                path: 'users.user',
+            },
+        ]);
 
     const users = tenant.users.filter(user => user.user._id.toString() != sub);
 

@@ -11,7 +11,11 @@ module.exports = async (request, reply) => {
             tenant: tenantId,
             _id: tenantBranchId,
         })
-        .populate('translations.language');
+        .populate([
+            {
+                path: 'translations.language',
+            },
+        ]);
 
     if (!tenantBranch) {
         return reply.send({

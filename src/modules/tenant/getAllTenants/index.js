@@ -11,8 +11,14 @@ module.exports = async (request, reply) => {
                 },
             }
         )
-        .populate('languages.language')
-        .populate('currencies.currency');
+        .populate([
+            {
+                path: 'languages.language',
+            },
+            {
+                path: 'currencies.currency',
+            },
+        ]);
 
     if (tenants.length === 0) {
         return reply.send({

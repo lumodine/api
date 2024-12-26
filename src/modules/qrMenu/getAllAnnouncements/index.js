@@ -14,7 +14,11 @@ module.exports = async (request, reply) => {
         .sort({
             sort: 1,
         })
-        .populate('translations.language');
+        .populate([
+            {
+                path: 'translations.language',
+            },
+        ]);
 
     if (announcements.length === 0) {
         return reply.send({

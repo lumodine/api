@@ -72,7 +72,7 @@ module.exports = (fastify, opts, done) => {
 
     fastify.register(require('../product'));
 
-    // fastify.register(require('../productVariant'));
+    fastify.register(require('../productVariant'));
 
     fastify.register(require('../tag'));
 

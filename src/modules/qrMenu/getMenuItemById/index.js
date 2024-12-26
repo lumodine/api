@@ -13,7 +13,36 @@ module.exports = async (request, reply) => {
                 $ne: ITEM_STATUS.HIDDEN,
             },
         })
-        .populate('translations.language');
+        .populate([
+            {
+                path: 'translations.language',
+            },
+            {
+                path: 'prices.currency',
+            },
+            {
+                path: 'childItems.item',
+                populate: [
+                    {
+                        path: 'translations.language',
+                    },
+                    {
+                        path: 'prices.currency',
+                    },
+                ],
+            },
+            {
+                path: 'parentItems.item',
+                populate: [
+                    {
+                        path: 'translations.language',
+                    },
+                    {
+                        path: 'prices.currency',
+                    },
+                ],
+            }
+        ]);
 
     if (!item) {
         return reply.send({

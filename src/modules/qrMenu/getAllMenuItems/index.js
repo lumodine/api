@@ -29,14 +29,36 @@ module.exports = async (request, reply) => {
         .sort({
             sort: 1,
         })
-        .populate('translations.language')
-        .populate('prices.currency')
-        .populate({
-            path: 'parentItems.item',
-            populate: {
+        .populate([
+            {
                 path: 'translations.language',
             },
-        });
+            {
+                path: 'prices.currency',
+            },
+            {
+                path: 'childItems.item',
+                populate: [
+                    {
+                        path: 'translations.language',
+                    },
+                    {
+                        path: 'prices.currency',
+                    },
+                ],
+            },
+            {
+                path: 'parentItems.item',
+                populate: [
+                    {
+                        path: 'translations.language',
+                    },
+                    {
+                        path: 'prices.currency',
+                    },
+                ],
+            }
+        ]);
 
     if (items.length === 0) {
         return reply.send({

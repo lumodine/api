@@ -13,8 +13,14 @@ module.exports = async (request, reply) => {
                 },
             }
         )
-        .populate('languages.language')
-        .populate('currencies.currency');
+        .populate([
+            {
+                path: 'languages.language',
+            },
+            {
+                path: 'currencies.currency',
+            },
+        ]);
 
     return reply.send({
         success: true,

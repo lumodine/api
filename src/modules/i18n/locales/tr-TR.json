@@ -83,6 +83,15 @@
     "product_update_error": "Ürün güncellenirken hata oluştu. Lütfen tekrar deneyin.",
     "product_update_success": "Ürün başarıyla güncellendi.",
 
+    "product_variant_not_found": "Ürün varyantı bulunamadı.",
+    "product_variants_not_found": "Ürün varyantları bulunamadı.",
+    "product_variant_create_error": "Ürün varyantı oluşturulurken hata oluştu. Lütfen tekrar deneyin.",
+    "product_variant_create_success": "Ürün varyantı başarıyla oluşturuldu.",
+    "product_variant_remove_error": "Ürün varyantı silinirken hata oluştu. Lütfen tekrar deneyin.",
+    "product_variant_remove_success": "Ürün varyantı başarıyla silindi.",
+    "product_variant_update_error": "Ürün varyantı güncellenirken hata oluştu. Lütfen tekrar deneyin.",
+    "product_variant_update_success": "Ürün varyantı başarıyla güncellendi.",
+
     "tag_not_found": "Etiket bulunamadı.",
     "tags_not_found": "Etiketler bulunamadı.",
     "tag_update_error": "Etiket güncellenirken hata oluştu. Lütfen tekrar deneyin.",

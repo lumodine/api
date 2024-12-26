@@ -82,6 +82,15 @@
     "product_image_upload_success": "Product image successfully uploaded.",
     "product_update_error": "Error updating product. Please try again.",
     "product_update_success": "Product successfully updated.",
+
+    "product_variant_not_found": "Product variant not found.",
+    "product_variants_not_found": "Product variants not found.",
+    "product_variant_create_error": "Error creating product variant. Please try again.",
+    "product_variant_create_success": "Product variant successfully created.",
+    "product_variant_remove_error": "Error removing product variant. Please try again.",
+    "product_variant_remove_success": "Product variant successfully removed.",
+    "product_variant_update_error": "Error updating product variant. Please try again.",
+    "product_variant_update_success": "Product variant successfully updated.",
     
     "tag_not_found": "Tag not found.",
     "tags_not_found": "Tags not found.",

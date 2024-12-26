@@ -47,6 +47,24 @@ const schema = new mongoose.Schema({
             },
         },
     ],
+    childItems: [
+        {
+            item: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'item',
+                required: true,
+            },
+            kind: {
+                type: String,
+                required: true,
+                enum: Object.values(ITEM_KINDS),
+            },
+            sort: {
+                type: Number,
+                default: 1,
+            },
+        },
+    ],
     sort: {
         type: Number,
         default: 1,

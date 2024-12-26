@@ -32,27 +32,37 @@ module.exports = async (request, reply) => {
         Category
             .find(query)
             .populate([
-                'translations.language',
+                {
+                    path: 'translations.language',
+                },
             ]),
         Product
             .find(query)
             .populate([
-                'translations.language',
+                {
+                    path: 'translations.language',
+                },
             ]),
         Tag
             .find(query)
             .populate([
-                'translations.language',
+                {
+                    path: 'translations.language',
+                },
             ]),
         Announcement
             .find(baseQuery)
             .populate([
-                'translations.language',
+                {
+                    path: 'translations.language',
+                },
             ]),
         TenantBranch
             .find(baseQuery)
             .populate([
-                'translations.language',
+                {
+                    path: 'translations.language',
+                },
             ]),
     ]);
 
