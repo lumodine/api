@@ -1,4 +1,5 @@
 const Product = require('../../product/product.model');
+const ProductVariant = require('../../productVariant/productVariant.model');
 
 module.exports = async (request, reply) => {
     const { tenantId } = request.params;
@@ -18,8 +19,18 @@ module.exports = async (request, reply) => {
         };
     }
 
-    const [products] = await Promise.all([
+    const [products, productVariants] = await Promise.all([
         Product
+            .find(query)
+            .populate([
+                {
+                    path: 'translations.language',
+                },
+                {
+                    path: 'prices.currency',
+                },
+            ]),
+        ProductVariant
             .find(query)
             .populate([
                 {
@@ -35,6 +46,7 @@ module.exports = async (request, reply) => {
         success: true,
         data: {
             products,
+            productVariants,
         },
     });
 };

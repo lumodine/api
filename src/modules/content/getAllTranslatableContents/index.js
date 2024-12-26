@@ -1,5 +1,6 @@
 const Category = require('../../category/category.model');
 const Product = require('../../product/product.model');
+const ProductVariant = require('../../productVariant/productVariant.model');
 const Tag = require('../../tag/tag.model');
 const Announcement = require('../../announcement/announcement.model');
 const TenantBranch = require('../../tenantBranch/tenantBranch.model');
@@ -25,6 +26,7 @@ module.exports = async (request, reply) => {
     const [
         categories,
         products,
+        productVariants,
         tags,
         announcements,
         tenantBranches
@@ -37,6 +39,13 @@ module.exports = async (request, reply) => {
                 },
             ]),
         Product
+            .find(query)
+            .populate([
+                {
+                    path: 'translations.language',
+                },
+            ]),
+            ProductVariant
             .find(query)
             .populate([
                 {
@@ -71,6 +80,7 @@ module.exports = async (request, reply) => {
         data: {
             categories,
             products,
+            productVariants,
             tags,
             announcements,
             tenantBranches,
