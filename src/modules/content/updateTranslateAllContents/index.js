@@ -1,5 +1,6 @@
 const Category = require('../../category/category.model');
 const Product = require('../../product/product.model');
+const ProductVariant = require('../../productVariant/productVariant.model');
 const Tag = require('../../tag/tag.model');
 const Announcement = require('../../announcement/announcement.model');
 const TenantBranch = require('../../tenantBranch/tenantBranch.model');
@@ -17,6 +18,9 @@ module.exports = async (request, reply) => {
             break;
         case 'products':
             Item = Product;
+            break;
+        case 'productVariants':
+            Item = ProductVariant;
             break;
         case 'tags':
             Item = Tag;

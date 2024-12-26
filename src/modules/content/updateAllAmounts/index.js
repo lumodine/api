@@ -1,4 +1,5 @@
 const Product = require('../../product/product.model');
+const ProductVariant = require('../../productVariant/productVariant.model');
 
 module.exports = async (request, reply) => {
     const {
@@ -11,6 +12,9 @@ module.exports = async (request, reply) => {
         case 'products':
             Item = Product;
             break;
+        case 'productVariants':
+            Item = ProductVariant;
+            break;
         default:
             return reply.send({
                 success: false,
@@ -20,20 +24,42 @@ module.exports = async (request, reply) => {
 
     const bulkOperations = [];
     for (const item of items) {
-        // TODO: check currency not exist and add new currency
-        bulkOperations.push({
-            updateOne: {
-                filter: {
-                    _id: item.item,
-                    "prices.currency": item.currency,
-                },
-                update: {
-                    $set: {
-                        "prices.$.amount": item.amount,
+        const existingItem = await Item.findOne({
+            _id: item.item,
+            "prices.currency": item.currency,
+        });
+
+        if (existingItem) {
+            bulkOperations.push({
+                updateOne: {
+                    filter: {
+                        _id: item.item,
+                        "prices.currency": item.currency,
+                    },
+                    update: {
+                        $set: {
+                            "prices.$.amount": item.amount,
+                        },
                     },
                 },
-            },
-        });
+            });
+        } else {
+            bulkOperations.push({
+                updateOne: {
+                    filter: {
+                        _id: item.item,
+                    },
+                    update: {
+                        $push: {
+                            prices: {
+                                currency: item.currency,
+                                amount: item.amount,
+                            },
+                        },
+                    },
+                },
+            });
+        }
     }
 
     const result = await Item.bulkWrite(bulkOperations);

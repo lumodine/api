@@ -1,52 +1,36 @@
-const { ITEM_KINDS } = require('../../item/item.constant');
 const ProductVariant = require('../productVariant.model');
+const ItemRelation = require('../../itemRelation/itemRelation.model');
 
 module.exports = async (request, reply) => {
     const {
         tenantId,
         productVariantId,
     } = request.params;
-
     const {
-        productId,
         translations,
         prices,
+        product,
     } = request.body;
 
-    const product = await ProductVariant
+    const productVariant = await ProductVariant
         .findOne({
             tenant: tenantId,
             _id: productVariantId,
         });
 
-    if (!product) {
+    if (!productVariant) {
         return reply.send({
             success: false,
             message: request.i18n.product_variant_not_found,
         });
     }
 
-    //TODO: check productId
-    //TODO: check translations.language
-    //TODO: check prices.currency
-
-    const parentItems = [
-        {
-            item: productId,
-            kind: ITEM_KINDS.PRODUCT,
-        },
-    ];
-
-    const payload = {
-        tenant: tenantId,
-        translations,
-        parentItems,
-        prices,
-    };
-
     const updatedProductVariant = await ProductVariant.findByIdAndUpdate(
         productVariantId,
-        payload,
+        {
+            translations,
+            prices,
+        },
         {
             new: true,
         }
@@ -56,6 +40,18 @@ module.exports = async (request, reply) => {
         return reply.send({
             success: false,
             message: request.i18n.product_variant_update_error,
+        });
+    }
+
+    if (product) {
+        await ItemRelation.deleteMany({
+            sourceItem: product,
+            targetItem: productVariantId
+        });
+
+        await ItemRelation.create({
+            sourceItem: product,
+            targetItem: productVariantId
         });
     }
 

@@ -1,5 +1,7 @@
 const Category = require('../category.model');
-const Product = require('../../product/product.model');
+const Item = require('../../item/item.model');
+const ItemRelation = require('../../itemRelation/itemRelation.model');
+const { mongoose } = require('@lumodine/mongodb');
 
 module.exports = async (request, reply) => {
     const {
@@ -20,27 +22,59 @@ module.exports = async (request, reply) => {
         });
     }
 
-    const [
-        isRemovedCategory,
-        isRemovedProduct,
-    ] = await Promise.all([
-        Category.findByIdAndDelete(categoryId),
-        Product.deleteMany({
-            'parentItems.item': {
-                $in: categoryId,
-            },
-        }),
-    ]);
+    const relations = await ItemRelation.find({ 
+        sourceItem: categoryId 
+    });
+    const relatedItemIds = relations.map(relation => relation.targetItem);
 
-    if (!isRemovedCategory) {
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
+    try {
+        const [
+            isRemovedCategory,
+            isRemovedItem,
+            isRemovedRelations,
+        ] = await Promise.all([
+            Category.findByIdAndDelete(categoryId, { session }),
+            Item.deleteMany({
+                _id: {
+                    $in: relatedItemIds,
+                },
+            }, { session }),
+            ItemRelation.deleteMany({
+                $or: [
+                    { sourceItem: categoryId },
+                    { targetItem: categoryId }
+                ]
+            }, { session }),
+        ]);
+
+        if (!isRemovedCategory || !isRemovedItem || !isRemovedRelations) {
+            await session.abortTransaction();
+            session.endSession();
+
+            return reply.send({
+                success: false,
+                message: request.i18n.category_remove_error,
+            });
+        }
+
+        await session.commitTransaction();
+        session.endSession();
+
+        return reply.send({
+            success: true,
+            message: request.i18n.category_remove_success,
+        });
+    } catch (error) {
+        await session.abortTransaction();
+        session.endSession();
+
         return reply.send({
             success: false,
             message: request.i18n.category_remove_error,
+            error: error.message,
         });
     }
-
-    return reply.send({
-        success: true,
-        message: request.i18n.category_remove_success,
-    });
 };

@@ -1,17 +1,17 @@
-const { ITEM_KINDS } = require('../../item/item.constant');
 const Product = require('../product.model');
+const ItemRelation = require('../../itemRelation/itemRelation.model');
 
 module.exports = async (request, reply) => {
     const {
         tenantId,
         productId,
     } = request.params;
-
     const {
         translations,
-        image,
-        category,
         prices,
+        image,
+        type,
+        category,
         tags,
     } = request.body;
 
@@ -28,37 +28,14 @@ module.exports = async (request, reply) => {
         });
     }
 
-    //TODO: check translations.language
-    //TODO: check category
-    //TODO: check prices.currency
-
-    const parentItems = [
-        {
-            item: category,
-            kind: ITEM_KINDS.CATEGORY,
-        },
-    ];
-
-    if (tags) {
-        tags.forEach((tag) => {
-            parentItems.push({
-                item: tag,
-                kind: ITEM_KINDS.TAG,
-            });
-        });
-    }
-
-    const payload = {
-        tenant: tenantId,
-        translations,
-        image,
-        parentItems,
-        prices,
-    };
-
     const updatedProduct = await Product.findByIdAndUpdate(
         productId,
-        payload,
+        {
+            translations,
+            prices,
+            image,
+            type,
+        },
         {
             new: true,
         }
@@ -69,6 +46,28 @@ module.exports = async (request, reply) => {
             success: false,
             message: request.i18n.product_update_error,
         });
+    }
+
+    await ItemRelation.deleteMany({
+        targetItem: productId
+    });
+
+    if (category) {
+        await ItemRelation.create({
+            sourceItem: category,
+            targetItem: productId
+        });
+    }
+
+    if (tags && tags.length > 0) {
+        await Promise.all(
+            tags.map(tagId => 
+                ItemRelation.create({
+                    sourceItem: tagId,
+                    targetItem: productId
+                })
+            )
+        );
     }
 
     return reply.send({

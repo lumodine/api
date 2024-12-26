@@ -1,5 +1,7 @@
 const Tag = require('../tag.model');
 const Product = require('../../product/product.model');
+const ItemRelation = require('../../itemRelation/itemRelation.model');
+const { mongoose } = require('@lumodine/mongodb');
 
 module.exports = async (request, reply) => {
     const {
@@ -20,36 +22,48 @@ module.exports = async (request, reply) => {
         });
     }
 
-    const [
-        isRemovedTag,
-        isRemovedProduct,
-    ] = await Promise.all([
-        await Tag.findByIdAndDelete(tagId),
-        Product.updateMany(
-            {
-                'parentItems.item': {
-                    $in: tagId,
-                },
-            },
-            {
-                $pull: {
-                    parentItems: {
-                        item: tagId,
-                    },
-                },
-            }
-        ),
-    ]);
+    const session = await mongoose.startSession();
+    session.startTransaction();
 
-    if (!isRemovedTag) {
+    try {
+        const [
+            isRemovedTag,
+            isRemovedRelations,
+        ] = await Promise.all([
+            Tag.findByIdAndDelete(tagId, { session }),
+            ItemRelation.deleteMany({
+                $or: [
+                    { sourceItem: tagId },
+                    { targetItem: tagId }
+                ]
+            }, { session }),
+        ]);
+
+        if (!isRemovedTag || !isRemovedRelations) {
+            await session.abortTransaction();
+            session.endSession();
+
+            return reply.send({
+                success: false,
+                message: request.i18n.tag_remove_error,
+            });
+        }
+
+        await session.commitTransaction();
+        session.endSession();
+
+        return reply.send({
+            success: true,
+            message: request.i18n.tag_remove_success,
+        });
+    } catch (error) {
+        await session.abortTransaction();
+        session.endSession();
+
         return reply.send({
             success: false,
             message: request.i18n.tag_remove_error,
+            error: error.message,
         });
     }
-
-    return reply.send({
-        success: true,
-        message: request.i18n.tag_remove_success,
-    });
 };

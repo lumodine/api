@@ -4,6 +4,7 @@ const ProductVariant = require('../../productVariant/productVariant.model');
 const Tag = require('../../tag/tag.model');
 const Announcement = require('../../announcement/announcement.model');
 const TenantBranch = require('../../tenantBranch/tenantBranch.model');
+const ItemRelation = require('../../itemRelation/itemRelation.model');
 
 module.exports = async (request, reply) => {
     const { tenantId } = request.params;
@@ -18,8 +19,15 @@ module.exports = async (request, reply) => {
     };
 
     if (item) {
-        query['parentItems.item'] = {
-            $in: item,
+        const relations = await ItemRelation.find({ 
+            sourceItem: { 
+                $in: item 
+            } 
+        });
+        const relatedItemIds = relations.map(relation => relation.targetItem);
+        
+        query._id = {
+            $in: relatedItemIds
         };
     }
 
@@ -45,7 +53,7 @@ module.exports = async (request, reply) => {
                     path: 'translations.language',
                 },
             ]),
-            ProductVariant
+        ProductVariant
             .find(query)
             .populate([
                 {

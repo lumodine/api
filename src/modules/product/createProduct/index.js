@@ -1,54 +1,48 @@
-const { ITEM_KINDS } = require('../../item/item.constant');
 const Product = require('../product.model');
+const ItemRelation = require('../../itemRelation/itemRelation.model');
 
 module.exports = async (request, reply) => {
-    const {
-        tenantId,
-    } = request.params;
-
+    const tenantId = request.tenant._id;
     const {
         translations,
-        image,
         prices,
-        tags,
+        image,
+        type,
         category,
+        tags,
     } = request.body;
 
-    //TODO: check translations.language
-    //TODO: check category
-    //TODO: check prices.currency
-
-    const parentItems = [
-        {
-            item: category,
-            kind: ITEM_KINDS.CATEGORY,
-        },
-    ];
-
-    if (tags) {
-        tags.forEach((tag) => {
-            parentItems.push({
-                item: tag,
-                kind: ITEM_KINDS.TAG,
-            });
-        });
-    }
-
-    const payload = {
+    const product = await Product.create({
         tenant: tenantId,
         translations,
-        image,
-        parentItems,
         prices,
-    };
+        image,
+        type,
+    });
 
-    const createdProduct = await (new Product(payload)).save();
-
-    if (!createdProduct) {
+    if (!product) {
         return reply.send({
             success: false,
             message: request.i18n.product_create_error,
         });
+    }
+
+    if (category) {
+        await ItemRelation.create({
+            sourceItem: category,
+            targetItem: product._id
+        });
+    }
+
+    if (tags && tags.length > 0) {
+        await Promise.all(
+            tags.map(tagId => 
+                ItemRelation.create({
+                    sourceItem: tagId,
+                    targetItem: product._id
+                })
+            )
+        );
     }
 
     return reply.send({

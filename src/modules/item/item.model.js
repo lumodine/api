@@ -1,6 +1,6 @@
 const { mongoose } = require('@lumodine/mongodb');
 const baseModel = require('../common/mongodb.base.model');
-const { ITEM_STATUS, ITEM_KINDS } = require('./item.constant');
+const { ITEM_STATUS } = require('./item.constant');
 const { THEME_TYPES } = require('../theme/theme.constant');
 
 const schema = new mongoose.Schema({
@@ -29,42 +29,6 @@ const schema = new mongoose.Schema({
         type: Boolean,
         default: true,
     },
-    parentItems: [
-        {
-            item: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'item',
-                required: true,
-            },
-            kind: {
-                type: String,
-                required: true,
-                enum: Object.values(ITEM_KINDS),
-            },
-            sort: {
-                type: Number,
-                default: 1,
-            },
-        },
-    ],
-    childItems: [
-        {
-            item: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'item',
-                required: true,
-            },
-            kind: {
-                type: String,
-                required: true,
-                enum: Object.values(ITEM_KINDS),
-            },
-            sort: {
-                type: Number,
-                default: 1,
-            },
-        },
-    ],
     sort: {
         type: Number,
         default: 1,
