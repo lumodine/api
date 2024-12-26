@@ -1,5 +1,6 @@
 const Product = require('../product.model');
 const ItemRelation = require('../../itemRelation/itemRelation.model');
+const { mongoose } = require('@lumodine/mongodb');
 
 module.exports = async (request, reply) => {
     const {
@@ -15,63 +16,95 @@ module.exports = async (request, reply) => {
         tags,
     } = request.body;
 
-    const product = await Product
-        .findOne({
-            tenant: tenantId,
-            _id: productId,
-        });
+    const session = await mongoose.startSession();
+    session.startTransaction();
 
-    if (!product) {
-        return reply.send({
-            success: false,
-            message: request.i18n.product_not_found,
-        });
-    }
+    try {
+        const product = await Product
+            .findOne({
+                tenant: tenantId,
+                _id: productId,
+            }, null, { session });
 
-    const updatedProduct = await Product.findByIdAndUpdate(
-        productId,
-        {
-            translations,
-            prices,
-            image,
-            type,
-        },
-        {
-            new: true,
+        if (!product) {
+            await session.abortTransaction();
+            session.endSession();
+            return reply.send({
+                success: false,
+                message: request.i18n.product_not_found,
+            });
         }
-    );
 
-    if (!updatedProduct) {
+        const [updatedProduct] = await Promise.all([
+            Product.findByIdAndUpdate(
+                productId,
+                {
+                    translations,
+                    prices,
+                    image,
+                    type,
+                },
+                {
+                    new: true,
+                    session,
+                }
+            ),
+            ItemRelation.deleteMany({
+                targetItem: productId
+            }, { session })
+        ]);
+
+        if (!updatedProduct) {
+            await session.abortTransaction();
+            session.endSession();
+            return reply.send({
+                success: false,
+                message: request.i18n.product_update_error,
+            });
+        }
+
+        const relationPromises = [];
+        
+        if (category) {
+            relationPromises.push(
+                ItemRelation.create([{
+                    sourceItem: category,
+                    targetItem: productId
+                }], { session })
+            );
+        }
+
+        if (tags && tags.length > 0) {
+            relationPromises.push(
+                ItemRelation.create(
+                    tags.map(tagId => ({
+                        sourceItem: tagId,
+                        targetItem: productId
+                    })),
+                    { session }
+                )
+            );
+        }
+
+        if (relationPromises.length > 0) {
+            await Promise.all(relationPromises);
+        }
+
+        await session.commitTransaction();
+        session.endSession();
+
+        return reply.send({
+            success: true,
+            message: request.i18n.product_update_success,
+        });
+    } catch (error) {
+        await session.abortTransaction();
+        session.endSession();
+
         return reply.send({
             success: false,
             message: request.i18n.product_update_error,
+            error: error.message,
         });
     }
-
-    await ItemRelation.deleteMany({
-        targetItem: productId
-    });
-
-    if (category) {
-        await ItemRelation.create({
-            sourceItem: category,
-            targetItem: productId
-        });
-    }
-
-    if (tags && tags.length > 0) {
-        await Promise.all(
-            tags.map(tagId => 
-                ItemRelation.create({
-                    sourceItem: tagId,
-                    targetItem: productId
-                })
-            )
-        );
-    }
-
-    return reply.send({
-        success: true,
-        message: request.i18n.product_update_success,
-    });
 };

@@ -17,17 +17,12 @@ module.exports = async (request, reply) => {
 
     const item = await Item
         .findOne(query)
-        .sort({
-            sort: 1,
-        })
+        .sort({ sort: 1 })
         .populate([
-            {
-                path: 'translations.language',
-            },
-            {
-                path: 'prices.currency',
-            }
-        ]);
+            { path: 'translations.language' },
+            { path: 'prices.currency' }
+        ])
+        .lean();
 
     if (!item) {
         return reply.send({
@@ -36,30 +31,41 @@ module.exports = async (request, reply) => {
         });
     }
 
-    const sourceRelations = await ItemRelation.find({
-        targetItem: item._id
-    }).populate({
-        path: 'sourceItem',
-        populate: [
-            { path: 'translations.language' },
-            { path: 'prices.currency' }
-        ]
-    });
-
-    const targetRelations = await ItemRelation.find({
-        sourceItem: item._id
-    }).populate({
-        path: 'targetItem',
-        populate: [
-            { path: 'translations.language' },
-            { path: 'prices.currency' }
-        ]
-    });
+    const [relations, [sourceItems, targetItems]] = await Promise.all([
+        ItemRelation.find({
+            $or: [
+                { sourceItem: itemId },
+                { targetItem: itemId }
+            ]
+        }).lean(),
+        Promise.all([
+            Item.find({
+                _id: {
+                    $in: await ItemRelation.distinct('sourceItem', { targetItem: itemId })
+                }
+            })
+            .populate([
+                { path: 'translations.language' },
+                { path: 'prices.currency' }
+            ])
+            .lean(),
+            Item.find({
+                _id: {
+                    $in: await ItemRelation.distinct('targetItem', { sourceItem: itemId })
+                }
+            })
+            .populate([
+                { path: 'translations.language' },
+                { path: 'prices.currency' }
+            ])
+            .lean()
+        ])
+    ]);
 
     const itemWithRelations = {
-        ...item.toObject(),
-        parentItems: sourceRelations.map(relation => relation.sourceItem),
-        childItems: targetRelations.map(relation => relation.targetItem)
+        ...item,
+        parentItems: sourceItems,
+        childItems: targetItems
     };
 
     return reply.send({

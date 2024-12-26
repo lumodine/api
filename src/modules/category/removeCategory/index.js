@@ -22,18 +22,18 @@ module.exports = async (request, reply) => {
         });
     }
 
-    const relations = await ItemRelation.find({ 
-        sourceItem: categoryId 
-    });
-    const relatedItemIds = relations.map(relation => relation.targetItem);
-
     const session = await mongoose.startSession();
     session.startTransaction();
 
     try {
+        const relations = await ItemRelation.find({ 
+            sourceItem: categoryId 
+        }, null, { session });
+        const relatedItemIds = relations.map(relation => relation.targetItem);
+
         const [
             isRemovedCategory,
-            isRemovedItem,
+            isRemovedItems,
             isRemovedRelations,
         ] = await Promise.all([
             Category.findByIdAndDelete(categoryId, { session }),
@@ -50,7 +50,7 @@ module.exports = async (request, reply) => {
             }, { session }),
         ]);
 
-        if (!isRemovedCategory || !isRemovedItem || !isRemovedRelations) {
+        if (!isRemovedCategory || !isRemovedItems || !isRemovedRelations) {
             await session.abortTransaction();
             session.endSession();
 
