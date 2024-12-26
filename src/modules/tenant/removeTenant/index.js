@@ -1,6 +1,6 @@
 const Tenant = require('../tenant.model');
+const TenantBranch = require('../../tenantBranch/tenantBranch.model');
 const Item = require('../../item/item.model');
-const Tag = require('../../tag/tag.model');
 const Announcement = require('../../announcement/announcement.model');
 const { s3 } = require('@lumodine/aws');
 
@@ -9,16 +9,16 @@ module.exports = async (request, reply) => {
 
     const [
         isRemovedTenant,
+        isRemovedTenantBranch,
         isRemovedItem,
-        isRemovedTag,
         isRemovedAnnouncement,
         isRemovedS3Folder,
     ] = await Promise.all([
         Tenant.findByIdAndDelete(tenantId),
-        Item.deleteMany({
+        TenantBranch.deleteMany({
             tenant: tenantId,
         }),
-        Tag.deleteMany({
+        Item.deleteMany({
             tenant: tenantId,
         }),
         Announcement.deleteMany({
