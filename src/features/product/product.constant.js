@@ -2,7 +2,7 @@ const PRODUCT_TYPES = {
     DEFAULT: 'row',
 
     ROW: 'row',
-    GRID: 'grid',
+    CARD: 'card',
 };
 
 module.exports = {
