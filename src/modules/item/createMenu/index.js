@@ -4,43 +4,42 @@ const { mongoose } = require('@lumodine/mongodb');
 
 module.exports = async (request, reply) => {
     const tenantId = request.tenant._id;
-    const { categories } = request.body;
+    const { items } = request.body;
 
     const session = await mongoose.startSession();
     session.startTransaction();
 
     try {
-        let categoryIndex = 0;
-        for (const category of categories) {
-            const categoryDoc = await Item.create([{
+        let itemIndex = 0;
+        for (const item of items) {
+            const itemDoc = await Item.create([{
                 tenant: tenantId,
-                kind: category.kind,
-                translations: category.translations,
+                kind: item.kind,
+                translations: item.translations,
+                prices: item.prices || undefined,
                 isShowInMenu: true,
-                sort: categoryIndex,
+                sort: itemIndex,
             }], { session });
 
-            // Create sub-categories
-            let itemIndex = 0;
-            for (const item of category.items) {
-                const itemDoc = await Item.create([{
+            let subItemIndex = 0;
+            for (const subItem of item.items) {
+                const subItemDoc = await Item.create([{
                     tenant: tenantId,
-                    kind: item.kind,
-                    translations: item.translations,
-                    prices: item.prices || undefined,
+                    kind: subItem.kind,
+                    translations: subItem.translations,
+                    prices: subItem.prices || undefined,
                     isShowInMenu: true,
-                    sort: itemIndex,
+                    sort: subItemIndex,
                 }], { session });
 
-                // Create relation between category and sub-category
                 await ItemRelation.create([{
-                    sourceItem: categoryDoc[0]._id,
-                    targetItem: itemDoc[0]._id
+                    sourceItem: itemDoc[0]._id,
+                    targetItem: subItemDoc[0]._id
                 }], { session });
 
                 if (item.variants && item.variants.length > 0) {
                     let variantIndex = 0;
-                    for (const variant of item.variants) {
+                    for (const variant of subItem.variants) {
                         const variantDoc = await Item.create([{
                             tenant: tenantId,
                             kind: variant.kind,
@@ -50,9 +49,8 @@ module.exports = async (request, reply) => {
                             sort: variantIndex,
                         }], { session });
 
-                        // Create relation between product and variant
                         await ItemRelation.create([{
-                            sourceItem: itemDoc[0]._id,
+                            sourceItem: subItemDoc[0]._id,
                             targetItem: variantDoc[0]._id
                         }], { session });
 
@@ -60,10 +58,10 @@ module.exports = async (request, reply) => {
                     }
                 }
 
-                itemIndex++;
+                subItemIndex++;
             }
 
-            categoryIndex++;
+            itemIndex++;
         }
 
         await session.commitTransaction();
