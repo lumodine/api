@@ -235,5 +235,12 @@ module.exports = (fastify, opts, done) => {
         },
     );
 
+    fastify.register(
+        require('../menu'),
+        {
+            prefix: '/:tenantId',
+        },
+    );
+
     done();
 };

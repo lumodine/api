@@ -159,5 +159,8 @@
     "content_update_all_amounts_error": "Tüm miktarlar güncellenirken hata oluştu. Lütfen tekrar deneyin.",
     "content_update_all_amounts_success": "Tüm miktarlar başarıyla güncellendi.",
     "content_update_all_translations_error": "Tüm çeviriler güncellenirken hata oluştu. Lütfen tekrar deneyin.",
-    "content_update_all_translations_success": "Tüm çeviriler başarıyla güncellendi."
+    "content_update_all_translations_success": "Tüm çeviriler başarıyla güncellendi.",
+
+    "menu_create_error": "Menü oluşturulurken hata oluştu. Lütfen tekrar deneyin.",
+    "menu_create_success": "Menü başarıyla oluşturuldu."
 }

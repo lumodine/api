@@ -1,4 +1,4 @@
-const Item = require('../item.model');
+const Item = require('../../item/item.model');
 const ItemRelation = require('../../itemRelation/itemRelation.model');
 const { mongoose } = require('@lumodine/mongodb');
 

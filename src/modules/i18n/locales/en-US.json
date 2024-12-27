@@ -159,5 +159,8 @@
     "content_update_all_amounts_error": "Error updating all amounts. Please try again.",
     "content_update_all_amounts_success": "All amounts successfully updated.",
     "content_update_all_translations_error": "Error updating all translations. Please try again.",
-    "content_update_all_translations_success": "All translations successfully updated."
+    "content_update_all_translations_success": "All translations successfully updated.",
+
+    "menu_create_error": "Error creating menu. Please try again.",
+    "menu_create_success": "Menu successfully created."
 }
