@@ -4,6 +4,7 @@ const updateItemSort = require('./updateItemSort');
 const updateItemStatus = require('./updateItemStatus');
 const updateItemType = require('./updateItemType');
 const getItemById = require('./getItemById');
+const createMenu = require('./createMenu');
 
 module.exports = (fastify, opts, done) => {
     fastify.get(
@@ -28,6 +29,18 @@ module.exports = (fastify, opts, done) => {
             ],
         },
         getItemById
+    );
+
+    fastify.post(
+        '/menu',
+        {
+            preHandler: [
+                fastify.authenticate,
+                //fastify.authorize(PERMISSIONS.ITEM_CREATE),
+                fastify.checkTenantByParams,
+            ],
+        },
+        createMenu
     );
 
     fastify.put(
