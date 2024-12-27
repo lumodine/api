@@ -37,7 +37,7 @@ module.exports = async (request, reply) => {
                     targetItem: subItemDoc[0]._id
                 }], { session });
 
-                if (item.variants && item.variants.length > 0) {
+                if (subItem.variants && subItem.variants.length > 0) {
                     let variantIndex = 0;
                     for (const variant of subItem.variants) {
                         const variantDoc = await Item.create([{
