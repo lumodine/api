@@ -1,24 +1,23 @@
-const Tag = require('../tag.model');
-const Product = require('../../product/product.model');
+const SubCategory = require('../subCategory.model');
 const ItemRelation = require('../../itemRelation/itemRelation.model');
 const { mongoose } = require('@lumodine/mongodb');
 
 module.exports = async (request, reply) => {
     const {
         tenantId,
-        tagId,
+        subCategoryId,
     } = request.params;
 
-    const tag = await Tag
+    const subCategory = await SubCategory
         .findOne({
             tenant: tenantId,
-            _id: tagId,
+            _id: subCategoryId,
         });
 
-    if (!tag) {
+    if (!subCategory) {
         return reply.send({
             success: false,
-            message: request.i18n.tag_not_found,
+            message: request.i18n.sub_category_not_found,
         });
     }
 
@@ -27,25 +26,25 @@ module.exports = async (request, reply) => {
 
     try {
         const [
-            isRemovedTag,
+            isRemovedSubCategory,
             isRemovedRelations,
         ] = await Promise.all([
-            Tag.findByIdAndDelete(tagId, { session }),
+            SubCategory.findByIdAndDelete(subCategoryId, { session }),
             ItemRelation.deleteMany({
                 $or: [
-                    { sourceItem: tagId },
-                    { targetItem: tagId }
+                    { sourceItem: subCategoryId },
+                    { targetItem: subCategoryId }
                 ]
             }, { session }),
         ]);
 
-        if (!isRemovedTag || !isRemovedRelations) {
+        if (!isRemovedSubCategory || !isRemovedRelations) {
             await session.abortTransaction();
             session.endSession();
 
             return reply.send({
                 success: false,
-                message: request.i18n.tag_remove_error,
+                message: request.i18n.sub_category_remove_error,
             });
         }
 
@@ -54,7 +53,7 @@ module.exports = async (request, reply) => {
 
         return reply.send({
             success: true,
-            message: request.i18n.tag_remove_success,
+            message: request.i18n.sub_category_remove_success,
         });
     } catch (error) {
         await session.abortTransaction();
@@ -62,7 +61,7 @@ module.exports = async (request, reply) => {
 
         return reply.send({
             success: false,
-            message: request.i18n.tag_remove_error,
+            message: request.i18n.sub_category_remove_error,
         });
     }
 };

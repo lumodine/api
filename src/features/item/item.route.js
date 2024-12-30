@@ -68,7 +68,7 @@ module.exports = (fastify, opts, done) => {
 
     fastify.register(require('../category'));
     
-    // fastify.register(require('../subCategory'));
+    fastify.register(require('../subCategory'));
 
     fastify.register(require('../product'));
 

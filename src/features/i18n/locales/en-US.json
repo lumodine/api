@@ -162,5 +162,11 @@
     "content_update_all_translations_success": "All translations successfully updated.",
 
     "menu_create_error": "Error creating menu. Please try again.",
-    "menu_create_success": "Menu successfully created."
+    "menu_create_success": "Menu successfully created.",
+
+    "sub_category_not_found": "Sub category not found.",
+    "sub_category_update_error": "Error updating sub category. Please try again.",
+    "sub_category_update_success": "Sub category successfully updated.",
+    "sub_category_remove_error": "Error removing sub category. Please try again.",
+    "sub_category_remove_success": "Sub category successfully removed."
 }

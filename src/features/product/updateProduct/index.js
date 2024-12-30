@@ -104,7 +104,6 @@ module.exports = async (request, reply) => {
         return reply.send({
             success: false,
             message: request.i18n.product_update_error,
-            error: error.message,
         });
     }
 };

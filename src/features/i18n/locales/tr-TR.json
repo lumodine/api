@@ -162,5 +162,11 @@
     "content_update_all_translations_success": "Tüm çeviriler başarıyla güncellendi.",
 
     "menu_create_error": "Menü oluşturulurken hata oluştu. Lütfen tekrar deneyin.",
-    "menu_create_success": "Menü başarıyla oluşturuldu."
+    "menu_create_success": "Menü başarıyla oluşturuldu.",
+
+    "sub_category_not_found": "Alt kategori bulunamadı.",
+    "sub_category_update_error": "Alt kategori güncellenirken hata oluştu. Lütfen tekrar deneyin.",
+    "sub_category_update_success": "Alt kategori başarıyla güncellendi.",
+    "sub_category_remove_error": "Alt kategori silinirken hata oluştu. Lütfen tekrar deneyin.",
+    "sub_category_remove_success": "Alt kategori başarıyla silindi."
 }

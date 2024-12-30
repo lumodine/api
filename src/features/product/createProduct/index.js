@@ -77,7 +77,6 @@ module.exports = async (request, reply) => {
         return reply.send({
             success: false,
             message: request.i18n.product_create_error,
-            error: error.message,
         });
     }
 };

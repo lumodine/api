@@ -74,7 +74,6 @@ module.exports = async (request, reply) => {
         return reply.send({
             success: false,
             message: request.i18n.category_remove_error,
-            error: error.message,
         });
     }
 };
