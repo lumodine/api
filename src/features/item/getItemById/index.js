@@ -8,7 +8,6 @@ module.exports = async (request, reply) => {
     const query = {
         tenant: tenantId,
         _id: itemId,
-        isShowInMenu: true,
     };
 
     if (kind) {
