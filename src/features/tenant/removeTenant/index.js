@@ -3,6 +3,7 @@ const TenantBranch = require('../../tenantBranch/tenantBranch.model');
 const Item = require('../../item/item.model');
 const ItemRelation = require('../../itemRelation/itemRelation.model');
 const Announcement = require('../../announcement/announcement.model');
+const Event = require('../../event/event.model');
 const { s3 } = require('@lumodine/aws');
 const { mongoose } = require('@lumodine/mongodb');
 
@@ -22,6 +23,7 @@ module.exports = async (request, reply) => {
             isRemovedItem,
             isRemovedRelations,
             isRemovedAnnouncement,
+            isRemovedEvent,
             isRemovedS3Folder,
         ] = await Promise.all([
             Tenant.findByIdAndDelete(tenantId, { session }),
@@ -40,10 +42,13 @@ module.exports = async (request, reply) => {
             Announcement.deleteMany({
                 tenant: tenantId,
             }, { session }),
+            Event.deleteMany({
+                tenant: tenantId,
+            }, { session }),
             s3.removeFolder(`${tenantId}/`),
         ]);
     
-        if (!isRemovedTenant || !isRemovedTenantBranch || !isRemovedItem || !isRemovedRelations || !isRemovedAnnouncement || !isRemovedS3Folder) {
+        if (!isRemovedTenant || !isRemovedTenantBranch || !isRemovedItem || !isRemovedRelations || !isRemovedAnnouncement || !isRemovedEvent || !isRemovedS3Folder) {
             await session.abortTransaction();
             session.endSession();
 
@@ -61,6 +66,8 @@ module.exports = async (request, reply) => {
             message: request.i18n.tenant_remove_success,
         });
     } catch (error) {
+        console.error(error);
+
         await session.abortTransaction();
         session.endSession();
 
