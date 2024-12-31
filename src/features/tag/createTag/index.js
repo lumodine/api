@@ -5,7 +5,6 @@ module.exports = async (request, reply) => {
 
     const {
         translations,
-        isShowInMenu,
         color,
     } = request.body;
 
@@ -14,7 +13,6 @@ module.exports = async (request, reply) => {
     const payload = {
         tenant: tenantId,
         translations,
-        isShowInMenu,
         theme: {
             color,
         },
