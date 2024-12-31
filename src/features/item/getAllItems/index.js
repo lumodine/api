@@ -7,6 +7,7 @@ module.exports = async (request, reply) => {
 
     const query = {
         tenant: tenantId,
+        isShowInMenu: true,
     };
 
     if (itemId) {
