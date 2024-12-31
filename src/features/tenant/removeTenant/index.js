@@ -17,8 +17,9 @@ module.exports = async (request, reply) => {
         const items = await Item.find({ tenant: tenantId });
         const itemIds = items.map(item => item._id);
 
+        const isRemovedTenant = await Tenant.findByIdAndDelete(tenantId, { session });
+
         const [
-            isRemovedTenant,
             isRemovedTenantBranch,
             isRemovedItem,
             isRemovedRelations,
@@ -26,7 +27,6 @@ module.exports = async (request, reply) => {
             isRemovedEvent,
             isRemovedS3Folder,
         ] = await Promise.all([
-            Tenant.findByIdAndDelete(tenantId, { session }),
             TenantBranch.deleteMany({
                 tenant: tenantId,
             }, { session }),
