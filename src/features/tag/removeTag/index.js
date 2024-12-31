@@ -26,11 +26,11 @@ module.exports = async (request, reply) => {
     session.startTransaction();
 
     try {
+        const isRemovedTag = await Tag.findByIdAndDelete(tagId, { session });
+
         const [
-            isRemovedTag,
             isRemovedRelations,
         ] = await Promise.all([
-            Tag.findByIdAndDelete(tagId, { session }),
             ItemRelation.deleteMany({
                 $or: [
                     { sourceItem: tagId },

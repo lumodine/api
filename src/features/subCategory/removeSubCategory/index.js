@@ -25,11 +25,11 @@ module.exports = async (request, reply) => {
     session.startTransaction();
 
     try {
+        const isRemovedSubCategory = await SubCategory.findByIdAndDelete(subCategoryId, { session });
+
         const [
-            isRemovedSubCategory,
             isRemovedRelations,
         ] = await Promise.all([
-            SubCategory.findByIdAndDelete(subCategoryId, { session }),
             ItemRelation.deleteMany({
                 $or: [
                     { sourceItem: subCategoryId },

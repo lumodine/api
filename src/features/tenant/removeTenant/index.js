@@ -14,12 +14,11 @@ module.exports = async (request, reply) => {
     session.startTransaction();
 
     try {
-        const items = await Item.find({ tenant: tenantId });
+        const items = await Item.find({ tenant: tenantId }, null, { session });
         const itemIds = items.map(item => item._id);
 
-        const isRemovedTenant = await Tenant.findByIdAndDelete(tenantId, { session });
-
         const [
+            isRemovedTenant,
             isRemovedTenantBranch,
             isRemovedItem,
             isRemovedRelations,
@@ -27,6 +26,7 @@ module.exports = async (request, reply) => {
             isRemovedEvent,
             isRemovedS3Folder,
         ] = await Promise.all([
+            Tenant.findByIdAndDelete(tenantId, { session }),
             TenantBranch.deleteMany({
                 tenant: tenantId,
             }, { session }),
@@ -66,8 +66,6 @@ module.exports = async (request, reply) => {
             message: request.i18n.tenant_remove_success,
         });
     } catch (error) {
-        console.error(error);
-
         await session.abortTransaction();
         session.endSession();
 

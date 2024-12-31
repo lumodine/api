@@ -26,8 +26,8 @@ module.exports = async (request, reply) => {
     session.startTransaction();
 
     try {
-        const relations = await ItemRelation.find({ 
-            sourceItem: categoryId 
+        const relations = await ItemRelation.find({
+            sourceItem: categoryId,
         }, null, { session });
         const relatedItemIds = relations.map(relation => relation.targetItem);
 
