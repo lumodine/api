@@ -16,18 +16,16 @@ module.exports = async (request, reply) => {
 
     if (itemId) {
         const relations = await ItemRelation.find({ 
-            sourceItem: { 
-                $in: itemId 
-            } 
+            'source.item': itemId,
         });
-        const relatedItemIds = relations.map(relation => relation.targetItem);
+        const relatedItemIds = relations.map(relation => relation.target.item);
         
         query._id = {
             $in: relatedItemIds
         };
     } else {
         const relations = await ItemRelation.find({});
-        const relatedItemIds = relations.map(relation => relation.targetItem);
+        const relatedItemIds = relations.map(relation => relation.target.item);
         
         query._id = {
             $nin: relatedItemIds
@@ -52,19 +50,19 @@ module.exports = async (request, reply) => {
     
     let relations = await ItemRelation.find({
         $or: [
-            { targetItem: { $in: itemIds } },
-            { sourceItem: { $in: itemIds } }
+            { 'target.item': { $in: itemIds } },
+            { 'source.item': { $in: itemIds } }
         ]
     }).populate([
         {
-            path: 'sourceItem',
+            path: 'source.item',
             populate: [
                 { path: 'translations.language' },
                 { path: 'prices.currency' }
             ]
         },
         {
-            path: 'targetItem',
+            path: 'target.item',
             populate: [
                 { path: 'translations.language' },
                 { path: 'prices.currency' }
@@ -72,17 +70,17 @@ module.exports = async (request, reply) => {
         }
     ]);
 
-    relations = relations.filter(relation => relation.sourceItem.status !== ITEM_STATUS.HIDDEN);
-    relations = relations.filter(relation => relation.targetItem.status !== ITEM_STATUS.HIDDEN);
+    relations = relations.filter(relation => relation.source.item.status !== ITEM_STATUS.HIDDEN);
+    relations = relations.filter(relation => relation.target.item.status !== ITEM_STATUS.HIDDEN);
 
     const itemsWithRelations = items.map(item => {
-        const sourceRelations = relations.filter(relation => relation.targetItem.equals(item._id));
-        const targetRelations = relations.filter(relation => relation.sourceItem.equals(item._id));
+        const sourceRelations = relations.filter(relation => relation.target.item.equals(item._id));
+        const targetRelations = relations.filter(relation => relation.source.item.equals(item._id));
 
         return {
             ...item.toObject(),
-            parentItems: sourceRelations.map(relation => relation.sourceItem),
-            childItems: targetRelations.map(relation => relation.targetItem)
+            parentItems: sourceRelations.map(relation => relation.source.item),
+            childItems: targetRelations.map(relation => relation.target.item)
         };
     });
 

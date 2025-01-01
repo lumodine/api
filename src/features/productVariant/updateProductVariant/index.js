@@ -1,5 +1,6 @@
 const ProductVariant = require('../productVariant.model');
 const ItemRelation = require('../../itemRelation/itemRelation.model');
+const { ITEM_KINDS } = require('../../item/item.constant');
 
 module.exports = async (request, reply) => {
     const {
@@ -9,7 +10,7 @@ module.exports = async (request, reply) => {
     const {
         translations,
         prices,
-        product,
+        productId,
     } = request.body;
 
     const productVariant = await ProductVariant
@@ -43,15 +44,21 @@ module.exports = async (request, reply) => {
         });
     }
 
-    if (product) {
+    if (productId) {
         await ItemRelation.deleteMany({
-            sourceItem: product,
-            targetItem: productVariantId
+            'source.item': productId,
+            'target.item': productVariantId
         });
 
         await ItemRelation.create({
-            sourceItem: product,
-            targetItem: productVariantId
+            source: {
+                item: productId,
+                kind: ITEM_KINDS.PRODUCT,
+            },
+            target: {
+                item: productVariantId,
+                kind: ITEM_KINDS.PRODUCT_VARIANT,
+            }
         });
     }
 

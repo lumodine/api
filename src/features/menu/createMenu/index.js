@@ -17,8 +17,14 @@ async function createItemRecursively({ tenantId, item, sort, session }) {
             const childDoc = await createItemRecursively({ tenantId, item: item.items[i], sort: i, session });
 
             await ItemRelation.create([{
-                sourceItem: itemDoc[0]._id,
-                targetItem: childDoc[0]._id,
+                source: {
+                    item: itemDoc[0]._id,
+                    kind: item.kind,
+                },
+                target: {
+                    item: childDoc[0]._id,
+                    kind: item.items[i].kind,
+                },
             }], { session });
         }
     }

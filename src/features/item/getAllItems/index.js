@@ -12,18 +12,16 @@ module.exports = async (request, reply) => {
 
     if (itemId) {
         const relations = await ItemRelation.find({ 
-            sourceItem: { 
-                $in: itemId 
-            } 
+            'source.item': itemId,
         });
-        const relatedItemIds = relations.map(relation => relation.targetItem);
+        const relatedItemIds = relations.map(relation => relation.target.item);
         
         query._id = {
             $in: relatedItemIds
         };
     } else {
         const relations = await ItemRelation.find({});
-        const relatedItemIds = relations.map(relation => relation.targetItem);
+        const relatedItemIds = relations.map(relation => relation.target.item);
         
         query._id = {
             $nin: relatedItemIds
@@ -50,34 +48,36 @@ module.exports = async (request, reply) => {
 
     const itemIds = items.map(item => item._id);
     
-    const sourceRelations = await ItemRelation.find({
-        targetItem: { $in: itemIds }
-    }).populate({
-        path: 'sourceItem',
-        populate: [
-            { path: 'translations.language' },
-            { path: 'prices.currency' }
+    const relations = await ItemRelation.find({
+        $or: [
+            { 'target.item': { $in: itemIds } },
+            { 'source.item': { $in: itemIds } }
         ]
-    });
-
-    const targetRelations = await ItemRelation.find({
-        sourceItem: { $in: itemIds }
-    }).populate({
-        path: 'targetItem',
-        populate: [
-            { path: 'translations.language' },
-            { path: 'prices.currency' }
-        ]
-    });
+    }).populate([
+        {
+            path: 'source.item',
+            populate: [
+                { path: 'translations.language' },
+                { path: 'prices.currency' }
+            ]
+        },
+        {
+            path: 'target.item',
+            populate: [
+                { path: 'translations.language' },
+                { path: 'prices.currency' }
+            ]
+        }
+    ]);
 
     const itemsWithRelations = items.map(item => {
-        const sourceItems = sourceRelations
-            .filter(relation => relation.targetItem.equals(item._id))
-            .map(relation => relation.sourceItem);
+        const sourceItems = relations
+            .filter(relation => relation.target.item.equals(item._id))
+            .map(relation => relation.source.item);
         
-        const targetItems = targetRelations
-            .filter(relation => relation.sourceItem.equals(item._id))
-            .map(relation => relation.targetItem);
+        const targetItems = relations
+            .filter(relation => relation.source.item.equals(item._id))
+            .map(relation => relation.target.item);
 
         return {
             ...item.toObject(),

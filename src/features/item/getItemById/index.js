@@ -36,30 +36,36 @@ module.exports = async (request, reply) => {
         });
     }
 
-    const sourceRelations = await ItemRelation.find({
-        targetItem: item._id
-    }).populate({
-        path: 'sourceItem',
-        populate: [
-            { path: 'translations.language' },
-            { path: 'prices.currency' }
+    const relations = await ItemRelation.find({
+        $or: [
+            { 'target.item': item._id },
+            { 'source.item': item._id }
         ]
-    });
-
-    const targetRelations = await ItemRelation.find({
-        sourceItem: item._id
-    }).populate({
-        path: 'targetItem',
-        populate: [
-            { path: 'translations.language' },
-            { path: 'prices.currency' }
-        ]
-    });
+    }).populate([
+        {
+            path: 'source.item',
+            populate: [
+                { path: 'translations.language' },
+                { path: 'prices.currency' }
+            ]
+        },
+        {
+            path: 'target.item',
+            populate: [
+                { path: 'translations.language' },
+                { path: 'prices.currency' }
+            ]
+        }
+    ]);
 
     const itemWithRelations = {
         ...item.toObject(),
-        parentItems: sourceRelations.map(relation => relation.sourceItem),
-        childItems: targetRelations.map(relation => relation.targetItem)
+        parentItems: relations
+            .filter(relation => relation.target.item.equals(item._id))
+            .map(relation => relation.source.item),
+        childItems: relations
+            .filter(relation => relation.source.item.equals(item._id))
+            .map(relation => relation.target.item)
     };
 
     return reply.send({

@@ -1,5 +1,6 @@
 const ProductVariant = require('../productVariant.model');
 const ItemRelation = require('../../itemRelation/itemRelation.model');
+const { ITEM_KINDS } = require('../../item/item.constant');
 
 module.exports = async (request, reply) => {
     const tenantId = request.tenant._id;
@@ -24,8 +25,14 @@ module.exports = async (request, reply) => {
 
     if (product) {
         await ItemRelation.create({
-            sourceItem: product,
-            targetItem: productVariant._id
+            source: {
+                item: product,
+                kind: ITEM_KINDS.PRODUCT,
+            },
+            target: {
+                item: productVariant._id,
+                kind: ITEM_KINDS.PRODUCT_VARIANT,
+            },
         });
     }
 

@@ -27,7 +27,7 @@ module.exports = async (request, reply) => {
 
     try {
         const relations = await ItemRelation.find({
-            sourceItem: categoryId,
+            'source.item': categoryId,
         }, null, { session });
         const relatedItemIds = relations.map(relation => relation.targetItem);
 
@@ -44,8 +44,8 @@ module.exports = async (request, reply) => {
             }, { session }),
             ItemRelation.deleteMany({
                 $or: [
-                    { sourceItem: categoryId },
-                    { targetItem: categoryId }
+                    { 'source.item': categoryId },
+                    { 'target.item': categoryId }
                 ]
             }, { session }),
         ]);

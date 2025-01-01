@@ -35,8 +35,8 @@ module.exports = async (request, reply) => {
             }, { session }),
             ItemRelation.deleteMany({
                 $or: [
-                    { sourceItem: { $in: itemIds } },
-                    { targetItem: { $in: itemIds } }
+                    { 'source.item': { $in: itemIds } },
+                    { 'target.item': { $in: itemIds } }
                 ]
             }, { session }),
             Announcement.deleteMany({

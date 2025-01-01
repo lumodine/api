@@ -1,3 +1,4 @@
+const { ITEM_KINDS } = require('../../item/item.constant');
 const Item = require('../../item/item.model');
 const ItemRelation = require('../../itemRelation/itemRelation.model');
 const { mongoose } = require('@lumodine/mongodb');
@@ -13,8 +14,14 @@ async function createItemRecursively({ tenantId, itemId, item, sort, session }) 
     }], { session });
 
     await ItemRelation.create([{
-        sourceItem: itemId,
-        targetItem: itemDoc[0]._id,
+        source: {
+            item: itemId,
+            kind: ITEM_KINDS.CATEGORY, // TODO:
+        },
+        target: {
+            item: itemDoc[0]._id,
+            kind: item.kind,
+        },
     }], { session });
 
     if (item.items && item.items.length > 0) {
@@ -22,8 +29,14 @@ async function createItemRecursively({ tenantId, itemId, item, sort, session }) 
             const childDoc = await createItemRecursively({ tenantId, itemId, item: item.items[i], sort: i, session });
 
             await ItemRelation.create([{
-                sourceItem: itemDoc[0]._id,
-                targetItem: childDoc[0]._id,
+                source: {
+                    item: itemDoc[0]._id,
+                    kind: item.kind,
+                },
+                target: {
+                    item: childDoc[0]._id,
+                    kind: item.items[i].kind,
+                },
             }], { session });
         }
     }

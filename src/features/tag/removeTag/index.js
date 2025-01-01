@@ -33,8 +33,8 @@ module.exports = async (request, reply) => {
         ] = await Promise.all([
             ItemRelation.deleteMany({
                 $or: [
-                    { sourceItem: tagId },
-                    { targetItem: tagId }
+                    { 'source.item': tagId },
+                    { 'target.item': tagId }
                 ]
             }, { session }),
         ]);

@@ -1,6 +1,7 @@
 const Product = require('../product.model');
 const ItemRelation = require('../../itemRelation/itemRelation.model');
 const { mongoose } = require('@lumodine/mongodb');
+const { ITEM_KINDS } = require('../../item/item.constant');
 
 module.exports = async (request, reply) => {
     const {
@@ -50,7 +51,7 @@ module.exports = async (request, reply) => {
                 }
             ),
             ItemRelation.deleteMany({
-                targetItem: productId
+                'target.item': productId
             }, { session })
         ]);
 
@@ -68,8 +69,14 @@ module.exports = async (request, reply) => {
         if (category) {
             relationPromises.push(
                 ItemRelation.create([{
-                    sourceItem: category,
-                    targetItem: productId
+                    source: {
+                        item: category,
+                        kind: ITEM_KINDS.CATEGORY,
+                    },
+                    target: {
+                        item: productId,
+                        kind: ITEM_KINDS.PRODUCT,
+                    },
                 }], { session })
             );
         }
@@ -78,8 +85,14 @@ module.exports = async (request, reply) => {
             relationPromises.push(
                 ItemRelation.create(
                     tags.map(tagId => ({
-                        sourceItem: tagId,
-                        targetItem: productId
+                        source: {
+                            item: tagId,
+                            kind: ITEM_KINDS.TAG,
+                        },
+                        target: {
+                            item: productId,
+                            kind: ITEM_KINDS.PRODUCT,
+                        },
                     })),
                     { session }
                 )
