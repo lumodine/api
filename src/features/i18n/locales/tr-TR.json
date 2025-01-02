@@ -82,6 +82,8 @@
     "product_image_upload_success": "Ürün resmi başarıyla yüklendi.",
     "product_update_error": "Ürün güncellenirken hata oluştu. Lütfen tekrar deneyin.",
     "product_update_success": "Ürün başarıyla güncellendi.",
+    "product_update_tags_error": "Ürün etiketleri güncellenirken hata oluştu. Lütfen tekrar deneyin.",
+    "product_update_tags_success": "Ürün etiketleri başarıyla güncellendi.",
 
     "product_variant_not_found": "Ürün varyantı bulunamadı.",
     "product_variants_not_found": "Ürün varyantları bulunamadı.",

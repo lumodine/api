@@ -4,6 +4,7 @@ const updateProduct = require('./updateProduct');
 const removeProduct = require('./removeProduct');
 const uploadProductImage = require('./uploadProductImage');
 const removeProductImage = require('./removeProductImage');
+const updateProductTags = require('./updateProductTags');
 
 module.exports = (fastify, opts, done) => {
     fastify.post(
@@ -28,6 +29,18 @@ module.exports = (fastify, opts, done) => {
             ],
         },
         updateProduct
+    );
+
+    fastify.put(
+        '/:productId/tags',
+        {
+            preHandler: [
+                fastify.authenticate,
+                fastify.authorize(PERMISSIONS.PRODUCT_UPDATE_TAGS),
+                fastify.checkTenantByParams,
+            ],
+        },
+        updateProductTags
     );
 
     fastify.delete(
