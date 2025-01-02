@@ -3,8 +3,6 @@ const baseModel = require('../common/mongodb.base.model');
 const { THEME_TYPES } = require('../theme/theme.constant');
 const Item = require('../item/item.model');
 
-const SubCategory = require('../subCategory/subCategory.model');
-
 const schema = new mongoose.Schema({
     image: {
         type: String,
