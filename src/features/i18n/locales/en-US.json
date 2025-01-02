@@ -132,6 +132,8 @@
     "tenant_remove_success": "Tenant successfully removed.",
     "tenant_create_error": "Error creating tenant. Please try again.",
     "tenant_create_success": "Tenant successfully created.",
+    "tenant_alias_too_short": "Alias must be at least {min} characters long.",
+    "tenant_alias_invalid": "Alias must contain only letters, numbers, underscores, and hyphens.",
 
     "user_not_found": "User not found.",
     "users_not_found": "Users not found.",

@@ -1,5 +1,4 @@
 const Tenant = require('../tenant.model');
-const { DISALLOWED_ALIASES } = require('../tenant.constant');
 const qrcode = require("@lumodine/qrcode");
 const { mongoose } = require('@lumodine/mongodb');
 const { s3 } = require('@lumodine/aws');
@@ -13,15 +12,6 @@ module.exports = async (request, reply) => {
         languages,
         currencies,
     } = request.body;
-
-    const isDisallowedAlias = DISALLOWED_ALIASES.includes(alias);
-
-    if (isDisallowedAlias) {
-        return reply.send({
-            success: false,
-            message: request.i18n.tenant_already_exists,
-        });
-    }
 
     const tenant = await Tenant.findOne({
         alias,

@@ -132,6 +132,8 @@
     "tenant_remove_success": "İşletme başarıyla silindi.",
     "tenant_create_error": "İşletme oluşturulurken hata oluştu. Lütfen tekrar deneyin.",
     "tenant_create_success": "İşletme başarıyla oluşturuldu.",
+    "tenant_alias_too_short": "Web adresi en az {min} karakter olmalıdır.",
+    "tenant_alias_invalid": "Web adresi yalnızca harfler, sayılar, alt çizgiler ve kısa çizgiler içerebilir.",
     
     "user_not_found": "Kullanıcı bulunamadı.",
     "users_not_found": "Kullanıcılar bulunamadı.",

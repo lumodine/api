@@ -13,8 +13,11 @@ const TENANT_STATUS = {
     PUBLISHED: 'published',
 };
 
+const TENANT_ALIAS_MIN_LENGTH = 5;
+
 module.exports = {
     DISALLOWED_ALIASES,
     SOCIAL_MEDIAS,
     TENANT_STATUS,
+    TENANT_ALIAS_MIN_LENGTH,
 };

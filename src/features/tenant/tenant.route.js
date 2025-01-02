@@ -23,6 +23,7 @@ module.exports = (fastify, opts, done) => {
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.TENANT_CREATE),
+                fastify.validateTenantAlias,
             ],
         },
         createTenant
@@ -45,6 +46,7 @@ module.exports = (fastify, opts, done) => {
             preHandler: [
                 fastify.authenticate,
                 fastify.authorize(PERMISSIONS.TENANT_UPDATE_SETTINGS),
+                fastify.validateTenantAlias,
                 fastify.checkTenantByParams,
             ],
         },
