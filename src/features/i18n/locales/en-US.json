@@ -53,12 +53,12 @@
 
     "item_not_found": "Item not found.",
     "items_not_found": "Items not found.",
-    "item_type_update_error": "Error updating item type. Please try again.",
-    "item_type_update_success": "Item type successfully updated.",
-    "item_status_update_error": "Error updating item status. Please try again.",
-    "item_status_update_success": "Item status successfully updated.",
-    "item_sort_update_error": "Error updating item sort. Please try again.",
-    "item_sort_update_success": "Item sort successfully updated.",
+    "item_type_update_error": "Error updating type. Please try again.",
+    "item_type_update_success": "Type successfully updated.",
+    "item_status_update_error": "Error updating status. Please try again.",
+    "item_status_update_success": "Status successfully updated.",
+    "item_sort_update_error": "Error updating sort. Please try again.",
+    "item_sort_update_success": "Sort successfully updated.",
 
     "language_not_found": "Language not found.",
     "languages_not_found": "Languages not found.",
