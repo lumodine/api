@@ -38,7 +38,7 @@ module.exports = (fastify, opts, done) => {
             ],
         },
         removeProductVariant
-    );-
+    );
 
     done();
 };
