@@ -26,9 +26,12 @@ module.exports = async (request, reply) => {
         //TODO: 
         const emailHtml = `<p>Reset your password via ${process.env.DASHBOARD_URL}/reset-password?t=${token.data}</p>`;
         emailService.send({
-            from: 'noreply@lumodine.com',
+            from: {
+                name: process.env.EMAIL_USER_NAME,
+                address: process.env.EMAIL_USER_EMAIL,
+            },
             to: user.email,
-            subject: 'forgot_password',
+            subject: 'Forgot Password',
             html: emailHtml,
         });
     }

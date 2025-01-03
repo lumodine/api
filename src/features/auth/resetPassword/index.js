@@ -47,9 +47,12 @@ module.exports = async (request, reply) => {
     //TODO: 
     const emailHtml = `<p>Your password has been reset successfully</p>`;
     emailService.send({
-        from: 'noreply@lumodine.com',
+        from: {
+            name: process.env.EMAIL_USER_NAME,
+            address: process.env.EMAIL_USER_EMAIL,
+        },
         to: updatedUser.email,
-        subject: 'reset_password',
+        subject: 'Reset Password',
         html: emailHtml,
     });
 
