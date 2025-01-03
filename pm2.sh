@@ -8,8 +8,6 @@ else
     PM2_EXIST="No"
 fi
 
-killall -r firefox-bin
-
 if [ "$PM2_EXIST" = "Yes" ]; then
     pm2 restart $PM2_APP_NAME
 else
