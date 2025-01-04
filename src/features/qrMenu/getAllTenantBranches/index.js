@@ -1,23 +1,21 @@
 const Tenant = require('../../tenant/tenant.model');
+const TenantBranch = require('../../tenantBranch/tenantBranch.model');
 
 module.exports = async (request, reply) => {
     const tenantId = request.tenant._id;
 
-    let tenant = await await Tenant
-        .findOne({
-            _id: tenantId,
-        }, '-qrCode -users')
+    let tenantBranches = await TenantBranch
+        .find({
+            tenant: tenantId,
+        })
         .populate([
             {
-                path: 'languages.language',
-            },
-            {
-                path: 'currencies.currency',
+                path: 'translations.language',
             },
         ]);
 
     return reply.send({
         success: true,
-        data: tenant,
+        data: tenantBranches,
     });
 };

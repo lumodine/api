@@ -3,6 +3,7 @@ const getMenu = require('./getMenu');
 const getAllMenuItems = require('./getAllMenuItems');
 const getMenuItemById = require('./getMenuItemById');
 const getAllAnnouncements = require('./getAllAnnouncements');
+const getAllTenantBranches = require('./getAllTenantBranches');
 
 module.exports = (fastify, opts, done) => {
     fastify.get(
@@ -15,6 +16,18 @@ module.exports = (fastify, opts, done) => {
             ],
         },
         getMenu
+    );
+
+    fastify.get(
+        '/:tenantAlias/branches',
+        {
+            preHandler: [
+                //fastify.authenticate,
+                //fastify.authorize(PERMISSIONS.QR_MENU_GET_ALL_TENANT_BRANCHES),
+                fastify.checkTenantByParams,
+            ],
+        },
+        getAllTenantBranches
     );
 
     fastify.get(
