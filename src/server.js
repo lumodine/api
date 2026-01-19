@@ -1,11 +1,11 @@
-const fastifyOptions = {
+const fastify = require('fastify')({
   logger: (process.env.NODE_ENV === 'development'),
-  ignoreTrailingSlash: true,
-  ignoreDuplicateSlashes: true,
-  trustProxy: true,
-};
-
-const fastify = require('fastify')(fastifyOptions);
+  routerOptions: {
+    ignoreTrailingSlash: true,
+    ignoreDuplicateSlashes: true,
+    trustProxy: true,
+  },
+});
 const cors = require('@fastify/cors');
 const Ajv = require('ajv').default;
 const { connect: mongodbConnect } = require('@lumodine/mongodb');
