@@ -40,7 +40,7 @@ fastify.register(require('./features/qrMenu'));
 fastify.register(require('./features/theme'));
 fastify.register(require('./features/event'));
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 2000;
 
 const start = async () => {
   try {
