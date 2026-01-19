@@ -41,13 +41,16 @@ fastify.register(require('./features/theme'));
 fastify.register(require('./features/event'));
 
 const port = process.env.PORT || 3000;
-fastify.listen({ port, host: '0.0.0.0' }, async (err, address) => {
-  if (err) {
+
+const start = async () => {
+  try {
+    await mongodbConnect(process.env.MONGODB_URL);
+    const address = await fastify.listen({ port, host: '0.0.0.0' });
+    console.log(`Server listening on ${address}`);
+  } catch (err) {
     fastify.log.error(err);
     process.exit(1);
   }
+};
 
-  await mongodbConnect(process.env.MONGODB_URL);
-
-  console.log(`Server listening on ${address}`);
-});
+start();
